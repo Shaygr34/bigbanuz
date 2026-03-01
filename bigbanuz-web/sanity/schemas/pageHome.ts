@@ -1,0 +1,108 @@
+import { defineField, defineType } from "sanity";
+
+export default defineType({
+  name: "pageHome",
+  title: "Homepage",
+  type: "document",
+  fields: [
+    defineField({
+      name: "heroImage",
+      title: "Hero Image",
+      type: "image",
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "heroHeadline",
+      title: "Hero Headline",
+      type: "string",
+      initialValue: "Amit Banuz — Surf & Event Photographer",
+    }),
+    defineField({
+      name: "heroSubline",
+      title: "Hero Subline",
+      type: "string",
+      initialValue: "Capturing moments in motion — from ocean waves to unforgettable events.",
+    }),
+    defineField({
+      name: "eventsPreview",
+      title: "Events Preview Card",
+      type: "object",
+      fields: [
+        defineField({
+          name: "image",
+          title: "Preview Image",
+          type: "image",
+          options: { hotspot: true },
+        }),
+        defineField({
+          name: "headline",
+          title: "Headline",
+          type: "string",
+          initialValue: "Event Photography & Magnets",
+        }),
+        defineField({
+          name: "bullets",
+          title: "Highlight Bullets",
+          type: "array",
+          of: [{ type: "string" }],
+        }),
+        defineField({
+          name: "ctaText",
+          title: "CTA Text",
+          type: "string",
+          initialValue: "Explore Events",
+        }),
+      ],
+    }),
+    defineField({
+      name: "surfPreview",
+      title: "Surf Preview Card",
+      type: "object",
+      fields: [
+        defineField({
+          name: "image",
+          title: "Preview Image",
+          type: "image",
+          options: { hotspot: true },
+        }),
+        defineField({
+          name: "headline",
+          title: "Headline",
+          type: "string",
+          initialValue: "Surf Photography",
+        }),
+        defineField({
+          name: "bullets",
+          title: "Highlight Bullets",
+          type: "array",
+          of: [{ type: "string" }],
+        }),
+        defineField({
+          name: "ctaText",
+          title: "CTA Text",
+          type: "string",
+          initialValue: "Explore Surf",
+        }),
+      ],
+    }),
+    defineField({
+      name: "featuredGallery",
+      title: "Featured Gallery",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "gallery" }] }],
+    }),
+    defineField({
+      name: "bottomCtaText",
+      title: "Bottom CTA Text",
+      type: "string",
+      initialValue: "Ready to work together?",
+    }),
+  ],
+  preview: {
+    select: {
+      title: "heroHeadline",
+      media: "heroImage",
+    },
+  },
+});
