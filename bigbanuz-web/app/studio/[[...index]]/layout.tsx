@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "bigbanuz CMS Studio",
+  title: "Smile Amigo CMS Studio",
 };
 
 export default function StudioLayout({
