@@ -1,7 +1,8 @@
 import { client } from "@/lib/sanity/client";
 import { homePageQuery, galleryByLaneQuery } from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import SplitGateway from "@/components/sections/SplitGateway";
+import VideoReel from "@/components/sections/VideoReel";
 import FeaturedGallery from "@/components/sections/FeaturedGallery";
 import CtaSection from "@/components/sections/CtaSection";
 import type { GalleryImage } from "@/components/ui/GalleryGrid";
@@ -81,19 +82,22 @@ export default async function HomePage() {
     getSanityImageUrl(data?.surfPreview?.image) ||
     getSanityImageUrl(surfGalleries[0]?.images?.[0]?.image);
 
-  // Build featured gallery images from CMS
-  const galleryImages: GalleryImage[] = [];
+  // Build featured gallery images from CMS, collecting source refs for blur generation
+  const galleryEntries: { galleryImage: GalleryImage; source: SanityImage }[] = [];
   if (data?.featuredGallery) {
     for (const gallery of data.featuredGallery) {
       if (gallery.images) {
         for (const img of gallery.images) {
           const url = getSanityImageUrl(img.image, 800);
           if (url) {
-            galleryImages.push({
-              url,
-              alt: img.alt || "Photography by Amit Banuz",
-              caption: img.caption,
-              location: img.location,
+            galleryEntries.push({
+              galleryImage: {
+                url,
+                alt: img.alt || "Photography by Amit Banuz",
+                caption: img.caption,
+                location: img.location,
+              },
+              source: img.image,
             });
           }
         }
@@ -101,12 +105,23 @@ export default async function HomePage() {
     }
   }
 
+  // Generate blur placeholders in parallel
+  await Promise.all(
+    galleryEntries.map(async (entry) => {
+      entry.galleryImage.blurDataURL = await getBlurDataURL(entry.source);
+    })
+  );
+
+  const galleryImages = galleryEntries.map((e) => e.galleryImage);
+
   return (
     <>
       <SplitGateway
         eventsImage={eventsImageUrl}
         surfImage={surfImageUrl}
       />
+
+      <VideoReel />
 
       {galleryImages.length > 0 && (
         <FeaturedGallery images={galleryImages.slice(0, 9)} />

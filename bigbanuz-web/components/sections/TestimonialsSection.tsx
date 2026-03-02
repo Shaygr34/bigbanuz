@@ -1,4 +1,5 @@
 import TestimonialCard from "@/components/ui/TestimonialCard";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 interface Testimonial {
   _id: string;
@@ -20,18 +21,21 @@ export default function TestimonialsSection({
   return (
     <section className="py-section">
       <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-h2 font-heading font-bold text-black text-center mb-12">
-          What People Say
-        </h2>
+        <ScrollReveal>
+          <h2 className="text-h2 font-heading font-bold text-black text-center mb-12">
+            What People Say
+          </h2>
+        </ScrollReveal>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((t) => (
-            <TestimonialCard
-              key={t._id}
-              quote={t.quote}
-              name={t.name}
-              context={t.context}
-              avatarUrl={t.avatarUrl}
-            />
+          {testimonials.map((t, i) => (
+            <ScrollReveal key={t._id} delay={i * 100}>
+              <TestimonialCard
+                quote={t.quote}
+                name={t.name}
+                context={t.context}
+                avatarUrl={t.avatarUrl}
+              />
+            </ScrollReveal>
           ))}
         </div>
       </div>

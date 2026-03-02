@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { client } from "@/lib/sanity/client";
 import { packagesQuery, galleryByLaneQuery, testimonialsByLaneQuery } from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import Hero from "@/components/sections/Hero";
 import PackagesSection from "@/components/sections/PackagesSection";
 import TrustSection from "@/components/sections/TrustSection";
 import GalleryGrid from "@/components/ui/GalleryGrid";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CtaSection from "@/components/sections/CtaSection";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import type { GalleryImage } from "@/components/ui/GalleryGrid";
 
 export const metadata: Metadata = {
@@ -126,18 +127,21 @@ export default async function EventsPage() {
 
   const displayPackages = packages.length > 0 ? packages : FALLBACK_PACKAGES;
 
-  // Build gallery images
-  const galleryImages: GalleryImage[] = [];
+  // Build gallery images, collecting source refs for blur
+  const galleryEntries: { galleryImage: GalleryImage; source: SanityImage }[] = [];
   for (const gallery of galleries) {
     if (gallery.images) {
       for (const img of gallery.images) {
         const url = getImageUrl(img.image);
         if (url) {
-          galleryImages.push({
-            url,
-            alt: img.alt || "Event photography",
-            caption: img.caption,
-            location: img.location,
+          galleryEntries.push({
+            galleryImage: {
+              url,
+              alt: img.alt || "Event photography",
+              caption: img.caption,
+              location: img.location,
+            },
+            source: img.image,
           });
         }
       }
@@ -154,13 +158,25 @@ export default async function EventsPage() {
   }));
 
   // Use first gallery image as hero if available
-  const eventsHeroUrl = galleryImages.length > 0 ? getImageUrl(galleries[0]?.images?.[0]?.image, 1920) : "";
+  const heroSource = galleries[0]?.images?.[0]?.image;
+  const eventsHeroUrl = galleryEntries.length > 0 ? getImageUrl(heroSource, 1920) : "";
+
+  // Generate blur placeholders in parallel (hero + gallery)
+  const [heroBlur] = await Promise.all([
+    heroSource?.asset?._ref ? getBlurDataURL(heroSource) : Promise.resolve(""),
+    ...galleryEntries.map(async (entry) => {
+      entry.galleryImage.blurDataURL = await getBlurDataURL(entry.source);
+    }),
+  ]);
+
+  const galleryImages = galleryEntries.map((e) => e.galleryImage);
 
   return (
     <>
       <Hero
         imageUrl={eventsHeroUrl}
         imageAlt="Event photography by Amit Banuz"
+        blurDataURL={heroBlur}
         headline="Event Photography & Magnets"
         subline="Premium photos and instant magnet prints for your event"
         ctas={[
@@ -175,10 +191,14 @@ export default async function EventsPage() {
       {galleryImages.length > 0 && (
         <section className="py-section">
           <div className="max-w-wide mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-h2 font-heading font-bold text-black text-center mb-8">
-              Event Portfolio
-            </h2>
-            <GalleryGrid images={galleryImages} columns={3} gap="tight" />
+            <ScrollReveal>
+              <h2 className="text-h2 font-heading font-bold text-black text-center mb-8">
+                Event Portfolio
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={100}>
+              <GalleryGrid images={galleryImages} columns={3} gap="tight" />
+            </ScrollReveal>
           </div>
         </section>
       )}
