@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { buildWhatsAppUrlSimple } from "@/lib/utils/whatsapp";
+import { INSTAGRAM_URL } from "@/lib/utils/constants";
 
 interface CtaSectionProps {
   headline?: string;
@@ -17,7 +18,7 @@ export default function CtaSection({
   emailLabel,
   emailHref = "/contact",
   instagramLabel,
-  instagramHref = "https://instagram.com/smileamigo.photo",
+  instagramHref = INSTAGRAM_URL,
 }: CtaSectionProps) {
   return (
     <section className="py-section bg-charcoal">

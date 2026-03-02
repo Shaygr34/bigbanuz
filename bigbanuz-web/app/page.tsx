@@ -130,7 +130,7 @@ export default async function HomePage() {
       <CtaSection
         headline={data?.bottomCtaText || "Let's create something amazing"}
         whatsappLabel="WhatsApp Me"
-        instagramLabel="Follow @smileamigo.photo"
+        instagramLabel="Follow @bigbanuz"
         instagramHref={INSTAGRAM_URL}
       />
     </>

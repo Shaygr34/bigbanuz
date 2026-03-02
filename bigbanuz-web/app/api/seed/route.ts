@@ -27,9 +27,9 @@ export async function GET() {
         siteDescription:
           "Professional surf and event photography by Amit Banuz. Capturing moments in motion — from ocean waves to unforgettable events.",
         socialLinks: {
-          instagram: "https://instagram.com/smileamigo.photo",
+          instagram: "https://www.instagram.com/bigbanuz/",
           whatsapp: "972548194361",
-          email: "hello@smileamigo.com",
+          email: "iambigbanuz@gmail.com",
         },
         ctaWhatsappMessage:
           "Hey Amit! I saw your website and I'd love to chat about a shoot.",

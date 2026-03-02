@@ -128,7 +128,7 @@ export default async function SurfPage() {
 
       <CtaSection
         headline="See more on Instagram"
-        instagramLabel="Follow @smileamigo.photo"
+        instagramLabel="Follow @bigbanuz"
         instagramHref={INSTAGRAM_URL}
         whatsappLabel="WhatsApp Me"
       />

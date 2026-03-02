@@ -22,6 +22,11 @@ const config: Config = {
           soft: "#FEF9C3",
           text: "#0A0A0A",
         },
+        sun: {
+          light: "#FDE68A",
+          DEFAULT: "#F59E0B",
+          dark: "#D97706",
+        },
         overlay: {
           dark: "rgba(10, 10, 10, 0.55)",
           light: "rgba(10, 10, 10, 0.30)",
@@ -54,6 +59,8 @@ const config: Config = {
       boxShadow: {
         card: "0 1px 3px rgba(10, 10, 10, 0.08)",
         "card-hover": "0 4px 12px rgba(10, 10, 10, 0.15)",
+        "sun-glow": "0 2px 12px rgba(245, 158, 11, 0.25)",
+        "sun-glow-lg": "0 4px 20px rgba(245, 158, 11, 0.4)",
       },
       borderRadius: {
         sm: "4px",
@@ -73,6 +80,14 @@ const config: Config = {
       backgroundImage: {
         "hero-gradient":
           "linear-gradient(to top, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0.3) 40%, transparent 100%)",
+        "sun-gradient":
+          "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+        "sun-gradient-hover":
+          "linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%)",
+        "charcoal-gradient":
+          "linear-gradient(135deg, #1A1A2E 0%, #2C2C3A 100%)",
+        "charcoal-gradient-hover":
+          "linear-gradient(135deg, #2C2C3A 0%, #3D3D50 100%)",
       },
     },
   },

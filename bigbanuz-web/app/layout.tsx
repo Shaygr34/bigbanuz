@@ -51,7 +51,7 @@ const jsonLd = {
   jobTitle: "Photographer",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.com",
   image: `${process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.com"}/og-default.jpg`,
-  sameAs: ["https://instagram.com/smileamigo.photo"],
+  sameAs: ["https://www.instagram.com/bigbanuz/"],
   knowsAbout: ["Surf Photography", "Event Photography", "Photo Magnets"],
   address: {
     "@type": "PostalAddress",

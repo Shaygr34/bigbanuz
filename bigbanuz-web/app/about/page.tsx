@@ -157,7 +157,7 @@ export default async function AboutPage() {
         whatsappLabel="Get in Touch"
         emailLabel="View Events"
         emailHref="/events"
-        instagramLabel="Follow @smileamigo.photo"
+        instagramLabel="Follow @bigbanuz"
         instagramHref={INSTAGRAM_URL}
       />
     </>
