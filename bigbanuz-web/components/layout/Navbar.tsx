@@ -2,12 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { NAV_LINKS } from "@/lib/utils/constants";
 import { buildWhatsAppUrlSimple } from "@/lib/utils/whatsapp";
 import { analytics } from "@/lib/utils/analytics";
 import MobileMenu from "./MobileMenu";
 
-export default function Navbar() {
+interface NavbarProps {
+  logoUrl?: string;
+}
+
+export default function Navbar({ logoUrl }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -39,11 +44,23 @@ export default function Navbar() {
             {/* Logo */}
             <Link
               href="/"
-              className={`text-xl lg:text-2xl font-bold tracking-tight transition-colors duration-normal ${
-                scrolled ? "text-ocean-deep" : "text-white"
-              }`}
+              className="flex items-center gap-2"
             >
-              Smile Amigo
+              {logoUrl ? (
+                <Image
+                  src={logoUrl}
+                  alt="Smile Amigo"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                  priority
+                />
+              ) : null}
+              <span className={`text-xl lg:text-2xl font-bold tracking-tight transition-colors duration-normal ${
+                scrolled ? "text-ocean-deep" : "text-white"
+              }`}>
+                Smile Amigo
+              </span>
             </Link>
 
             {/* Desktop Nav */}

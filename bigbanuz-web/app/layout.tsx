@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { client } from "@/lib/sanity/client";
+import { urlFor } from "@/lib/sanity/image";
 import "./globals.css";
 
 const inter = Inter({
@@ -51,11 +53,25 @@ const jsonLd = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let logoUrl = "";
+  try {
+    const settings = await client.fetch<{ logo?: { asset?: { _ref?: string } } }>(
+      '*[_type == "siteSettings"][0]{logo}',
+      {},
+      { next: { tags: ["sanity"] } }
+    );
+    if (settings?.logo?.asset?._ref) {
+      logoUrl = urlFor(settings.logo).width(120).quality(90).auto("format").url();
+    }
+  } catch {
+    // fallback to text logo
+  }
+
   return (
     <html lang="en" className={inter.variable}>
       <body className="font-body antialiased">
@@ -67,7 +83,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
-        <Navbar />
+        <Navbar logoUrl={logoUrl} />
         <main id="main-content">{children}</main>
         <Footer />
       </body>

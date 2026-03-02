@@ -73,10 +73,13 @@ export default async function SurfPage() {
     }
   }
 
+  // Use first gallery image as hero if available
+  const surfHeroUrl = galleryImages.length > 0 ? getImageUrl(galleries[0]?.images?.[0]?.image, 1920) : "";
+
   return (
     <>
       <Hero
-        imageUrl=""
+        imageUrl={surfHeroUrl}
         imageAlt="In-water surf photography by Amit Banuz"
         headline="Surf Photography"
         subline="Philippines · Sri Lanka · Israel · Australia"
