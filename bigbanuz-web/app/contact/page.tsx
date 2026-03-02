@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Contact | Smile Amigo",
   description:
     "Get in touch with Amit Banuz. Available for event photography, surf photography, and brand collaborations. WhatsApp, email, or Instagram DM.",
+  openGraph: {
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
+  },
 };
 
 export default function ContactPage() {

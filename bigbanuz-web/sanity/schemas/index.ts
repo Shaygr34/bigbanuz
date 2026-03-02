@@ -5,6 +5,7 @@ import gallery from "./gallery";
 import testimonial from "./testimonial";
 import lead from "./lead";
 import productPrint from "./productPrint";
+import story from "./story";
 
 export const schemaTypes = [
   siteSettings,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   testimonial,
   lead,
   productPrint,
+  story,
 ];

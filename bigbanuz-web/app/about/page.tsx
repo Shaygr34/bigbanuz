@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "About Amit Banuz | Smile Amigo",
   description:
     "The story behind the lens. Amit Banuz — combat veteran turned surf and event photographer. Based in Israel, shooting worldwide.",
+  openGraph: {
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
+  },
 };
 
 const LOCATIONS = [

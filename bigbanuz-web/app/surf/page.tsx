@@ -11,11 +11,31 @@ import CtaSection from "@/components/sections/CtaSection";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { INSTAGRAM_URL } from "@/lib/utils/constants";
 
-export const metadata: Metadata = {
-  title: "Surf Photography | Smile Amigo",
-  description:
-    "In-water surf photography by Amit Banuz. Shooting across Philippines, Sri Lanka, Israel, and Australia. Available for brand collaborations and editorial projects.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  let ogImage: string | undefined;
+  try {
+    const galleries = await client.fetch<GalleryDoc[]>(
+      galleryByLaneQuery,
+      { lane: "surf" },
+      { next: { tags: ["sanity"] } }
+    );
+    const firstImage = galleries?.[0]?.images?.[0]?.image;
+    if (firstImage?.asset?._ref) {
+      ogImage = urlFor(firstImage).width(1200).height(630).quality(80).auto("format").url();
+    }
+  } catch {
+    // fallback to default
+  }
+
+  return {
+    title: "Surf Photography | Smile Amigo",
+    description:
+      "In-water surf photography by Amit Banuz. Shooting across Philippines, Sri Lanka, Israel, and Australia. Available for brand collaborations and editorial projects.",
+    openGraph: {
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
+    },
+  };
+}
 
 interface SanityImage {
   asset?: { _ref?: string };

@@ -11,11 +11,31 @@ import CtaSection from "@/components/sections/CtaSection";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import type { GalleryImage } from "@/components/ui/GalleryGrid";
 
-export const metadata: Metadata = {
-  title: "Event Photography & Magnets | Smile Amigo",
-  description:
-    "Premium event photography and instant magnet prints by Amit Banuz. Three packages to fit your event. Fast delivery, personal attention, stunning results.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  let ogImage: string | undefined;
+  try {
+    const galleries = await client.fetch<GalleryDoc[]>(
+      galleryByLaneQuery,
+      { lane: "events" },
+      { next: { tags: ["sanity"] } }
+    );
+    const firstImage = galleries?.[0]?.images?.[0]?.image;
+    if (firstImage?.asset?._ref) {
+      ogImage = urlFor(firstImage).width(1200).height(630).quality(80).auto("format").url();
+    }
+  } catch {
+    // fallback to default
+  }
+
+  return {
+    title: "Event Photography & Magnets | Smile Amigo",
+    description:
+      "Premium event photography and instant magnet prints by Amit Banuz. Three packages to fit your event. Fast delivery, personal attention, stunning results.",
+    openGraph: {
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
+    },
+  };
+}
 
 interface SanityImage {
   asset?: { _ref?: string };
@@ -171,8 +191,31 @@ export default async function EventsPage() {
 
   const galleryImages = galleryEntries.map((e) => e.galleryImage);
 
+  // Product JSON-LD for packages
+  const packageJsonLd = displayPackages.map((pkg) => ({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${pkg.title} Event Photography Package`,
+    description: pkg.inclusions.join(", "),
+    brand: { "@type": "Brand", name: "Smile Amigo" },
+    offers: {
+      "@type": "Offer",
+      price: pkg.priceILS,
+      priceCurrency: "ILS",
+      availability: "https://schema.org/InStock",
+      priceValidUntil: new Date(new Date().getFullYear() + 1, 0, 1).toISOString().split("T")[0],
+    },
+  }));
+
   return (
     <>
+      {packageJsonLd.map((jsonLd, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ))}
       <Hero
         imageUrl={eventsHeroUrl}
         imageAlt="Event photography by Amit Banuz"

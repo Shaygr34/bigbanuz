@@ -149,6 +149,32 @@ export const testimonialsByLaneQuery = groq`
   }
 `;
 
+// Stories
+export const storiesQuery = groq`
+  *[_type == "story"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    image,
+    shortDescription,
+    publishedAt,
+    location
+  }
+`;
+
+export const storyBySlugQuery = groq`
+  *[_type == "story" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    image,
+    shortDescription,
+    body,
+    publishedAt,
+    location
+  }
+`;
+
 // About page
 export const aboutPageQuery = groq`
   *[_type == "siteSettings"][0] {

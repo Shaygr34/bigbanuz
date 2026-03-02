@@ -12,6 +12,7 @@ export const EMAIL_ADDRESS = "iambigbanuz@gmail.com";
 export const NAV_LINKS = [
   { label: "Events", href: "/events" },
   { label: "Surf", href: "/surf" },
+  { label: "Stories", href: "/stories" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;

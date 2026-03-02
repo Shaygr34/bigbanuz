@@ -1,9 +1,11 @@
 import { client } from "@/lib/sanity/client";
-import { homePageQuery, galleryByLaneQuery } from "@/lib/sanity/queries";
+import { homePageQuery, galleryByLaneQuery, testimonialsQuery } from "@/lib/sanity/queries";
 import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import SplitGateway from "@/components/sections/SplitGateway";
 import VideoReel from "@/components/sections/VideoReel";
 import FeaturedGallery from "@/components/sections/FeaturedGallery";
+import PressSection from "@/components/sections/PressSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CtaSection from "@/components/sections/CtaSection";
 import type { GalleryImage } from "@/components/ui/GalleryGrid";
 import { INSTAGRAM_URL } from "@/lib/utils/constants";
@@ -49,6 +51,14 @@ interface GalleryDoc {
   }>;
 }
 
+interface Testimonial {
+  _id: string;
+  quote: string;
+  name: string;
+  context?: string;
+  avatar?: SanityImage;
+}
+
 function getSanityImageUrl(image?: SanityImage, width = 1920): string {
   if (!image?.asset?._ref) return "";
   try {
@@ -62,12 +72,14 @@ export default async function HomePage() {
   let data: HomePageData | null = null;
   let eventsGalleries: GalleryDoc[] = [];
   let surfGalleries: GalleryDoc[] = [];
+  let testimonials: Testimonial[] = [];
 
   try {
-    [data, eventsGalleries, surfGalleries] = await Promise.all([
+    [data, eventsGalleries, surfGalleries, testimonials] = await Promise.all([
       client.fetch<HomePageData>(homePageQuery, {}, { next: { tags: ["sanity"] } }),
       client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "events" }, { next: { tags: ["sanity"] } }),
       client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "surf" }, { next: { tags: ["sanity"] } }),
+      client.fetch<Testimonial[]>(testimonialsQuery, {}, { next: { tags: ["sanity"] } }),
     ]);
   } catch {
     // CMS not configured yet
@@ -114,6 +126,14 @@ export default async function HomePage() {
 
   const galleryImages = galleryEntries.map((e) => e.galleryImage);
 
+  const displayTestimonials = testimonials.map((t) => ({
+    _id: t._id,
+    quote: t.quote,
+    name: t.name,
+    context: t.context,
+    avatarUrl: getSanityImageUrl(t.avatar, 80),
+  }));
+
   return (
     <>
       <SplitGateway
@@ -126,6 +146,10 @@ export default async function HomePage() {
       {galleryImages.length > 0 && (
         <FeaturedGallery images={galleryImages.slice(0, 9)} />
       )}
+
+      <PressSection />
+
+      <TestimonialsSection testimonials={displayTestimonials} />
 
       <CtaSection
         headline={data?.bottomCtaText || "Let's create something amazing"}

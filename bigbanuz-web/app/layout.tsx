@@ -33,6 +33,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Smile Amigo",
+    images: [
+      {
+        url: "/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Smile Amigo — Surf & Event Photography by Amit Banuz",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -40,6 +48,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 

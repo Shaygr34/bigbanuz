@@ -214,6 +214,26 @@ export async function GET() {
       results.testimonials = `${existingTestimonials} already exist`;
     }
 
+    // 6. Sample story
+    const existingStories = await client.fetch(
+      `count(*[_type == "story"])`
+    );
+    if (existingStories === 0) {
+      await writeClient.create({
+        _type: "story",
+        title: "Chasing Dawn in Siargao",
+        slug: { _type: "slug", current: "chasing-dawn-siargao" },
+        shortDescription:
+          "A week of 5am wake-ups, glassy barrels, and the magic that happens when the light is just right.",
+        body: "There's something about Siargao at dawn that you can't find anywhere else. The palm trees are still silhouettes, the ocean is glass, and the only sound is the distant rumble of Cloud 9.\n\nI spent a week here shooting before sunrise — paddling out in the dark with just a headlamp and my housing, waiting for that first golden ray to hit the water.\n\nThe surfers here are different too. They're not rushing. There's a respect for the ocean that shows in every turn, every duck dive. That energy translates directly into the images — you can feel the calm intensity.\n\nOne morning, a local kid paddled up next to me and asked if I could take his photo. He'd been surfing since he could walk, he said. I shot him for twenty minutes as the sun came up behind Cloud 9. Those are some of my favorite frames from the entire trip.\n\nSiargao taught me that the best shots come when you stop chasing them. You show up, you wait, and you let the moment find you.",
+        publishedAt: new Date("2025-01-15").toISOString(),
+        location: "Siargao, Philippines",
+      });
+      results.stories = "created 1 sample story";
+    } else {
+      results.stories = `${existingStories} already exist`;
+    }
+
     return NextResponse.json({
       success: true,
       message:
