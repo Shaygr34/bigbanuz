@@ -4,10 +4,11 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
 
 export default defineConfig({
-  name: "bigbanuz",
-  title: "bigbanuz CMS",
+  name: "smile-amigo",
+  title: "Smile Amigo CMS",
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  basePath: "/studio",
   plugins: [structureTool(), visionTool()],
   schema: {
     types: schemaTypes,
