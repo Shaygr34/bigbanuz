@@ -54,7 +54,7 @@ export async function generateMetadata({
       ? "צילום גלישה מקצועי וצילום אירועים עם מגנטים מיידיים. מבוסס בישראל, מצלם בכל העולם."
       : "Premium surf photography and event coverage with instant magnet prints. Based in Israel, shooting worldwide. Philippines · Sri Lanka · Australia.",
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.com"
+      process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.vercel.app"
     ),
     openGraph: {
       title: isHe
@@ -131,7 +131,7 @@ export default async function LocaleLayout({
   }
 
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.com";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.vercel.app";
 
   const jsonLd = {
     "@context": "https://schema.org",
