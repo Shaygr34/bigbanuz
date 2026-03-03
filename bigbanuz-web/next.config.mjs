@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'vampiresurfclub.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+      },
     ],
   },
 };
