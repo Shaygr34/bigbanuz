@@ -2,7 +2,7 @@
   "Nav": {
     "events": "אירועים",
     "surf": "גלישה",
-    "stories": "סיפורים",
+    "stories": "סטוריז",
     "about": "אודות",
     "contact": "צור קשר",
     "getInTouch": "דברו איתי",
@@ -14,8 +14,8 @@
   },
   "Footer": {
     "brand": "Smile Amigo",
-    "followInstagram": "עקבו באינסטגרם",
-    "contactWhatsApp": "צרו קשר בוואטסאפ",
+    "followInstagram": "@bigbanuz באינסטגרם",
+    "contactWhatsApp": "כתבו לי בוואטסאפ",
     "copyright": "© {year} Smile Amigo. כל הזכויות שמורות."
   },
   "Home": {
@@ -32,12 +32,12 @@
     "galleryTitle": "עבודות נבחרות",
     "gallerySubtitle": "אוסף צילומי גלישה ואירועים אחרונים מרחבי העולם.",
     "galleryViewAll": "לתיק העבודות המלא",
-    "pressTitle": "עיתונות ופיצ׳רים",
-    "pressReadArticle": "קראו את הכתבה",
-    "testimonialsTitle": "מה אומרים עליי",
+    "pressTitle": "פיצ׳רים ושיתופי פעולה",
+    "pressReadArticle": "קראו עוד",
+    "testimonialsTitle": "חוויות של לקוחות",
     "ctaDefault": "בואו ניצור משהו מדהים",
-    "whatsappMe": "שלחו הודעה בוואטסאפ",
-    "followBigbanuz": "עקבו אחרי @bigbanuz"
+    "whatsappMe": "כתבו לי בוואטסאפ",
+    "followBigbanuz": "@bigbanuz באינסטגרם"
   },
   "Events": {
     "metaTitle": "צילום אירועים ומגנטים | Smile Amigo",
@@ -49,8 +49,8 @@
     "packagesTitle": "חבילות אירועים",
     "packagesSubtitle": "בחרו את החבילה שמתאימה לאירוע שלכם. כל חבילה כוללת עריכה מקצועית ומשלוח מהיר.",
     "portfolioTitle": "תיק עבודות אירועים",
-    "ctaHeadline": "בואו נהפוך את האירוע שלכם לבלתי נשכח",
-    "whatsappMe": "שלחו הודעה בוואטסאפ",
+    "ctaHeadline": "בואו ניצור אירוע בלתי נשכח",
+    "whatsappMe": "כתבו לי בוואטסאפ",
     "sendEmail": "שלחו אימייל",
     "features": "תכונות",
     "popular": "פופולרי",
@@ -69,9 +69,9 @@
     "workWithMe": "עבדו איתי",
     "portfolioTitle": "תיק עבודות",
     "workWithMeSubtitle": "מחפשים צלם גלישה למותג, לפרסום או לפרויקט אישי? בואו ניצור משהו מדהים ביחד.",
-    "ctaHeadline": "ראו עוד באינסטגרם",
-    "followBigbanuz": "עקבו אחרי @bigbanuz",
-    "whatsappMe": "שלחו הודעה בוואטסאפ",
+    "ctaHeadline": "רוצים לראות עוד?",
+    "followBigbanuz": "@bigbanuz באינסטגרם",
+    "whatsappMe": "כתבו לי בוואטסאפ",
     "categoryAll": "הכל",
     "categoryAction": "אקשן",
     "categoryLifestyle": "לייפסטייל",
@@ -92,7 +92,7 @@
     "metaDescription": "סיפורים מהשטח — מאחורי הקלעים, הרפתקאות טיול, והרגעים שהופכים כל צילום לייחודי. מאת עמית בנוז.",
     "title": "סיפורים",
     "subtitle": "מאחורי הקלעים, הרפתקאות טיול, והרגעים שהופכים כל צילום לייחודי.",
-    "empty": "סיפורים בקרוב. הישארו מעודכנים!",
+    "empty": "סיפורים בדרך. חכו לעדכונים!",
     "fullStorySoon": "הסיפור המלא בקרוב.",
     "allStories": "כל הסיפורים",
     "workWithMe": "עבדו איתי"
@@ -122,12 +122,12 @@
     "ctaHeadline": "בואו נעבוד ביחד",
     "ctaGetInTouch": "דברו איתי",
     "ctaViewEvents": "צפו באירועים",
-    "ctaFollowBigbanuz": "עקבו אחרי @bigbanuz"
+    "ctaFollowBigbanuz": "@bigbanuz באינסטגרם"
   },
   "Contact": {
     "metaTitle": "צור קשר | Smile Amigo",
     "metaDescription": "צרו קשר עם עמית בנוז. זמין לצילום אירועים, צילום גלישה ושיתופי פעולה עם מותגים. וואטסאפ, אימייל או הודעה באינסטגרם.",
-    "heroTitle": "בואו ניצור משהו ביחד",
+    "heroTitle": "בואו ניצור ביחד",
     "heroSubtitle": "בין אם זה צילום האירוע שלכם, צילום גלישה במיקום חדש, או שיתוף פעולה עם מותג — אשמח לשמוע מכם.",
     "basedIn": "כרגע מבוסס בישראל, זמין בכל העולם",
     "whatsapp": "וואטסאפ",
@@ -170,13 +170,13 @@
     "budget5000plus": "$5,000+",
     "budgetDiscuss": "בואו נדבר",
     "successTitle": "תודה!",
-    "successMessage": "אחזור אליכם בקרוב. בינתיים, אל תהססו לפנות בוואטסאפ.",
+    "successMessage": "אחזור אליכם בקרוב. בינתיים, תמיד אפשר בוואטסאפ.",
     "sending": "שולח...",
     "sendMessage": "שלחו הודעה",
     "errorDefault": "משהו השתבש. אנא נסו שוב."
   },
   "Trust": {
-    "title": "למה לעבוד איתי",
+    "title": "למה Smile Amigo",
     "fastDeliveryTitle": "משלוח מהיר",
     "fastDeliveryDesc": "תמונות ערוכות מועברות תוך ימים, לא שבועות.",
     "premiumQualityTitle": "איכות פרימיום",

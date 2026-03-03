@@ -9,7 +9,7 @@ export default function Footer() {
   const t = useTranslations("Footer");
 
   return (
-    <footer className="bg-charcoal text-white py-12" role="contentinfo">
+    <footer dir="ltr" className="bg-charcoal text-white py-12" role="contentinfo">
       <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}

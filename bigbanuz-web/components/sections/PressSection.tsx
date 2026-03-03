@@ -20,6 +20,24 @@ const PRESS_FEATURES: PressFeature[] = [
     excerpt:
       "Sometimes, the ocean introduces us to more than waves — it reveals the faces that linger long after the lens is put down.",
   },
+  {
+    title: "Vampire Surf Club × Smile Amigo",
+    author: "Vampire Surf Club",
+    date: "2025",
+    url: "https://www.instagram.com/bigbanuz",
+    image: "/images/collab-vampire-surf-club.jpg",
+    excerpt:
+      "Brand collaboration — shooting the Vampire Surf Club hooded rashguard line across Siargao's best breaks.",
+  },
+  {
+    title: "Reef & Ride × Smile Amigo",
+    author: "Reef & Ride",
+    date: "2025",
+    url: "https://www.instagram.com/bigbanuz",
+    image: "/images/collab-reef-and-ride.jpg",
+    excerpt:
+      "Capturing the spirit of island surf culture — a visual collaboration with Reef & Ride.",
+  },
 ];
 
 interface PressSectionProps {
@@ -27,7 +45,7 @@ interface PressSectionProps {
   readArticleLabel?: string;
 }
 
-export default function PressSection({ title = "Press & Features", readArticleLabel = "Read Article" }: PressSectionProps) {
+export default function PressSection({ title = "Features & Collaborations", readArticleLabel = "Read More" }: PressSectionProps) {
   if (PRESS_FEATURES.length === 0) return null;
 
   const isSingle = PRESS_FEATURES.length === 1;
@@ -48,8 +66,8 @@ export default function PressSection({ title = "Press & Features", readArticleLa
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {PRESS_FEATURES.map((feature, i) => (
-              <ScrollReveal key={feature.url} delay={i * 100}>
-                <GridFeatureCard feature={feature} />
+              <ScrollReveal key={feature.url + i} delay={i * 100}>
+                <GridFeatureCard feature={feature} readArticleLabel={readArticleLabel} />
               </ScrollReveal>
             ))}
           </div>
@@ -110,7 +128,7 @@ function SingleFeatureCard({ feature, readArticleLabel = "Read Article" }: { fea
   );
 }
 
-function GridFeatureCard({ feature }: { feature: PressFeature }) {
+function GridFeatureCard({ feature, readArticleLabel = "Read More" }: { feature: PressFeature; readArticleLabel?: string }) {
   return (
     <a
       href={feature.url}
@@ -139,6 +157,23 @@ function GridFeatureCard({ feature }: { feature: PressFeature }) {
             {feature.excerpt}
           </p>
         )}
+        <span className="inline-flex items-center gap-2 text-small font-semibold text-sun mt-3">
+          {readArticleLabel}
+          <svg
+            className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-normal"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+        </span>
       </div>
     </a>
   );

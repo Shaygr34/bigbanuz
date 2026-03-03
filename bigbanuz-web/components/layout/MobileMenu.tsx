@@ -42,6 +42,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   return (
     <div
+      dir="ltr"
       className="fixed inset-0 z-[60] bg-charcoal flex flex-col"
       role="dialog"
       aria-modal="true"

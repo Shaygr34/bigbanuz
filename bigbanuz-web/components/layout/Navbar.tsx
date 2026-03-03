@@ -46,6 +46,7 @@ export default function Navbar({ logoUrl }: NavbarProps) {
   return (
     <>
       <nav
+        dir="ltr"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-normal ${
           scrolled
             ? "bg-[var(--color-white-pure)]/95 backdrop-blur-sm shadow-card border-b border-gray-light/50"
