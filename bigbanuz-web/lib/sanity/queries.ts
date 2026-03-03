@@ -185,6 +185,22 @@ export const storyBySlugQuery = groq`
   }
 `;
 
+// Features & Collaborations — title and excerpt are translatable
+export const featuresQuery = groq`
+  *[_type == "feature" && featured == true] | order(sortOrder asc) {
+    _id,
+    "title": coalesce(title[$locale], title),
+    author,
+    date,
+    url,
+    image,
+    imageUrl,
+    "excerpt": coalesce(excerpt[$locale], excerpt),
+    featured,
+    sortOrder
+  }
+`;
+
 // About page
 export const aboutPageQuery = groq`
   *[_type == "siteSettings"][0] {

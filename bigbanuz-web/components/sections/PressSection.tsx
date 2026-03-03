@@ -10,27 +10,16 @@ interface PressFeature {
   excerpt?: string;
 }
 
-const PRESS_FEATURES: PressFeature[] = [
-  {
-    title: "Fleeting Waves and Lasting Impressions: Amit Banuz on the Magic of Unscripted Encounters",
-    author: "Nicola Morgan",
-    date: "Jan 2025",
-    url: "https://vampiresurfclub.com/blogs/news/fleeting-waves-and-lasting-impressions-amit-banuz-on-the-magic-of-unscripted-encounters",
-    image: "https://cdn.shopify.com/s/files/1/0574/0760/2769/files/Yenien_VampireSurfClub_hoodedRashguard_Siargao_AmitBanuz_2048x2048.jpg?v=1735154819",
-    excerpt:
-      "Sometimes, the ocean introduces us to more than waves — it reveals the faces that linger long after the lens is put down.",
-  },
-];
-
 interface PressSectionProps {
+  features: PressFeature[];
   title?: string;
   readArticleLabel?: string;
 }
 
-export default function PressSection({ title = "Features & Collaborations", readArticleLabel = "Read More" }: PressSectionProps) {
-  if (PRESS_FEATURES.length === 0) return null;
+export default function PressSection({ features, title = "Features & Collaborations", readArticleLabel = "Read More" }: PressSectionProps) {
+  if (features.length === 0) return null;
 
-  const isSingle = PRESS_FEATURES.length === 1;
+  const isSingle = features.length === 1;
 
   return (
     <section className="py-section">
@@ -43,11 +32,11 @@ export default function PressSection({ title = "Features & Collaborations", read
 
         {isSingle ? (
           <ScrollReveal delay={100}>
-            <SingleFeatureCard feature={PRESS_FEATURES[0]} readArticleLabel={readArticleLabel} />
+            <SingleFeatureCard feature={features[0]} readArticleLabel={readArticleLabel} />
           </ScrollReveal>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PRESS_FEATURES.map((feature, i) => (
+            {features.map((feature, i) => (
               <ScrollReveal key={feature.url + i} delay={i * 100}>
                 <GridFeatureCard feature={feature} readArticleLabel={readArticleLabel} />
               </ScrollReveal>

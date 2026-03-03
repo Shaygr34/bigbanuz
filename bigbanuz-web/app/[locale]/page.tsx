@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { client } from "@/lib/sanity/client";
-import { homePageQuery, galleryByLaneQuery, testimonialsQuery } from "@/lib/sanity/queries";
+import { homePageQuery, galleryByLaneQuery, testimonialsQuery, featuresQuery } from "@/lib/sanity/queries";
 import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import SplitGateway from "@/components/sections/SplitGateway";
 import VideoReel from "@/components/sections/VideoReel";
@@ -60,6 +60,17 @@ interface Testimonial {
   avatar?: SanityImage;
 }
 
+interface Feature {
+  _id: string;
+  title: string;
+  author: string;
+  date?: string;
+  url: string;
+  image?: SanityImage;
+  imageUrl?: string;
+  excerpt?: string;
+}
+
 function getSanityImageUrl(image?: SanityImage, width = 1920): string {
   if (!image?.asset?._ref) return "";
   try {
@@ -82,13 +93,15 @@ export default async function HomePage({
   let eventsGalleries: GalleryDoc[] = [];
   let surfGalleries: GalleryDoc[] = [];
   let testimonials: Testimonial[] = [];
+  let features: Feature[] = [];
 
   try {
-    [data, eventsGalleries, surfGalleries, testimonials] = await Promise.all([
+    [data, eventsGalleries, surfGalleries, testimonials, features] = await Promise.all([
       client.fetch<HomePageData>(homePageQuery, { locale }, { next: { tags: ["sanity"] } }),
       client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "events", locale }, { next: { tags: ["sanity"] } }),
       client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "surf", locale }, { next: { tags: ["sanity"] } }),
       client.fetch<Testimonial[]>(testimonialsQuery, { locale }, { next: { tags: ["sanity"] } }),
+      client.fetch<Feature[]>(featuresQuery, { locale }, { next: { tags: ["sanity"] } }),
     ]);
   } catch {
     // CMS not configured yet
@@ -132,6 +145,15 @@ export default async function HomePage({
 
   const galleryImages = galleryEntries.map((e) => e.galleryImage);
 
+  const displayFeatures = features.map((f) => ({
+    title: f.title,
+    author: f.author,
+    date: f.date || "",
+    url: f.url,
+    image: getSanityImageUrl(f.image, 800) || f.imageUrl || "",
+    excerpt: f.excerpt,
+  }));
+
   const displayTestimonials = testimonials.map((tm) => ({
     _id: tm._id,
     quote: tm.quote,
@@ -168,6 +190,7 @@ export default async function HomePage({
       )}
 
       <PressSection
+        features={displayFeatures}
         title={t("pressTitle")}
         readArticleLabel={t("pressReadArticle")}
       />
