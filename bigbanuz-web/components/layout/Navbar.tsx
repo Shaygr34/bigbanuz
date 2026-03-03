@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { NAV_LINKS } from "@/lib/utils/constants";
@@ -13,17 +14,27 @@ interface NavbarProps {
   logoUrl?: string;
 }
 
+// Pages with full-viewport dark hero images where nav starts transparent with white text
+const DARK_HERO_PAGES = ["/", "/events", "/surf", "/about"];
+
 export default function Navbar({ logoUrl }: NavbarProps) {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const hasDarkHero = DARK_HERO_PAGES.includes(pathname);
+  const [scrolled, setScrolled] = useState(!hasDarkHero);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    if (!hasDarkHero) {
+      setScrolled(true);
+      return;
+    }
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [hasDarkHero]);
 
   const handleWhatsAppClick = () => {
     analytics.whatsappClick("nav");

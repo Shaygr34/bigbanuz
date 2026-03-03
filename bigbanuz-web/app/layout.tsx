@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { client } from "@/lib/sanity/client";
 import { urlFor } from "@/lib/sanity/image";
@@ -114,6 +115,7 @@ export default async function RootLayout({
         <Navbar logoUrl={logoUrl} />
         <main id="main-content">{children}</main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

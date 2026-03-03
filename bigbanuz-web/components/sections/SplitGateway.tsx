@@ -54,7 +54,7 @@ function Lane({
         <p className="mt-3 text-body md:text-h3 text-white/80 font-normal">
           {subline}
         </p>
-        <span className="mt-6 inline-flex items-center px-8 py-3 bg-sun-gradient text-white text-body font-semibold rounded-full shadow-sun-glow group-hover:bg-sun-gradient-hover group-hover:shadow-sun-glow-lg transition-all duration-normal">
+        <span className="mt-6 inline-flex items-center px-8 py-3 bg-sun-gradient text-white text-body font-semibold rounded-full shadow-sun-glow group-hover:bg-sun-gradient-hover group-hover:shadow-sun-glow-lg group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-normal">
           {ctaLabel}
         </span>
       </div>
