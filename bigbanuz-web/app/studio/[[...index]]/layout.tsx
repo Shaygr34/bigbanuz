@@ -8,8 +8,12 @@ export default function StudioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0" style={{ zIndex: 100 }}>
-      {children}
-    </div>
+    <html lang="en">
+      <body style={{ margin: 0 }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 100 }}>
+          {children}
+        </div>
+      </body>
+    </html>
   );
 }
