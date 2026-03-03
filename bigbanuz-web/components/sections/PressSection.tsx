@@ -20,24 +20,6 @@ const PRESS_FEATURES: PressFeature[] = [
     excerpt:
       "Sometimes, the ocean introduces us to more than waves — it reveals the faces that linger long after the lens is put down.",
   },
-  {
-    title: "Vampire Surf Club × Smile Amigo",
-    author: "Vampire Surf Club",
-    date: "2025",
-    url: "https://www.instagram.com/bigbanuz",
-    image: "/images/collab-vampire-surf-club.jpg",
-    excerpt:
-      "Brand collaboration — shooting the Vampire Surf Club hooded rashguard line across Siargao's best breaks.",
-  },
-  {
-    title: "Reef & Ride × Smile Amigo",
-    author: "Reef & Ride",
-    date: "2025",
-    url: "https://www.instagram.com/bigbanuz",
-    image: "/images/collab-reef-and-ride.jpg",
-    excerpt:
-      "Capturing the spirit of island surf culture — a visual collaboration with Reef & Ride.",
-  },
 ];
 
 interface PressSectionProps {
