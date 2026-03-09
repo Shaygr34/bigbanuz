@@ -9,6 +9,7 @@ import ScrollToTop from "@/components/ui/ScrollToTop";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { client } from "@/lib/sanity/client";
 import { urlFor } from "@/lib/sanity/image";
+import { siteSettingsSeoQuery } from "@/lib/sanity/queries";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,16 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+interface SiteSettingsSeo {
+  siteName?: string;
+  siteDescription?: string;
+  seoDefaults?: {
+    title?: string;
+    description?: string;
+    ogImage?: { asset?: { _ref?: string } };
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -46,35 +57,53 @@ export async function generateMetadata({
   const { locale } = await params;
   const isHe = locale === "he";
 
+  let seoSettings: SiteSettingsSeo | null = null;
+  try {
+    seoSettings = await client.fetch<SiteSettingsSeo>(
+      siteSettingsSeoQuery,
+      { locale },
+      { next: { tags: ["sanity"] } }
+    );
+  } catch {
+    // fallback to hardcoded
+  }
+
+  const seoTitle = seoSettings?.seoDefaults?.title || (isHe
+    ? "Smile Amigo — צילום גלישה ואירועים מאת עמית בנוז"
+    : "Smile Amigo — Surf & Event Photography by Amit Banuz");
+
+  const seoDescription = seoSettings?.seoDefaults?.description || (isHe
+    ? "צילום גלישה מקצועי וצילום אירועים עם מגנטים מיידיים. מבוסס בישראל, מצלם בכל העולם."
+    : "Premium surf photography and event coverage with instant magnet prints. Based in Israel, shooting worldwide. Philippines · Sri Lanka · Australia.");
+
+  let ogImageUrl = "/og-default.jpg";
+  if (seoSettings?.seoDefaults?.ogImage?.asset?._ref) {
+    try {
+      ogImageUrl = urlFor(seoSettings.seoDefaults.ogImage).width(1200).height(630).quality(80).auto("format").url();
+    } catch {
+      // fallback to default
+    }
+  }
+
   return {
-    title: isHe
-      ? "Smile Amigo — צילום גלישה ואירועים מאת עמית בנוז"
-      : "Smile Amigo — Surf & Event Photography by Amit Banuz",
-    description: isHe
-      ? "צילום גלישה מקצועי וצילום אירועים עם מגנטים מיידיים. מבוסס בישראל, מצלם בכל העולם."
-      : "Premium surf photography and event coverage with instant magnet prints. Based in Israel, shooting worldwide. Philippines · Sri Lanka · Australia.",
+    title: seoTitle,
+    description: seoDescription,
     metadataBase: new URL(
       process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.vercel.app"
     ),
     openGraph: {
-      title: isHe
-        ? "Smile Amigo — צילום גלישה ואירועים מאת עמית בנוז"
-        : "Smile Amigo — Surf & Event Photography by Amit Banuz",
-      description: isHe
-        ? "צילום גלישה מקצועי וצילום אירועים עם מגנטים מיידיים."
-        : "Premium surf photography and event coverage with instant magnet prints. Based in Israel, shooting worldwide.",
+      title: seoTitle,
+      description: seoDescription,
       type: "website",
       locale: isHe ? "he_IL" : "en_US",
       alternateLocale: [isHe ? "en_US" : "he_IL"],
-      siteName: "Smile Amigo",
+      siteName: seoSettings?.siteName || "Smile Amigo",
       images: [
         {
-          url: "/og-default.jpg",
+          url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: isHe
-            ? "Smile Amigo — צילום גלישה ואירועים מאת עמית בנוז"
-            : "Smile Amigo — Surf & Event Photography by Amit Banuz",
+          alt: seoTitle,
         },
       ],
     },

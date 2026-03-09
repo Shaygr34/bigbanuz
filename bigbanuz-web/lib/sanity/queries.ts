@@ -87,47 +87,6 @@ export const galleryByLaneQuery = groq`
   }
 `;
 
-// All gallery images (for surf page with filtering)
-export const allGalleryQuery = groq`
-  *[_type == "gallery"] | order(sortOrder asc) {
-    _id,
-    "title": coalesce(title[$locale], title),
-    slug,
-    lane,
-    category,
-    images[] {
-      image {
-        asset,
-        hotspot,
-        crop
-      },
-      "alt": coalesce(alt[$locale], alt),
-      "caption": coalesce(caption[$locale], caption),
-      location,
-      featured
-    },
-    sortOrder
-  }
-`;
-
-// Featured gallery images
-export const featuredGalleryQuery = groq`
-  *[_type == "gallery" && images[].featured == true] | order(sortOrder asc) {
-    _id,
-    "title": coalesce(title[$locale], title),
-    images[featured == true] {
-      image {
-        asset,
-        hotspot,
-        crop
-      },
-      "alt": coalesce(alt[$locale], alt),
-      "caption": coalesce(caption[$locale], caption),
-      location,
-      featured
-    }
-  }
-`;
 
 // Testimonials — quote and context are translatable
 export const testimonialsQuery = groq`
@@ -201,10 +160,19 @@ export const featuresQuery = groq`
   }
 `;
 
-// About page
-export const aboutPageQuery = groq`
+// Site settings SEO (consumed by layout metadata)
+export const siteSettingsSeoQuery = groq`
   *[_type == "siteSettings"][0] {
     "siteName": coalesce(siteName[$locale], siteName),
-    "siteDescription": coalesce(siteDescription[$locale], siteDescription)
+    "siteDescription": coalesce(siteDescription[$locale], siteDescription),
+    seoDefaults {
+      title,
+      description,
+      ogImage {
+        asset,
+        hotspot,
+        crop
+      }
+    }
   }
 `;
