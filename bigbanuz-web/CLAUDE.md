@@ -6,7 +6,7 @@ Dual-lane: Events (Israel, Hebrew-primary) + Surf (international, English-primar
 
 ## Stack
 - Next.js 14.2.5 (App Router, RSC)
-- Sanity V3 (embedded Studio at /studio, project 6q0h6ivm, dataset production)
+- Sanity V3 (embedded Studio at /studio, project 6q0h6ivm, dataset production, workspace `smile-amigo`)
 - Tailwind CSS 3.4.3
 - next-intl 4.8.0 (EN + HE, RTL support)
 - Resend (email), Vercel (deploy)
@@ -19,6 +19,7 @@ Dual-lane: Events (Israel, Hebrew-primary) + Surf (international, English-primar
 - Server actions: lib/actions/
 - i18n: messages/en.json, messages/he.json
 - Design tokens: app/globals.css + tailwind.config.ts
+- Docs: docs/ (v3-scope.md, decision-log.md, links-hub.md)
 
 ## Operational Rules
 1. Never push to main without verifying all routes render
@@ -27,11 +28,15 @@ Dual-lane: Events (Israel, Hebrew-primary) + Surf (international, English-primar
 4. All user-facing strings in both en.json and he.json
 5. Images: next/image with responsive sizes + blur placeholders
 6. Forms: server actions → Sanity lead + Resend email
+7. Sanity MCP calls require `workspaceName: "smile-amigo"` (not "default")
+8. Schema deploy: `cd sanity && npx sanity@latest schema deploy`
+9. GROQ i18n pattern: `coalesce(field[$locale], field)` for flat strings, `coalesce(field[$locale], field.en)` for bilingual objects
 
-## Sanity Checklist
-- [ ] cd sanity && npx sanity@latest schema deploy
-- [ ] Studio loads at /studio
-- [ ] Existing documents validate
+## Schema Types (11)
+siteSettings, pageHome, pageAbout, packages, gallery, testimonial, lead, productPrint, story, feature, socialHighlight
+
+## V3 Status
+All milestones complete (M0–M5). See docs/v3-scope.md for details and manual steps.
 
 ## Brand
 - Display: "Smile Amigo"
