@@ -20,6 +20,8 @@
   --color-white: #FAFAFA;
   --color-accent: #FACC15;
   --color-accent-hover: #EAB308;
+  --color-ocean: #0F76B0;
+  --color-ocean-dark: #0B5782;
   --color-overlay-dark: rgba(10, 10, 10, 0.55);
   --color-overlay-light: rgba(10, 10, 10, 0.30);
 
@@ -75,6 +77,8 @@ html.dark {
   --color-gray-mid: #9CA3AF;
   --color-accent-soft: #3D3520;
   --color-accent-text: #0A0A0A;
+  --color-ocean: #3B9FD4;
+  --color-ocean-dark: #0F76B0;
 
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4);

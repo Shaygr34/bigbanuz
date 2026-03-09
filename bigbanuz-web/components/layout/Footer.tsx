@@ -12,8 +12,11 @@ export default function Footer() {
     <footer dir="ltr" className="bg-charcoal text-white py-12" role="contentinfo">
       <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Logo */}
-          <div className="text-xl font-bold tracking-tight">{t("brand")}</div>
+          {/* Logo + tagline */}
+          <div className="text-center md:text-left">
+            <div className="text-xl font-bold tracking-tight">{t("brand")}</div>
+            <p className="text-white/40 text-caption mt-1">Surf · Events · Energy</p>
+          </div>
 
           {/* Social links */}
           <div className="flex items-center gap-6">

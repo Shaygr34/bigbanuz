@@ -51,7 +51,7 @@ export default function LocationsStrip() {
             {LOCATIONS.map((loc) => (
               <div
                 key={loc.nameKey}
-                className="snap-center shrink-0 flex flex-col items-center gap-2 px-6 py-4 bg-white-pure rounded-lg shadow-card min-w-[140px]"
+                className="snap-center shrink-0 flex flex-col items-center gap-2 px-6 py-4 bg-white-pure rounded-lg shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-normal min-w-[140px]"
               >
                 <MapPinIcon />
                 <span className="text-small font-medium text-black">

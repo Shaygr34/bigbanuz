@@ -31,6 +31,11 @@ const config: Config = {
           DEFAULT: "#F59E0B",
           dark: "#D97706",
         },
+        ocean: {
+          DEFAULT: "#0F76B0",
+          dark: "#0B5782",
+          light: "#3B9FD4",
+        },
         overlay: {
           dark: "rgba(10, 10, 10, 0.55)",
           light: "rgba(10, 10, 10, 0.30)",
@@ -41,13 +46,13 @@ const config: Config = {
         body: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        hero: ["clamp(2.5rem, 5vw, 4.5rem)", { lineHeight: "1.1" }],
-        h1: ["clamp(2rem, 3.5vw, 3rem)", { lineHeight: "1.1" }],
-        h2: ["clamp(1.5rem, 2.5vw, 2rem)", { lineHeight: "1.1" }],
-        h3: ["clamp(1.25rem, 2vw, 1.5rem)", { lineHeight: "1.1" }],
-        body: ["1rem", { lineHeight: "1.5" }],
+        hero: ["clamp(2.5rem, 5vw, 4.5rem)", { lineHeight: "1.1", letterSpacing: "-0.03em" }],
+        h1: ["clamp(2rem, 3.5vw, 3rem)", { lineHeight: "1.1", letterSpacing: "-0.03em" }],
+        h2: ["clamp(1.5rem, 2.5vw, 2rem)", { lineHeight: "1.15", letterSpacing: "-0.01em" }],
+        h3: ["clamp(1.25rem, 2vw, 1.5rem)", { lineHeight: "1.2" }],
+        body: ["1rem", { lineHeight: "1.6" }],
         small: ["0.875rem", { lineHeight: "1.5" }],
-        caption: ["0.75rem", { lineHeight: "1.5" }],
+        caption: ["0.75rem", { lineHeight: "1.4" }],
       },
       spacing: {
         section: "clamp(4rem, 8vw, 8rem)",
@@ -92,6 +97,10 @@ const config: Config = {
           "linear-gradient(135deg, #1A1A2E 0%, #2C2C3A 100%)",
         "charcoal-gradient-hover":
           "linear-gradient(135deg, #2C2C3A 0%, #3D3D50 100%)",
+        "ocean-gradient":
+          "linear-gradient(135deg, #0F76B0 0%, #0B5782 100%)",
+        "ocean-gradient-hover":
+          "linear-gradient(135deg, #3B9FD4 0%, #0F76B0 100%)",
       },
     },
   },
