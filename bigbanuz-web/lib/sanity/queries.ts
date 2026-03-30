@@ -26,13 +26,17 @@ export const siteSettingsQuery = groq`
 export const homePageQuery = groq`
   *[_type == "pageHome"][0] {
     heroImage,
+    heroVideo,
     "heroHeadline": coalesce(heroHeadline[$locale], heroHeadline),
     "heroSubline": coalesce(heroSubline[$locale], heroSubline),
     eventsPreview,
     surfPreview,
+    miniAboutImage,
+    "miniAboutText": coalesce(miniAboutText[$locale], miniAboutText.en),
     featuredGallery[]-> {
       _id,
       "title": coalesce(title[$locale], title),
+      tags,
       images[] {
         image {
           asset,
@@ -87,6 +91,27 @@ export const galleryByLaneQuery = groq`
   }
 `;
 
+
+// All galleries for /work page
+export const allGalleriesQuery = groq`
+  *[_type == "gallery"] | order(sortOrder asc) {
+    _id,
+    "title": coalesce(title[$locale], title),
+    tags,
+    lane,
+    images[] {
+      image {
+        asset,
+        hotspot,
+        crop
+      },
+      "alt": coalesce(alt[$locale], alt),
+      "caption": coalesce(caption[$locale], caption),
+      location,
+      featured
+    }
+  }
+`;
 
 // Testimonials — quote and context are translatable
 export const testimonialsQuery = groq`
