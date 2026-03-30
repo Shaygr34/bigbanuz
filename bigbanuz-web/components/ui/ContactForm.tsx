@@ -12,12 +12,6 @@ export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const t = useTranslations("Contact");
 
-  const SUBJECT_OPTIONS = [
-    t("subjectEvent"),
-    t("subjectSurf"),
-    t("subjectOther"),
-  ];
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -27,8 +21,13 @@ export default function ContactForm() {
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
-      subject: formData.get("subject") as string,
-      message: formData.get("message") as string,
+      subject: "General Inquiry",
+      message: [
+        formData.get("phone") ? `Phone: ${formData.get("phone")}` : "",
+        formData.get("message") as string,
+      ]
+        .filter(Boolean)
+        .join("\n"),
     };
 
     const result = await submitContactLead(data);
@@ -46,28 +45,28 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="text-center py-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sun-gradient text-white shadow-sun-glow mb-4">
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-ocean text-white">
+          <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-h3 font-heading font-bold text-black mb-2">
+        <h3 className="font-heading text-h3 font-bold text-ink mb-2">
           {t("successTitle")}
         </h3>
-        <p className="text-body text-gray-mid">
+        <p className="text-body text-ink-muted">
           {t("successMessage")}
         </p>
       </div>
     );
   }
 
+  const inputClass =
+    "w-full rounded-md border border-sand-dark bg-white px-4 py-3 text-ink placeholder:text-ink-muted/50 focus:outline-none focus:ring-2 focus:ring-ocean focus:border-transparent";
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label
-          htmlFor="contact-name"
-          className="block text-small font-medium text-black mb-1"
-        >
+        <label htmlFor="contact-name" className="block text-small font-medium text-ink mb-1">
           {t("nameLabel")}
         </label>
         <input
@@ -75,16 +74,13 @@ export default function ContactForm() {
           id="contact-name"
           name="name"
           required
-          className="w-full px-4 py-3 rounded-md border border-gray-200 dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          className={inputClass}
           placeholder={t("namePlaceholder")}
         />
       </div>
 
       <div>
-        <label
-          htmlFor="contact-email"
-          className="block text-small font-medium text-black mb-1"
-        >
+        <label htmlFor="contact-email" className="block text-small font-medium text-ink mb-1">
           {t("emailLabel")}
         </label>
         <input
@@ -92,38 +88,26 @@ export default function ContactForm() {
           id="contact-email"
           name="email"
           required
-          className="w-full px-4 py-3 rounded-md border border-gray-200 dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          className={inputClass}
           placeholder={t("emailPlaceholder")}
         />
       </div>
 
       <div>
-        <label
-          htmlFor="contact-subject"
-          className="block text-small font-medium text-black mb-1"
-        >
-          {t("subjectLabel")}
+        <label htmlFor="contact-phone" className="block text-small font-medium text-ink mb-1">
+          {t("phoneLabel")}
         </label>
-        <select
-          id="contact-subject"
-          name="subject"
-          required
-          className="w-full px-4 py-3 rounded-md border border-gray-200 dark:border-white/10 bg-white-pure text-black focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-        >
-          <option value="">{t("subjectPlaceholder")}</option>
-          {SUBJECT_OPTIONS.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
+        <input
+          type="tel"
+          id="contact-phone"
+          name="phone"
+          className={inputClass}
+          placeholder={t("phonePlaceholder")}
+        />
       </div>
 
       <div>
-        <label
-          htmlFor="contact-message"
-          className="block text-small font-medium text-black mb-1"
-        >
+        <label htmlFor="contact-message" className="block text-small font-medium text-ink mb-1">
           {t("messageLabel")}
         </label>
         <textarea
@@ -131,7 +115,7 @@ export default function ContactForm() {
           name="message"
           required
           rows={5}
-          className="w-full px-4 py-3 rounded-md border border-gray-200 dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-y"
+          className={`${inputClass} resize-y`}
           placeholder={t("messagePlaceholder")}
         />
       </div>

@@ -110,6 +110,8 @@
     "subjectEvent": "פנייה בנושא אירוע",
     "subjectSurf": "שיתוף פעולה בגלישה",
     "subjectOther": "אחר",
+    "phoneLabel": "טלפון",
+    "phonePlaceholder": "מספר הטלפון שלכם",
     "messageLabel": "הודעה *",
     "messagePlaceholder": "ספרו לי על הפרויקט או הפנייה שלכם...",
     "successTitle": "ההודעה נשלחה!",

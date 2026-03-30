@@ -110,6 +110,8 @@
     "subjectEvent": "Event Inquiry",
     "subjectSurf": "Surf Collaboration",
     "subjectOther": "Other",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Your phone number",
     "messageLabel": "Message *",
     "messagePlaceholder": "Tell me about your project or inquiry...",
     "successTitle": "Message Sent!",
