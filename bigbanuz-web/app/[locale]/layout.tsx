@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, DM_Sans, Heebo } from "next/font/google";
+import { Inter, Syne, Heebo, Secular_One } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
@@ -17,17 +17,24 @@ const inter = Inter({
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-syne",
   display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
   variable: "--font-heebo",
   display: "swap",
+});
+
+const secularOne = Secular_One({
+  subsets: ["hebrew", "latin"],
+  variable: "--font-secular-one",
+  display: "swap",
+  weight: "400",
 });
 
 export function generateStaticParams() {
@@ -138,7 +145,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   const isHe = locale === "he";
-  const fontVars = `${inter.variable} ${dmSans.variable} ${heebo.variable}`;
+  const fontVars = `${inter.variable} ${syne.variable} ${heebo.variable} ${secularOne.variable}`;
 
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.vercel.app";

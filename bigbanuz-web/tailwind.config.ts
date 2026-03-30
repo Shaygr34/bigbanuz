@@ -35,7 +35,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
+        heading: ["var(--font-syne)", "system-ui", "sans-serif"],
         body: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
