@@ -44,6 +44,11 @@ Logo (Amit Banuz)    Work    About    Stories    Contact    [EN|עב]    WhatsAp
 - `/events` — removed, content absorbed into `/work` with tags
 - `/surf` — removed, content absorbed into `/work` with tags
 
+### Redirects (next.config.js)
+- `/events` → `/work?tag=events` (301 permanent)
+- `/surf` → `/work?tag=ocean` (301 permanent)
+- Preserves any existing search engine indexing or shared links.
+
 ---
 
 ## 2. Design System
@@ -168,8 +173,9 @@ Killed: shimmer skeletons, cinematic mobile menu stagger.
 
 #### `/work` — Unified Portfolio
 - Tag filter bar: All | Ocean | Golden Hour | People | Energy | Travel
-- Masonry grid of images from `gallery` documents
-- Tags sourced from new `gallery.tags` field
+- Masonry grid of individual images extracted from `gallery` documents (GROQ unwinds `images[]` from tagged galleries, flattens into single image array)
+- Filtering is client-side (URL query param `?tag=ocean`, JS filter on loaded images) — simpler for a portfolio with < 500 images
+- Tags are on gallery documents, not individual images — a gallery tagged "ocean" means all its images appear under ocean filter
 - Lightbox on click (existing UI component reused)
 - i18n: tag labels translated in messages files
 
@@ -181,7 +187,7 @@ Killed: shimmer skeletons, cinematic mobile menu stagger.
 
 #### `/contact` — Simplified
 - WhatsApp button (hero-sized, impossible to miss)
-- Simple form below: name + "tell me about your moment" + phone
+- Simple form below: name + email + "tell me about your moment" + phone (email kept — needed for non-WhatsApp follow-up)
 - Instagram link
 - Email link
 - Uses existing `lead` schema for form submissions
@@ -193,15 +199,16 @@ Killed: shimmer skeletons, cinematic mobile menu stagger.
 ### Modified Schemas
 
 #### `pageHome`
-- **Add:** `heroVideo` — `{ type: 'file', title: 'Hero Video', description: 'Optional. Takes priority over hero image.' }`
+- **Add:** `heroVideo` — `{ type: 'url', title: 'Hero Video URL', description: 'Optional MP4 URL (self-hosted in /public/videos/ or external CDN). Takes priority over hero image. Max ~5MB for performance. Component renders with muted, autoplay, playsinline, loop attributes + poster image fallback from heroImage.' }`
 - **Add:** `miniAboutImage` — `{ type: 'image', title: 'Mini About Photo', options: { hotspot: true } }`
-- **Add:** `miniAboutText` — `{ type: 'object', fields: [{ name: 'en', type: 'string' }, { name: 'he', type: 'string' }] }`
+- **Add:** `miniAboutText` — `{ type: 'object', fields: [{ name: 'en', type: 'text', rows: 3 }, { name: 'he', type: 'text', rows: 3 }] }`
 - **Hide from Studio:** `eventsPreview`, `surfPreview` fields (keep in schema)
 - **Rename display:** `featuredGallery` → keep field name, update Studio title to "Featured Work"
 
 #### `gallery`
 - **Add:** `tags` — `{ type: 'array', of: [{ type: 'string' }], options: { list: ['ocean', 'golden-hour', 'people', 'energy', 'travel', 'events', 'surf'] } }`
-- **Hide from Studio:** `lane` field (keep in schema for backward compat)
+- **Modify:** `lane` field — remove `required()` validation, set `initialValue: 'mixed'`, hide from Studio (keep in schema for backward compat)
+- **Hide from Studio:** `category` field (coexists with tags but hidden to avoid editor confusion)
 
 #### `siteSettings`
 - Update default `siteName` to "Amit Banuz"
@@ -256,9 +263,9 @@ story documents in Sanity → /stories list page (sorted by publishedAt) → /st
 ## 6. Files Affected (Estimated)
 
 ### Design System
-- `tailwind.config.ts` — new color tokens, font families
-- `app/globals.css` — new CSS variables, remove dark mode vars
-- `app/[locale]/layout.tsx` — new font imports (DM Sans)
+- `tailwind.config.ts` — new color tokens, font families, remove `darkMode: "class"`
+- `app/globals.css` — new CSS variables, remove all `html.dark` / dark mode vars, remove shimmer animation
+- `app/[locale]/layout.tsx` — replace Space Grotesk import with DM Sans, remove Rubik, remove dark mode init script
 
 ### Components (Modified)
 - `components/layout/Navbar.tsx` — new logo, colors, nav links
@@ -266,8 +273,10 @@ story documents in Sanity → /stories list page (sorted by publishedAt) → /st
 - `components/layout/MobileMenu.tsx` — simplified
 - `components/sections/SocialFeed.tsx` — minor styling updates
 
+### Components (Rewritten)
+- `components/sections/Hero.tsx` — existing file, complete rewrite to full-viewport hero (replaces SplitGateway usage)
+
 ### Components (New)
-- `components/sections/Hero.tsx` — full-viewport hero
 - `components/sections/WorkGrid.tsx` — homepage work preview
 - `components/sections/MiniAbout.tsx` — homepage about section
 - `components/sections/SimpleCTA.tsx` — WhatsApp-forward CTA
@@ -302,8 +311,21 @@ story documents in Sanity → /stories list page (sorted by publishedAt) → /st
 - `lib/sanity/queries.ts` — new work query with tag filter, updated homepage query
 
 ### i18n
-- `messages/en.json` — new nav labels, tag labels, CTA copy
-- `messages/he.json` — same in Hebrew
+- `messages/en.json` — new/updated keys:
+  - `Nav.work` (replaces `Nav.gallery`), `Nav.stories`, `Nav.about`, `Nav.contact`, `Nav.cta` ("Let's Talk")
+  - `Work.tagAll`, `Work.tagOcean`, `Work.tagGoldenHour`, `Work.tagPeople`, `Work.tagEnergy`, `Work.tagTravel`
+  - `Home.subtitle` ("Photographer · Creator · Surfer")
+  - `Home.miniAboutMore` ("More about me")
+  - `Home.ctaTitle`, `Home.ctaButton`
+  - `Footer.brand` ("Amit Banuz"), `Footer.tagline`
+  - Remove: `Nav.gallery`, `Nav.events`, `Nav.surf`, `Theme.*` (dark mode labels)
+- `messages/he.json` — Hebrew equivalents of all the above
+
+### Post-deploy CMS Migration
+- Update `siteSettings` document: change siteName to "Amit Banuz", update description
+- Populate `pageHome` new fields: `miniAboutImage`, `miniAboutText`
+- Add `tags` to existing gallery documents (manual in Studio or via script)
+- Update CLAUDE.md files (both parent and inner) to reflect new IA, nav, routes
 
 ---
 
