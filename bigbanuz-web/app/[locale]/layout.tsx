@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Heebo, Rubik } from "next/font/google";
+import { Inter, DM_Sans, Heebo } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
@@ -17,21 +17,16 @@ const inter = Inter({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-dm-sans",
   display: "swap",
+  weight: ["400", "500", "700"],
 });
 
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
   variable: "--font-heebo",
-  display: "swap",
-});
-
-const rubik = Rubik({
-  subsets: ["hebrew", "latin"],
-  variable: "--font-rubik",
   display: "swap",
 });
 
@@ -69,12 +64,12 @@ export async function generateMetadata({
   }
 
   const seoTitle = seoSettings?.seoDefaults?.title || (isHe
-    ? "Smile Amigo — צילום גלישה ואירועים מאת עמית בנוז"
-    : "Smile Amigo — Surf & Event Photography by Amit Banuz");
+    ? "עמית בנוז — צלם · יוצר · גולש"
+    : "Amit Banuz — Photographer · Creator · Surfer");
 
   const seoDescription = seoSettings?.seoDefaults?.description || (isHe
-    ? "צילום גלישה מקצועי וצילום אירועים עם מגנטים מיידיים. מבוסס בישראל, מצלם בכל העולם."
-    : "Premium surf photography and event coverage with instant magnet prints. Based in Israel, shooting worldwide. Philippines · Sri Lanka · Australia.");
+    ? "צלם · יוצר · גולש. מבוסס בישראל, מצלם בכל העולם."
+    : "Photographer · Creator · Surfer. Based in Israel, shooting worldwide.");
 
   let ogImageUrl = "/og-default.jpg";
   if (seoSettings?.seoDefaults?.ogImage?.asset?._ref) {
@@ -97,7 +92,7 @@ export async function generateMetadata({
       type: "website",
       locale: isHe ? "he_IL" : "en_US",
       alternateLocale: [isHe ? "en_US" : "he_IL"],
-      siteName: seoSettings?.siteName || "Smile Amigo",
+      siteName: seoSettings?.siteName || "Amit Banuz",
       images: [
         {
           url: ogImageUrl,
@@ -143,21 +138,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   const isHe = locale === "he";
-  const fontVars = isHe
-    ? `${heebo.variable} ${rubik.variable} ${inter.variable} ${spaceGrotesk.variable}`
-    : `${inter.variable} ${spaceGrotesk.variable} ${heebo.variable} ${rubik.variable}`;
-
-  let logoUrl = "";
-  try {
-    const settings = await client.fetch<{
-      logo?: { asset?: { _ref?: string } };
-    }>('*[_type == "siteSettings"][0]{logo}', {}, { next: { tags: ["sanity"] } });
-    if (settings?.logo?.asset?._ref) {
-      logoUrl = urlFor(settings.logo).width(120).quality(90).auto("format").url();
-    }
-  } catch {
-    // fallback to text logo
-  }
+  const fontVars = `${inter.variable} ${dmSans.variable} ${heebo.variable}`;
 
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://smile-amigo.vercel.app";
@@ -166,14 +147,14 @@ export default async function LocaleLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Amit Banuz",
-    alternateName: "Smile Amigo",
+    alternateName: "Bigbanuz",
     jobTitle: isHe ? "צלם" : "Photographer",
     url: siteUrl,
     image: `${siteUrl}/og-default.jpg`,
     sameAs: ["https://www.instagram.com/bigbanuz/"],
     knowsAbout: isHe
-      ? ["צילום גלישה", "צילום אירועים", "מגנטי תמונות"]
-      : ["Surf Photography", "Event Photography", "Photo Magnets"],
+      ? ["צילום", "גלישה", "יצירה"]
+      : ["Photography", "Surfing", "Creative Direction"],
     address: {
       "@type": "PostalAddress",
       addressCountry: "IL",
@@ -185,15 +166,7 @@ export default async function LocaleLayout({
       lang={locale}
       dir={isHe ? "rtl" : "ltr"}
       className={fontVars}
-      suppressHydrationWarning
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme:dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`,
-          }}
-        />
-      </head>
       <body className="font-body antialiased">
         <script
           type="application/ld+json"
@@ -204,7 +177,7 @@ export default async function LocaleLayout({
           <a href="#main-content" className="skip-to-content">
             {isHe ? "דלג לתוכן" : "Skip to content"}
           </a>
-          <Navbar logoUrl={logoUrl} />
+          <Navbar />
           <main id="main-content">{children}</main>
           <Footer />
           <ScrollToTop />
