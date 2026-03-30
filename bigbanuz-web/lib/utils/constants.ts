@@ -1,6 +1,6 @@
 export const SITE_NAME = "Amit Banuz";
 export const SITE_DESCRIPTION =
-  "Photographer · Creator · Surfer. Based in Israel, shooting worldwide.";
+  "Photographer · Creator. Based in Israel, shooting worldwide.";
 
 export const WHATSAPP_PHONE =
   process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "972548194361";

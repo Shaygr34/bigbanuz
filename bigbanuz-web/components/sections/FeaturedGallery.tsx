@@ -13,7 +13,7 @@ interface FeaturedGalleryProps {
 export default function FeaturedGallery({
   images,
   title = "Selected Work",
-  subtitle = "A collection of recent surf and event photography from around the world.",
+  subtitle = "A collection of recent photography from around the world.",
   viewAllLabel = "View Full Portfolio",
 }: FeaturedGalleryProps) {
   if (!images || images.length === 0) return null;

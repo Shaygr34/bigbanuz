@@ -53,7 +53,7 @@ export async function generateMetadata({
       : undefined;
 
     return {
-      title: `${story.title} | Smile Amigo`,
+      title: `${story.title} | Amit Banuz`,
       description: story.shortDescription || `A story by Amit Banuz`,
       openGraph: {
         images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,

@@ -64,12 +64,12 @@ export async function generateMetadata({
   }
 
   const seoTitle = seoSettings?.seoDefaults?.title || (isHe
-    ? "עמית בנוז — צלם · יוצר · גולש"
-    : "Amit Banuz — Photographer · Creator · Surfer");
+    ? "עמית בנוז — צלם · יוצר"
+    : "Amit Banuz — Photographer · Creator");
 
   const seoDescription = seoSettings?.seoDefaults?.description || (isHe
-    ? "צלם · יוצר · גולש. מבוסס בישראל, מצלם בכל העולם."
-    : "Photographer · Creator · Surfer. Based in Israel, shooting worldwide.");
+    ? "צלם · יוצר. מבוסס בישראל, מצלם בכל העולם."
+    : "Photographer · Creator. Based in Israel, shooting worldwide.");
 
   let ogImageUrl = "/og-default.jpg";
   if (seoSettings?.seoDefaults?.ogImage?.asset?._ref) {
@@ -154,7 +154,7 @@ export default async function LocaleLayout({
     sameAs: ["https://www.instagram.com/bigbanuz/"],
     knowsAbout: isHe
       ? ["צילום", "גלישה", "יצירה"]
-      : ["Photography", "Surfing", "Creative Direction"],
+      : ["Photography", "Content Creation", "Creative Direction"],
     address: {
       "@type": "PostalAddress",
       addressCountry: "IL",
