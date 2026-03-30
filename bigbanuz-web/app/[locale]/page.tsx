@@ -1,14 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { client } from "@/lib/sanity/client";
-import { homePageQuery, galleryByLaneQuery, featuresQuery } from "@/lib/sanity/queries";
+import { homePageQuery, pageAboutQuery } from "@/lib/sanity/queries";
 import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
-import SplitGateway from "@/components/sections/SplitGateway";
-import VideoReel from "@/components/sections/VideoReel";
-import FeaturedGallery from "@/components/sections/FeaturedGallery";
-import PressSection from "@/components/sections/PressSection";
-import CtaSection from "@/components/sections/CtaSection";
-import type { GalleryImage } from "@/components/ui/GalleryGrid";
-import { INSTAGRAM_URL } from "@/lib/utils/constants";
+import Hero from "@/components/sections/Hero";
+import WorkGrid from "@/components/sections/WorkGrid";
+import MiniAbout from "@/components/sections/MiniAbout";
+import SocialFeed from "@/components/sections/SocialFeed";
+import SimpleCTA from "@/components/sections/SimpleCTA";
 
 interface SanityImage {
   asset?: { _ref?: string };
@@ -26,49 +24,28 @@ interface SanityGalleryImage {
 
 interface HomePageData {
   heroImage?: SanityImage;
-  eventsPreview?: {
-    image?: SanityImage;
-  };
-  surfPreview?: {
-    image?: SanityImage;
-  };
+  heroVideo?: string;
+  heroHeadline?: string;
+  heroSubline?: string;
+  miniAboutImage?: SanityImage;
+  miniAboutText?: string;
   featuredGallery?: Array<{
     _id: string;
     title: string;
+    tags?: string[];
     images?: SanityGalleryImage[];
   }>;
   bottomCtaText?: string;
 }
 
-interface GalleryDoc {
-  _id: string;
-  title: string;
-  images?: Array<{
-    image: SanityImage;
-    alt: string;
-    caption?: string;
-    location?: string;
-  }>;
+interface AboutLocation {
+  name: string;
+  description?: string;
+  status?: string;
 }
 
-interface Feature {
-  _id: string;
-  title: string;
-  author: string;
-  date?: string;
-  url: string;
-  image?: SanityImage;
-  imageUrl?: string;
-  excerpt?: string;
-}
-
-function getSanityImageUrl(image?: SanityImage, width = 1920): string {
-  if (!image?.asset?._ref) return "";
-  try {
-    return urlFor(image).width(width).quality(85).auto("format").url();
-  } catch {
-    return "";
-  }
+interface AboutData {
+  locations?: AboutLocation[];
 }
 
 export default async function HomePage({
@@ -81,43 +58,36 @@ export default async function HomePage({
   const t = await getTranslations("Home");
 
   let data: HomePageData | null = null;
-  let eventsGalleries: GalleryDoc[] = [];
-  let surfGalleries: GalleryDoc[] = [];
-  let features: Feature[] = [];
+  let aboutData: AboutData | null = null;
 
   try {
-    [data, eventsGalleries, surfGalleries, features] = await Promise.all([
+    [data, aboutData] = await Promise.all([
       client.fetch<HomePageData>(homePageQuery, { locale }, { next: { tags: ["sanity"] } }),
-      client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "events", locale }, { next: { tags: ["sanity"] } }),
-      client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "surf", locale }, { next: { tags: ["sanity"] } }),
-      client.fetch<Feature[]>(featuresQuery, { locale }, { next: { tags: ["sanity"] } }),
+      client.fetch<AboutData>(pageAboutQuery, { locale }, { next: { tags: ["sanity"] } }),
     ]);
   } catch {
-    // CMS not configured yet
+    // CMS not configured yet — render with fallback
   }
 
-  const eventsImageUrl =
-    getSanityImageUrl(data?.eventsPreview?.image) ||
-    getSanityImageUrl(eventsGalleries[0]?.images?.[0]?.image);
+  // Flatten gallery images from featured galleries
+  const galleryEntries: Array<{
+    url: string;
+    alt: string;
+    blurDataURL?: string;
+    source: SanityImage;
+  }> = [];
 
-  const surfImageUrl =
-    getSanityImageUrl(data?.surfPreview?.image) ||
-    getSanityImageUrl(surfGalleries[0]?.images?.[0]?.image);
-
-  const galleryEntries: { galleryImage: GalleryImage; source: SanityImage }[] = [];
   if (data?.featuredGallery) {
     for (const gallery of data.featuredGallery) {
       if (gallery.images) {
         for (const img of gallery.images) {
-          const url = getSanityImageUrl(img.image, 800);
+          const url = img.image?.asset?._ref
+            ? urlFor(img.image).width(800).quality(85).auto("format").url()
+            : "";
           if (url) {
             galleryEntries.push({
-              galleryImage: {
-                url,
-                alt: img.alt || "Photography by Amit Banuz",
-                caption: img.caption,
-                location: img.location,
-              },
+              url,
+              alt: img.alt || "Photography by Amit Banuz",
               source: img.image,
             });
           }
@@ -126,61 +96,51 @@ export default async function HomePage({
     }
   }
 
+  // Get blur data URLs in parallel
   await Promise.all(
     galleryEntries.map(async (entry) => {
-      entry.galleryImage.blurDataURL = await getBlurDataURL(entry.source);
+      entry.blurDataURL = await getBlurDataURL(entry.source);
     })
   );
 
-  const galleryImages = galleryEntries.map((e) => e.galleryImage);
-
-  const displayFeatures = features.map((f) => ({
-    title: f.title,
-    author: f.author,
-    date: f.date || "",
-    url: f.url,
-    image: getSanityImageUrl(f.image, 800) || f.imageUrl || "",
-    excerpt: f.excerpt,
+  const galleryImages = galleryEntries.map(({ url, alt, blurDataURL }) => ({
+    url,
+    alt,
+    blurDataURL,
   }));
+
+  // MiniAbout image
+  const miniAboutImageUrl = data?.miniAboutImage?.asset?._ref
+    ? urlFor(data.miniAboutImage).width(512).quality(85).auto("format").url()
+    : "";
 
   return (
     <>
-      <SplitGateway
-        eventsImage={eventsImageUrl}
-        surfImage={surfImageUrl}
-        eventsHeadline={t("eventsHeadline")}
-        eventsSubline={t("eventsSubline")}
-        eventsCta={t("eventsCta")}
-        surfHeadline={t("surfHeadline")}
-        surfSubline={t("surfSubline")}
-        surfCta={t("surfCta")}
+      <Hero
+        heroImage={data?.heroImage}
+        heroVideo={data?.heroVideo}
+        name={t("name")}
+        subtitle={t("subtitle")}
       />
-
-      <VideoReel
-        title={t("videoTitle")}
-        subtitle={t("videoSubtitle")}
+      <WorkGrid
+        images={galleryImages}
+        title={t("workTitle")}
+        viewAllLabel={t("workViewAll")}
+        viewAllHref="/work"
       />
-
-      {galleryImages.length > 0 && (
-        <FeaturedGallery
-          images={galleryImages.slice(0, 9)}
-          title={t("galleryTitle")}
-          subtitle={t("gallerySubtitle")}
-          viewAllLabel={t("galleryViewAll")}
-        />
-      )}
-
-      <PressSection
-        features={displayFeatures}
-        title={t("pressTitle")}
-        readArticleLabel={t("pressReadArticle")}
+      <MiniAbout
+        imageUrl={miniAboutImageUrl}
+        text={data?.miniAboutText || ""}
+        moreLabel={t("miniAboutMore")}
+        moreHref="/about"
+        locations={aboutData?.locations}
       />
-
-      <CtaSection
-        headline={data?.bottomCtaText || t("ctaDefault")}
-        whatsappLabel={t("whatsappMe")}
-        instagramLabel={t("followSmileAmigo")}
-        instagramHref={INSTAGRAM_URL}
+      <SocialFeed />
+      <SimpleCTA
+        title={t("ctaTitle")}
+        buttonLabel={t("ctaButton")}
+        secondaryLabel={t("ctaSecondary")}
+        secondaryHref="/contact"
       />
     </>
   );
