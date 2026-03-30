@@ -26,7 +26,7 @@ export default function WorkGrid({ images, title, viewAllLabel, viewAllHref }: W
             href={viewAllHref}
             className="text-small font-medium text-ocean hover:text-ocean-dark transition-colors"
           >
-            {viewAllLabel} →
+            {viewAllLabel}
           </Link>
         </div>
 
