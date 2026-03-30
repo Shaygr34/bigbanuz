@@ -16,8 +16,8 @@ export default function ViewToggle({ view, onChange }: ViewToggleProps) {
         onClick={() => onChange("cards")}
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-small font-semibold transition-all duration-normal ${
           view === "cards"
-            ? "bg-sun-gradient text-white shadow-sun-glow"
-            : "bg-gray-light text-gray-mid hover:text-black"
+            ? "bg-golden text-white shadow-card"
+            : "bg-sand-dark text-ink-muted hover:text-black"
         }`}
         aria-pressed={view === "cards"}
       >
@@ -30,8 +30,8 @@ export default function ViewToggle({ view, onChange }: ViewToggleProps) {
         onClick={() => onChange("table")}
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-small font-semibold transition-all duration-normal ${
           view === "table"
-            ? "bg-sun-gradient text-white shadow-sun-glow"
-            : "bg-gray-light text-gray-mid hover:text-black"
+            ? "bg-golden text-white shadow-card"
+            : "bg-sand-dark text-ink-muted hover:text-black"
         }`}
         aria-pressed={view === "table"}
       >

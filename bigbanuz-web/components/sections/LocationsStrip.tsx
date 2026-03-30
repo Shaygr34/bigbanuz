@@ -6,7 +6,7 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 function MapPinIcon() {
   return (
     <svg
-      className="w-6 h-6 text-accent"
+      className="w-6 h-6 text-ocean"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -51,14 +51,14 @@ export default function LocationsStrip() {
             {LOCATIONS.map((loc) => (
               <div
                 key={loc.nameKey}
-                className="snap-center shrink-0 flex flex-col items-center gap-2 px-6 py-4 bg-white-pure rounded-lg shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-normal min-w-[140px]"
+                className="snap-center shrink-0 flex flex-col items-center gap-2 px-6 py-4 bg-sand-light rounded-lg shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-normal min-w-[140px]"
               >
                 <MapPinIcon />
                 <span className="text-small font-medium text-black">
                   {t(loc.nameKey)}
                 </span>
                 {loc.upcoming && (
-                  <span className="text-caption text-accent font-medium">
+                  <span className="text-caption text-ocean font-medium">
                     {t("comingSoon")}
                   </span>
                 )}

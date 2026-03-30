@@ -32,7 +32,7 @@ export default function StoryCard({
   return (
     <Link
       href={`/stories/${slug}`}
-      className="group flex flex-col rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-normal bg-white-pure"
+      className="group flex flex-col rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-normal bg-sand-light"
     >
       {imageUrl && (
         <div className="relative aspect-[16/9] overflow-hidden">
@@ -48,15 +48,15 @@ export default function StoryCard({
       )}
       <div className="p-5 flex flex-col flex-1">
         {(location || formattedDate) && (
-          <p className="text-caption text-gray-mid uppercase tracking-wider mb-2">
+          <p className="text-caption text-ink-muted uppercase tracking-wider mb-2">
             {[location, formattedDate].filter(Boolean).join(" · ")}
           </p>
         )}
-        <h3 className="text-h3 font-heading font-bold text-black group-hover:text-sun transition-colors duration-normal mb-2">
+        <h3 className="text-h3 font-heading font-bold text-black group-hover:text-golden transition-colors duration-normal mb-2">
           {title}
         </h3>
         {shortDescription && (
-          <p className="text-small text-gray-mid line-clamp-3 flex-1">
+          <p className="text-small text-ink-muted line-clamp-3 flex-1">
             {shortDescription}
           </p>
         )}

@@ -35,12 +35,12 @@ export default function PackageCard({
     <div
       className={`relative rounded-lg p-6 lg:p-8 flex flex-col transition-shadow duration-normal ${
         featured
-          ? "bg-charcoal text-white shadow-card-hover border-t-4 border-accent"
-          : "bg-white-pure border border-gray-200 dark:border-white/10 shadow-card hover:shadow-card-hover"
+          ? "bg-deep text-white shadow-card-hover border-t-4 border-ocean"
+          : "bg-sand-light border border-gray-200 dark:border-white/10 shadow-card hover:shadow-card-hover"
       }`}
     >
       {featured && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-accent-text text-caption font-bold px-3 py-1 rounded-full">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ocean text-white text-caption font-bold px-3 py-1 rounded-full">
           {t("popular")}
         </div>
       )}
@@ -60,10 +60,10 @@ export default function PackageCard({
         {inclusions.map((item, i) => (
           <li
             key={i}
-            className={`flex items-start gap-2 text-body ${featured ? "text-gray-300" : "text-gray-mid"}`}
+            className={`flex items-start gap-2 text-body ${featured ? "text-gray-300" : "text-ink-muted"}`}
           >
             <svg
-              className="w-5 h-5 text-accent mt-0.5 shrink-0"
+              className="w-5 h-5 text-ocean mt-0.5 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

@@ -49,7 +49,7 @@ export default function CollabForm() {
   if (submitted) {
     return (
       <div className="text-center py-12">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/20 text-accent mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-ocean/20 text-ocean mb-4">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
@@ -57,7 +57,7 @@ export default function CollabForm() {
         <h3 className="text-h3 font-heading font-bold text-black mb-2">
           {t("successTitle")}
         </h3>
-        <p className="text-body text-gray-mid">
+        <p className="text-body text-ink-muted">
           {t("successMessage")}
         </p>
       </div>
@@ -79,7 +79,7 @@ export default function CollabForm() {
             id="collab-name"
             name="name"
             required
-            className="w-full px-4 py-3 rounded-md border border-gray-light dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            className="w-full px-4 py-3 rounded-md border border-sand-dark dark:border-white/10 bg-sand-light text-black placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-ocean focus:border-transparent"
             placeholder={t("namePlaceholder")}
           />
         </div>
@@ -95,7 +95,7 @@ export default function CollabForm() {
             id="collab-email"
             name="email"
             required
-            className="w-full px-4 py-3 rounded-md border border-gray-light dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            className="w-full px-4 py-3 rounded-md border border-sand-dark dark:border-white/10 bg-sand-light text-black placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-ocean focus:border-transparent"
             placeholder={t("emailPlaceholder")}
           />
         </div>
@@ -112,7 +112,7 @@ export default function CollabForm() {
           type="text"
           id="collab-company"
           name="company"
-          className="w-full px-4 py-3 rounded-md border border-gray-light dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          className="w-full px-4 py-3 rounded-md border border-sand-dark dark:border-white/10 bg-sand-light text-black placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-ocean focus:border-transparent"
           placeholder={t("companyPlaceholder")}
         />
       </div>
@@ -129,7 +129,7 @@ export default function CollabForm() {
           name="projectDescription"
           required
           rows={4}
-          className="w-full px-4 py-3 rounded-md border border-gray-light dark:border-white/10 bg-white-pure text-black placeholder:text-gray-mid focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-y"
+          className="w-full px-4 py-3 rounded-md border border-sand-dark dark:border-white/10 bg-sand-light text-black placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-ocean focus:border-transparent resize-y"
           placeholder={t("projectPlaceholder")}
         />
       </div>
@@ -144,7 +144,7 @@ export default function CollabForm() {
         <select
           id="collab-budget"
           name="budgetRange"
-          className="w-full px-4 py-3 rounded-md border border-gray-light dark:border-white/10 bg-white-pure text-black focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          className="w-full px-4 py-3 rounded-md border border-sand-dark dark:border-white/10 bg-sand-light text-black focus:outline-none focus:ring-2 focus:ring-ocean focus:border-transparent"
         >
           <option value="">{t("budgetPlaceholder")}</option>
           {BUDGET_OPTIONS.map((opt) => (

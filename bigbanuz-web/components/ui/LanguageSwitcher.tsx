@@ -18,7 +18,7 @@ export default function LanguageSwitcher() {
     <button
       type="button"
       onClick={switchLocale}
-      className="inline-flex items-center gap-1 px-3 py-1.5 text-small font-medium rounded-full border border-gray-200 dark:border-white/20 hover:bg-accent-soft transition-colors duration-normal focus:outline-none focus:ring-2 focus:ring-accent"
+      className="inline-flex items-center gap-1 px-3 py-1.5 text-small font-medium rounded-full border border-gray-200 dark:border-white/20 hover:bg-ocean/10 transition-colors duration-normal focus:outline-none focus:ring-2 focus:ring-ocean"
       aria-label={t("switchLanguage")}
     >
       <span className={locale === "en" ? "font-bold" : "opacity-60"}>{t("en")}</span>

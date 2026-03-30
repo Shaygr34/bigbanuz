@@ -14,9 +14,9 @@ export default function TestimonialCard({
   avatarUrl,
 }: TestimonialCardProps) {
   return (
-    <div className="bg-white-pure rounded-lg p-6 lg:p-8 shadow-card border-s-4 border-accent">
+    <div className="bg-sand-light rounded-lg p-6 lg:p-8 shadow-card border-s-4 border-ocean">
       {/* Decorative quote mark */}
-      <span className="block text-5xl leading-none text-accent/20 font-serif select-none" aria-hidden="true">
+      <span className="block text-5xl leading-none text-ocean/20 font-serif select-none" aria-hidden="true">
         &ldquo;
       </span>
       {/* Quote */}
@@ -35,14 +35,14 @@ export default function TestimonialCard({
             className="rounded-full object-cover"
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-accent-soft flex items-center justify-center text-black font-bold text-small">
+          <div className="w-10 h-10 rounded-full bg-ocean/10 flex items-center justify-center text-black font-bold text-small">
             {name.charAt(0).toUpperCase()}
           </div>
         )}
         <div>
           <p className="text-small font-semibold text-black">{name}</p>
           {context && (
-            <p className="text-caption text-gray-mid">{context}</p>
+            <p className="text-caption text-ink-muted">{context}</p>
           )}
         </div>
       </div>

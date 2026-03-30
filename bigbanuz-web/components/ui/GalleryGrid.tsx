@@ -45,7 +45,7 @@ export default function GalleryGrid({
             key={i}
             type="button"
             onClick={() => setLightboxIndex(i)}
-            className="relative w-full mb-1 overflow-hidden cursor-pointer group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-inset break-inside-avoid"
+            className="relative w-full mb-1 overflow-hidden cursor-pointer group focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-inset break-inside-avoid"
             role="listitem"
             aria-label={`View ${img.alt}`}
           >

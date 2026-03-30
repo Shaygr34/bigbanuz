@@ -40,14 +40,14 @@ export default function PackageComparisonTable({ packages }: PackageComparisonTa
       <table className="w-full min-w-[600px] border-collapse">
         <thead>
           <tr>
-            <th className="text-start p-4 text-small font-semibold text-gray-mid border-b border-gray-200 dark:border-white/10">
+            <th className="text-start p-4 text-small font-semibold text-ink-muted border-b border-gray-200 dark:border-white/10">
               {t("features")}
             </th>
             {packages.map((pkg) => (
               <th
                 key={pkg._id}
                 className={`p-4 text-center border-b border-gray-200 dark:border-white/10 ${
-                  pkg.featured ? "bg-charcoal text-white rounded-t-lg" : ""
+                  pkg.featured ? "bg-deep text-white rounded-t-lg" : ""
                 }`}
               >
                 <div className="text-h3 font-heading font-bold">{pkg.title}</div>
@@ -55,7 +55,7 @@ export default function PackageComparisonTable({ packages }: PackageComparisonTa
                   {pkg.priceDisplay}
                 </div>
                 {pkg.featured && (
-                  <span className="inline-block mt-2 bg-accent text-accent-text text-caption font-bold px-3 py-0.5 rounded-full">
+                  <span className="inline-block mt-2 bg-ocean text-white text-caption font-bold px-3 py-0.5 rounded-full">
                     {t("popular")}
                   </span>
                 )}
@@ -66,7 +66,7 @@ export default function PackageComparisonTable({ packages }: PackageComparisonTa
         <tbody>
           {allFeatures.map((feature, i) => (
             <tr key={feature} className={i % 2 === 0 ? "bg-gray-50 dark:bg-white/5" : "bg-white dark:bg-transparent"}>
-              <td className="p-4 text-body text-gray-mid border-b border-gray-100 dark:border-white/5">
+              <td className="p-4 text-body text-ink-muted border-b border-gray-100 dark:border-white/5">
                 {feature}
               </td>
               {packages.map((pkg) => {
@@ -75,12 +75,12 @@ export default function PackageComparisonTable({ packages }: PackageComparisonTa
                   <td
                     key={pkg._id}
                     className={`p-4 text-center border-b border-gray-100 dark:border-white/5 ${
-                      pkg.featured ? "bg-charcoal/5" : ""
+                      pkg.featured ? "bg-deep/5" : ""
                     }`}
                   >
                     {included ? (
                       <svg
-                        className="w-5 h-5 text-accent mx-auto"
+                        className="w-5 h-5 text-ocean mx-auto"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

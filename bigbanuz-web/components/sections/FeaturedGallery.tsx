@@ -25,7 +25,7 @@ export default function FeaturedGallery({
           <h2 className="text-h2 font-heading font-bold text-black text-center mb-2">
             {title}
           </h2>
-          <p className="text-body text-gray-mid text-center max-w-text mx-auto mb-8">
+          <p className="text-body text-ink-muted text-center max-w-text mx-auto mb-8">
             {subtitle}
           </p>
         </ScrollReveal>

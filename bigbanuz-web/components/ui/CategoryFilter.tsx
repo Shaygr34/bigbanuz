@@ -24,10 +24,10 @@ export default function CategoryFilter({
           role="tab"
           aria-selected={activeCategory === cat.value}
           onClick={() => onCategoryChange(cat.value)}
-          className={`px-4 py-2 text-small font-medium rounded-full transition-all duration-normal focus:outline-none focus:ring-2 focus:ring-accent ${
+          className={`px-4 py-2 text-small font-medium rounded-full transition-all duration-normal focus:outline-none focus:ring-2 focus:ring-ocean ${
             activeCategory === cat.value
-              ? "bg-charcoal text-white shadow-md"
-              : "bg-gray-light text-gray-warm dark:text-gray-mid border border-gray-300 dark:border-white/10 hover:bg-accent-soft hover:border-accent"
+              ? "bg-deep text-white shadow-md"
+              : "bg-sand-dark text-ink-muted dark:text-ink-muted border border-gray-300 dark:border-white/10 hover:bg-ocean/10 hover:border-ocean"
           }`}
         >
           {cat.label}

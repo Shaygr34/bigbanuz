@@ -92,7 +92,7 @@ export default function Lightbox({
       <button
         type="button"
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-md"
+        className="absolute top-4 right-4 z-10 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-ocean rounded-md"
         aria-label="Close lightbox"
       >
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@ export default function Lightbox({
         <button
           type="button"
           onClick={goPrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-md"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-ocean rounded-md"
           aria-label="Previous image"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,7 +131,7 @@ export default function Lightbox({
         <button
           type="button"
           onClick={goNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-md"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-ocean rounded-md"
           aria-label="Next image"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

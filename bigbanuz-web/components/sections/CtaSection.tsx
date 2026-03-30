@@ -21,7 +21,7 @@ export default function CtaSection({
   instagramHref = INSTAGRAM_URL,
 }: CtaSectionProps) {
   return (
-    <section className="py-section bg-charcoal">
+    <section className="py-section bg-deep">
       <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <ScrollReveal>
           <h2 className="text-h2 font-heading font-bold text-white mb-8">

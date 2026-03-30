@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <section className="min-h-screen flex items-center justify-center px-4">
       <div className="text-center max-w-md">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sun-gradient text-white shadow-sun-glow mb-8">
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-golden text-white shadow-card mb-8">
           <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
@@ -24,7 +24,7 @@ export default function NotFound() {
         <h1 className="text-h1 font-heading font-bold text-black mb-3">
           {t("title")}
         </h1>
-        <p className="text-body text-gray-mid mb-8">
+        <p className="text-body text-ink-muted mb-8">
           {t("description")}
         </p>
 
@@ -37,9 +37,9 @@ export default function NotFound() {
           </Button>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-small text-gray-mid">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-small text-ink-muted">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="hover:text-sun transition-colors">
+            <Link key={link.href} href={link.href} className="hover:text-golden transition-colors">
               {tNav(link.labelKey)}
             </Link>
           ))}

@@ -145,7 +145,7 @@ export default async function StoryDetailPage({
                 {story.title}
               </h1>
               {(story.location || formattedDate) && (
-                <p className="text-body text-gray-mid">
+                <p className="text-body text-ink-muted">
                   {[story.location, formattedDate].filter(Boolean).join(" · ")}
                 </p>
               )}
@@ -160,16 +160,16 @@ export default async function StoryDetailPage({
           <ScrollReveal>
             {story.body ? (
               Array.isArray(story.body) ? (
-                <div className="prose prose-lg max-w-none text-gray-mid">
+                <div className="prose prose-lg max-w-none text-ink-muted">
                   <PortableText value={story.body} />
                 </div>
               ) : (
-                <div className="text-body text-gray-mid leading-relaxed whitespace-pre-line">
+                <div className="text-body text-ink-muted leading-relaxed whitespace-pre-line">
                   {story.body}
                 </div>
               )
             ) : (
-              <p className="text-body text-gray-mid italic">
+              <p className="text-body text-ink-muted italic">
                 {t("fullStorySoon")}
               </p>
             )}
@@ -180,7 +180,7 @@ export default async function StoryDetailPage({
             <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/stories"
-                className="text-small font-semibold text-gray-mid hover:text-black transition-colors inline-flex items-center gap-1"
+                className="text-small font-semibold text-ink-muted hover:text-black transition-colors inline-flex items-center gap-1"
               >
                 <span className="rtl:rotate-180">&larr;</span> {t("allStories")}
               </Link>

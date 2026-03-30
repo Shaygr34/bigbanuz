@@ -54,7 +54,7 @@ export default async function SocialFeed() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-small font-medium text-gray-mid hover:text-black transition-colors"
+            className="inline-flex items-center gap-2 text-small font-medium text-ink-muted hover:text-black transition-colors"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
