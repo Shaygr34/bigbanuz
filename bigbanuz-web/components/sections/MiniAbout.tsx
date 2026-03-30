@@ -28,14 +28,14 @@ export default function MiniAbout({ imageUrl, text, moreLabel, moreHref, locatio
           )}
 
           {/* Text + locations */}
-          <div className="flex-1 text-center md:text-start">
+          <div className={`flex-1 text-center ${imageUrl ? "md:text-start" : ""}`}>
             {text && (
               <p className="text-body text-ink-muted leading-relaxed max-w-text">{text}</p>
             )}
 
             {/* Locations strip */}
             {locations && locations.length > 0 && (
-              <div className="mt-6 flex flex-wrap gap-2 justify-center md:justify-start">
+              <div className={`mt-6 flex flex-wrap gap-2 justify-center ${imageUrl ? "md:justify-start" : ""}`}>
                 {locations.map((loc) => (
                   <span
                     key={loc.name}

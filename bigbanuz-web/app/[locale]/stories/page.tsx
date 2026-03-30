@@ -61,6 +61,9 @@ export default async function StoriesPage({
   let stories: Story[] = [];
 
   try {
+    // NOTE: Stories use document-level localization (language field).
+    // If a story doesn't have `language` set in Sanity, it appears in ALL locales.
+    // To restrict a story to one language, set its `language` field in the CMS.
     stories = await client.fetch<Story[]>(
       storiesQuery,
       { locale },
