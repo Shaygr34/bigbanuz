@@ -7,6 +7,13 @@ import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import SimpleCTA from "@/components/sections/SimpleCTA";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
+const LOCATION_NAMES_HE: Record<string, string> = {
+  "Philippines": "פיליפינים",
+  "Sri Lanka": "סרי לנקה",
+  "Israel": "ישראל",
+  "Australia": "אוסטרליה",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -146,7 +153,7 @@ export default async function AboutPage({
                   key={loc.name}
                   className="inline-flex items-center gap-1.5 rounded-full bg-sand px-4 py-2 text-body text-ink-muted"
                 >
-                  {loc.name}
+                  {locale === "he" ? (LOCATION_NAMES_HE[loc.name] || loc.name) : loc.name}
                   {loc.status === "coming-soon" && (
                     <span className="text-caption text-golden">&#10022;</span>
                   )}

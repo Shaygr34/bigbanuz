@@ -1,15 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 
+const LOCATION_NAMES_HE: Record<string, string> = {
+  "Philippines": "פיליפינים",
+  "Sri Lanka": "סרי לנקה",
+  "Israel": "ישראל",
+  "Australia": "אוסטרליה",
+};
+
 interface MiniAboutProps {
   imageUrl: string;
   text: string;
   moreLabel: string;
   moreHref: string;
   locations?: Array<{ name: string; status?: string }>;
+  locale?: string;
 }
 
-export default function MiniAbout({ imageUrl, text, moreLabel, moreHref, locations }: MiniAboutProps) {
+export default function MiniAbout({ imageUrl, text, moreLabel, moreHref, locations, locale }: MiniAboutProps) {
   return (
     <section className="bg-sand-dark py-section">
       <div className="mx-auto max-w-content px-4">
@@ -41,7 +49,7 @@ export default function MiniAbout({ imageUrl, text, moreLabel, moreHref, locatio
                     key={loc.name}
                     className="inline-flex items-center gap-1 rounded-full bg-sand px-3 py-1 text-small text-ink-muted"
                   >
-                    {loc.name}
+                    {locale === "he" ? (LOCATION_NAMES_HE[loc.name] || loc.name) : loc.name}
                     {loc.status === "coming-soon" && (
                       <span className="text-caption text-golden">&#10022;</span>
                     )}

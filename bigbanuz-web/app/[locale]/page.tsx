@@ -135,6 +135,7 @@ export default async function HomePage({
         moreLabel={t("miniAboutMore")}
         moreHref="/about"
         locations={aboutData?.locations}
+        locale={locale}
       />
       <SocialShowcase
         title={t("instagramTitle")}
