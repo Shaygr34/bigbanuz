@@ -30,10 +30,6 @@ interface HomePageData {
   heroSubline?: string;
   miniAboutImage?: SanityImage;
   miniAboutText?: string;
-  featuredPosts?: Array<{
-    url: string;
-    platform: "instagram" | "tiktok" | "youtube";
-  }>;
   featuredGallery?: Array<{
     _id: string;
     title: string;
@@ -114,15 +110,6 @@ export default async function HomePage({
     blurDataURL,
   }));
 
-  // Social posts (CMS or fallback)
-  const socialPosts = data?.featuredPosts?.length
-    ? data.featuredPosts
-    : [
-        { url: "https://www.instagram.com/p/DG5gWnKNDW0/", platform: "instagram" as const },
-        { url: "https://www.instagram.com/p/DGz3o4oN5uC/", platform: "instagram" as const },
-        { url: "https://www.instagram.com/p/DGwGkj4tRhE/", platform: "instagram" as const },
-      ];
-
   // MiniAbout image
   const miniAboutImageUrl = data?.miniAboutImage?.asset?._ref
     ? urlFor(data.miniAboutImage).width(512).quality(85).auto("format").url()
@@ -150,8 +137,8 @@ export default async function HomePage({
         locations={aboutData?.locations}
       />
       <SocialShowcase
-        posts={socialPosts}
         title={t("instagramTitle")}
+        followLabel={t("instagramFollow")}
       />
       <SocialFeed />
       <SimpleCTA
