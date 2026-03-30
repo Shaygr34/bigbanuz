@@ -6,19 +6,14 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-      {
-        protocol: 'https',
-        hostname: 'vampiresurfclub.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.shopify.com',
-      },
+      { protocol: 'https', hostname: 'cdn.sanity.io' },
     ],
+  },
+  async redirects() {
+    return [
+      { source: '/:locale/events', destination: '/:locale/work?tag=events', permanent: true },
+      { source: '/:locale/surf', destination: '/:locale/work?tag=ocean', permanent: true },
+    ];
   },
 };
 
