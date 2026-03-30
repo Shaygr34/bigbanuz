@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 import { client } from "@/lib/sanity/client";
-import { pageAboutQuery, galleryByLaneQuery } from "@/lib/sanity/queries";
+import { pageAboutQuery } from "@/lib/sanity/queries";
 import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
-import Hero from "@/components/sections/Hero";
-import CtaSection from "@/components/sections/CtaSection";
+import SimpleCTA from "@/components/sections/SimpleCTA";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { INSTAGRAM_URL } from "@/lib/utils/constants";
 
 export async function generateMetadata({
   params,
@@ -30,15 +29,8 @@ export async function generateMetadata({
 
 interface SanityImage {
   asset?: { _ref?: string };
-}
-
-interface GalleryDoc {
-  _id: string;
-  title: string;
-  images?: Array<{
-    image: SanityImage;
-    alt: string;
-  }>;
+  hotspot?: { x: number; y: number };
+  crop?: { top: number; bottom: number; left: number; right: number };
 }
 
 interface AboutData {
@@ -55,10 +47,10 @@ interface AboutData {
   heroImage?: SanityImage;
 }
 
-function getImageUrl(image?: SanityImage, width = 800): string {
+function getImageUrl(image?: SanityImage, width = 1920): string {
   if (!image?.asset?._ref) return "";
   try {
-    return urlFor(image).width(width).quality(80).auto("format").url();
+    return urlFor(image).width(width).quality(85).auto("format").url();
   } catch {
     return "";
   }
@@ -78,17 +70,15 @@ export default async function AboutPage({
   let heroBlur = "";
 
   try {
-    const [about, galleries] = await Promise.all([
-      client.fetch<AboutData | null>(pageAboutQuery, { locale }, { next: { tags: ["sanity"] } }),
-      client.fetch<GalleryDoc[]>(galleryByLaneQuery, { lane: "surf", locale }, { next: { tags: ["sanity"] } }),
-    ]);
-    aboutData = about;
+    aboutData = await client.fetch<AboutData | null>(
+      pageAboutQuery,
+      { locale },
+      { next: { tags: ["sanity"] } }
+    );
 
-    // Hero: prefer CMS heroImage, fall back to first surf gallery image
-    const heroSource = aboutData?.heroImage || galleries?.[0]?.images?.[0]?.image;
-    heroUrl = getImageUrl(heroSource, 1920);
-    if (heroSource?.asset?._ref) {
-      heroBlur = await getBlurDataURL(heroSource);
+    heroUrl = getImageUrl(aboutData?.heroImage);
+    if (aboutData?.heroImage?.asset?._ref) {
+      heroBlur = await getBlurDataURL(aboutData.heroImage);
     }
   } catch {
     // CMS not configured yet
@@ -97,102 +87,94 @@ export default async function AboutPage({
   // CMS-first with i18n fallback
   const headline = aboutData?.headline || t("heroHeadline");
   const subline = aboutData?.subline || t("heroSubline");
-  const bioParagraphs = aboutData?.bio
-    ? aboutData.bio.split("\n\n").filter(Boolean)
-    : [t("storyP1"), t("storyP2"), t("storyP3")];
+  const bio = aboutData?.bio || `${t("storyP1")} ${t("storyP2")} ${t("storyP3")}`;
   const approachTitle = aboutData?.approachTitle || t("approachTitle");
-  const approachParagraphs = aboutData?.approach
-    ? aboutData.approach.split("\n\n").filter(Boolean)
-    : [t("approachP1"), t("approachP2")];
+  const approach = aboutData?.approach || `${t("approachP1")} ${t("approachP2")}`;
 
   const locations = aboutData?.locations?.length
     ? aboutData.locations
     : [
-        { name: t("locationPhilippines"), description: t("locationPhilippinesDesc") },
-        { name: t("locationSriLanka"), description: t("locationSriLankaDesc") },
-        { name: t("locationIsrael"), description: t("locationIsraelDesc") },
-        { name: t("locationAustralia"), description: t("locationAustraliaDesc"), status: "coming-soon" },
+        { name: t("locationPhilippines") },
+        { name: t("locationSriLanka") },
+        { name: t("locationIsrael") },
+        { name: t("locationAustralia"), status: "coming-soon" },
       ];
 
   return (
     <>
-      <Hero
-        imageUrl={heroUrl}
-        imageAlt={t("heroImageAlt")}
-        blurDataURL={heroBlur}
-        headline={headline}
-        subline={subline}
-      />
+      {/* Hero Section */}
+      <section className="relative h-[70vh] min-h-[400px] w-full overflow-hidden">
+        {heroUrl ? (
+          <Image
+            src={heroUrl}
+            alt={t("heroImageAlt")}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+            {...(heroBlur ? { placeholder: "blur" as const, blurDataURL: heroBlur } : {})}
+          />
+        ) : (
+          <div className="absolute inset-0 bg-deep" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-deep/80 via-deep/30 to-transparent" />
+        <div className="relative z-10 flex h-full flex-col items-center justify-end pb-16 text-center px-4">
+          <h1 className="font-heading text-hero font-bold text-white">{headline}</h1>
+          <p className="mt-3 text-h3 font-light text-white/80">{subline}</p>
+        </div>
+      </section>
 
-      {/* Story Section */}
-      <section className="py-section">
-        <div className="max-w-text mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Bio Section — single paragraph */}
+      <section className="bg-sand py-section">
+        <div className="mx-auto max-w-text px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <h2 className="text-h2 font-heading font-bold text-black mb-8">
-              {t("storyTitle")}
-            </h2>
-            <div className="space-y-6 text-body text-gray-mid leading-relaxed">
-              {bioParagraphs.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </div>
+            <p className="text-body text-ink-muted leading-relaxed">{bio}</p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Locations Section */}
-      <section className="py-section bg-gray-light">
-        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Locations — pill style */}
+      <section className="bg-sand-dark py-section">
+        <div className="mx-auto max-w-content px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
-            <h2 className="text-h2 font-heading font-bold text-black text-center mb-12">
+            <h2 className="font-heading text-h2 font-bold text-ink mb-8">
               {t("locationsTitle")}
             </h2>
-          </ScrollReveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {locations.map((loc, i) => (
-              <ScrollReveal key={loc.name} delay={i * 100}>
-                <div className="bg-white-pure rounded-lg p-6 shadow-card text-center">
-                  <h3 className="text-h3 font-heading font-semibold text-black mb-2">
-                    {loc.name}
-                  </h3>
-                  <p className="text-small text-gray-mid">
-                    {loc.description}
-                  </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {locations.map((loc) => (
+                <span
+                  key={loc.name}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-sand px-4 py-2 text-body text-ink-muted"
+                >
+                  {loc.name}
                   {loc.status === "coming-soon" && (
-                    <span className="inline-block mt-2 text-caption text-accent font-medium">
-                      {t("locationAustraliaDesc").includes("2026") ? t("locationAustraliaDesc") : ""}
-                    </span>
+                    <span className="text-caption text-golden">&#10022;</span>
                   )}
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Approach Section */}
-      <section className="py-section">
-        <div className="max-w-text mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal>
-            <h2 className="text-h2 font-heading font-bold text-black mb-8">
-              {approachTitle}
-            </h2>
-            <div className="space-y-6 text-body text-gray-mid leading-relaxed">
-              {approachParagraphs.map((p, i) => (
-                <p key={i}>{p}</p>
+                </span>
               ))}
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      <CtaSection
-        headline={t("ctaHeadline")}
-        whatsappLabel={t("ctaGetInTouch")}
-        emailLabel={t("ctaViewEvents")}
-        emailHref="/events"
-        instagramLabel={t("ctaFollowSmileAmigo")}
-        instagramHref={INSTAGRAM_URL}
+      {/* Approach — single paragraph */}
+      <section className="bg-sand py-section">
+        <div className="mx-auto max-w-text px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <h2 className="font-heading text-h2 font-bold text-ink mb-6">
+              {approachTitle}
+            </h2>
+            <p className="text-body text-ink-muted leading-relaxed">{approach}</p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* WhatsApp CTA */}
+      <SimpleCTA
+        title={t("ctaHeadline")}
+        buttonLabel={t("ctaGetInTouch")}
+        secondaryLabel={t("ctaFollowBigbanuz")}
+        secondaryHref="https://www.instagram.com/bigbanuz/"
       />
     </>
   );
