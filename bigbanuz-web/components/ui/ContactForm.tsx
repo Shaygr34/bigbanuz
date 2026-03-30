@@ -126,7 +126,13 @@ export default function ContactForm() {
         </p>
       )}
 
-      <Button type="submit" variant="primary" size="lg" disabled={loading}>
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        disabled={loading}
+        className="w-full bg-ocean text-white hover:bg-ocean-dark shadow-lg font-semibold"
+      >
         {loading ? t("sending") : t("sendMessage")}
       </Button>
     </form>

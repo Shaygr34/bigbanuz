@@ -45,7 +45,7 @@ export default defineType({
           name: "headline",
           title: "Headline",
           type: "string",
-          initialValue: "Event Photography & Magnets",
+          initialValue: "Event Photography",
         }),
         defineField({
           name: "bullets",

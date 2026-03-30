@@ -34,7 +34,7 @@ export async function submitEventLead(data: EventLeadData) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "Smile Amigo <noreply@bigbanuz.com>",
+            from: "Amit Banuz <noreply@bigbanuz.com>",
             to: process.env.NOTIFICATION_EMAIL,
             subject: `New Event Inquiry from ${data.name}`,
             text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\nPackage: ${data.packageInterest || "N/A"}\nMessage: ${data.message || "N/A"}`,

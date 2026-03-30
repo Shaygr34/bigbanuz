@@ -49,7 +49,8 @@
     "tagEnergy": "אנרגיה",
     "tagTravel": "טיולים",
     "tagEvents": "אירועים",
-    "tagSurf": "גלישה"
+    "tagSurf": "גלישה",
+    "emptyTag": "לא נמצאו תמונות לתגית הזו."
   },
   "Stories": {
     "metaTitle": "סטוריז | עמית בנוז",

@@ -49,7 +49,8 @@
     "tagEnergy": "Energy",
     "tagTravel": "Travel",
     "tagEvents": "Events",
-    "tagSurf": "Surf"
+    "tagSurf": "Surf",
+    "emptyTag": "No images found for this tag."
   },
   "Stories": {
     "metaTitle": "Stories | Amit Banuz",

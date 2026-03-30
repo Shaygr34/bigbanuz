@@ -29,7 +29,7 @@ export async function submitContactLead(data: ContactLeadData) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "Smile Amigo <noreply@bigbanuz.com>",
+            from: "Amit Banuz <noreply@bigbanuz.com>",
             to: process.env.NOTIFICATION_EMAIL,
             subject: `New Contact Form: ${data.subject} — from ${data.name}`,
             text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,

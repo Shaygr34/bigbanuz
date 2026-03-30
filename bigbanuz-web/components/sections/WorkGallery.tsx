@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Lightbox from "@/components/ui/Lightbox";
 import type { GalleryImage } from "@/components/ui/GalleryGrid";
@@ -11,11 +12,13 @@ export interface WorkImage {
   tags: string[];
   width: number;
   height: number;
+  blurDataURL?: string;
 }
 
 interface WorkGalleryProps {
   images: WorkImage[];
   tagLabels: Record<string, string>;
+  emptyTagMessage: string;
 }
 
 const TAG_KEYS = [
@@ -29,9 +32,18 @@ const TAG_KEYS = [
   "surf",
 ] as const;
 
-export default function WorkGallery({ images, tagLabels }: WorkGalleryProps) {
+export default function WorkGallery({ images, tagLabels, emptyTagMessage }: WorkGalleryProps) {
+  const searchParams = useSearchParams();
   const [activeTag, setActiveTag] = useState<string>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Fix 5: Sync URL tag param with gallery filter on mount
+  useEffect(() => {
+    const tagParam = searchParams.get("tag");
+    if (tagParam && TAG_KEYS.includes(tagParam as typeof TAG_KEYS[number])) {
+      setActiveTag(tagParam);
+    }
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     if (activeTag === "all") return images;
@@ -40,6 +52,11 @@ export default function WorkGallery({ images, tagLabels }: WorkGalleryProps) {
     );
   }, [activeTag, images]);
 
+  // Fix 1: Close lightbox when filter changes to prevent stale index
+  useEffect(() => {
+    setLightboxIndex(null);
+  }, [activeTag]);
+
   // Convert to GalleryImage format for lightbox
   const lightboxImages: GalleryImage[] = filtered.map((img) => ({
     url: img.url,
@@ -47,6 +64,12 @@ export default function WorkGallery({ images, tagLabels }: WorkGalleryProps) {
     width: img.width,
     height: img.height,
   }));
+
+  // Clamp lightbox index to valid range as a safety measure
+  const safeLightboxIndex =
+    lightboxIndex !== null && lightboxIndex < filtered.length
+      ? lightboxIndex
+      : null;
 
   return (
     <section className="bg-sand pb-section">
@@ -88,25 +111,27 @@ export default function WorkGallery({ images, tagLabels }: WorkGalleryProps) {
                   alt={img.alt}
                   width={img.width}
                   height={img.height}
-                  className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-[1.02] group-hover:brightness-110"
+                  className="w-full h-auto object-cover transition-all duration-300 group-hover:scale-[1.02] group-hover:brightness-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
+                  placeholder={img.blurDataURL ? "blur" : undefined}
+                  blurDataURL={img.blurDataURL}
                 />
               </button>
             ))}
           </div>
         ) : (
           <div className="py-16 text-center">
-            <p className="text-body text-ink-muted">No images found for this tag.</p>
+            <p className="text-body text-ink-muted">{emptyTagMessage}</p>
           </div>
         )}
       </div>
 
       {/* Lightbox */}
-      {lightboxIndex !== null && (
+      {safeLightboxIndex !== null && (
         <Lightbox
           images={lightboxImages}
-          initialIndex={lightboxIndex}
+          initialIndex={safeLightboxIndex}
           onClose={() => setLightboxIndex(null)}
         />
       )}

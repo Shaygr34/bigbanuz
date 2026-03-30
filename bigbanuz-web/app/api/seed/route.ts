@@ -23,7 +23,7 @@ export async function GET() {
     if (!existingSettings) {
       await writeClient.create({
         _type: "siteSettings",
-        siteName: "Smile Amigo",
+        siteName: "Amit Banuz",
         siteDescription:
           "Professional surf and event photography by Amit Banuz. Capturing moments in motion — from ocean waves to unforgettable events.",
         socialLinks: {
@@ -34,9 +34,9 @@ export async function GET() {
         ctaWhatsappMessage:
           "Hey Amit! I saw your website and I'd love to chat about a shoot.",
         seoDefaults: {
-          title: "Smile Amigo — Surf & Event Photography by Amit Banuz",
+          title: "Amit Banuz — Photographer & Creator",
           description:
-            "Professional surf and event photography by Amit Banuz. Premium event coverage with instant magnet prints, and in-water surf photography across the globe.",
+            "Photography and content creation by Amit Banuz. Event coverage, ocean photography, and visual storytelling worldwide.",
         },
       });
       results.siteSettings = "created";

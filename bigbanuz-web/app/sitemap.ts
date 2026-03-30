@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://smile-amigo.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bigbanuz.vercel.app";
 
   const routes = [
     { path: "", priority: 1, changeFrequency: "weekly" as const },

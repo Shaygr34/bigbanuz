@@ -31,7 +31,7 @@ export async function submitCollabLead(data: CollabLeadData) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "Smile Amigo <noreply@bigbanuz.com>",
+            from: "Amit Banuz <noreply@bigbanuz.com>",
             to: process.env.NOTIFICATION_EMAIL,
             subject: `New Surf Collaboration Request from ${data.name}`,
             text: `Name: ${data.name}\nEmail: ${data.email}\nCompany: ${data.company || "N/A"}\nBudget: ${data.budgetRange || "N/A"}\nProject: ${data.projectDescription}`,

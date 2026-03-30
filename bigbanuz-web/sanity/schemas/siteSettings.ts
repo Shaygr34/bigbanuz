@@ -9,7 +9,7 @@ export default defineType({
       name: "siteName",
       title: "Site Name",
       type: "string",
-      initialValue: "Smile Amigo",
+      initialValue: "Amit Banuz",
     }),
     defineField({
       name: "siteDescription",

@@ -141,10 +141,10 @@ export const testimonialsByLaneQuery = groq`
   }
 `;
 
-// Stories — document-level localization (language field)
-// When language field exists, filters by locale; otherwise returns all
+// Stories — show all stories regardless of language.
+// Photography stories are visual content; language is secondary to images.
 export const storiesQuery = groq`
-  *[_type == "story" && (!defined(language) || language == $locale)] | order(publishedAt desc) {
+  *[_type == "story"] | order(publishedAt desc) {
     _id,
     title,
     slug,

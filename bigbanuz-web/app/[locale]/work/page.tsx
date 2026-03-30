@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { client } from "@/lib/sanity/client";
 import { allGalleriesQuery } from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import WorkGallery from "@/components/sections/WorkGallery";
 
 export async function generateMetadata({
@@ -53,6 +54,7 @@ export interface FlatImage {
   tags: string[];
   width: number;
   height: number;
+  blurDataURL?: string;
 }
 
 function getImageUrl(image?: SanityImage, width = 1200): string {
@@ -85,8 +87,8 @@ export default async function WorkPage({
     // CMS not configured yet
   }
 
-  // Flatten all images from all galleries, attaching parent gallery tags
-  const flatImages: FlatImage[] = galleries.flatMap((gallery) =>
+  // Flatten all images from all galleries, attaching parent gallery tags + blur placeholders
+  const flatImagesRaw = galleries.flatMap((gallery) =>
     (gallery.images || [])
       .map((img) => {
         const url = getImageUrl(img.image);
@@ -97,9 +99,21 @@ export default async function WorkPage({
           tags: gallery.tags || [],
           width: 800,
           height: 600,
+          image: img.image, // keep ref for blur generation
         };
       })
-      .filter((img): img is FlatImage => img !== null)
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+  );
+
+  // Generate blur placeholders in parallel
+  const flatImages: FlatImage[] = await Promise.all(
+    flatImagesRaw.map(async ({ image, ...rest }) => {
+      let blurDataURL = "";
+      if (image?.asset?._ref) {
+        blurDataURL = await getBlurDataURL(image);
+      }
+      return { ...rest, blurDataURL };
+    })
   );
 
   // Build tag labels from i18n
@@ -125,7 +139,13 @@ export default async function WorkPage({
         </div>
       </section>
 
-      <WorkGallery images={flatImages} tagLabels={tagLabels} />
+      <Suspense>
+        <WorkGallery
+          images={flatImages}
+          tagLabels={tagLabels}
+          emptyTagMessage={t("emptyTag")}
+        />
+      </Suspense>
     </>
   );
 }
