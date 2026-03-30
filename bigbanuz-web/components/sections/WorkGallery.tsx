@@ -96,29 +96,33 @@ export default function WorkGallery({ images, tagLabels, emptyTagMessage }: Work
       {/* Masonry gallery */}
       <div className="mx-auto max-w-content px-4">
         {filtered.length > 0 ? (
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-gallery" role="list">
-            {filtered.map((img, i) => (
-              <button
-                key={`${img.url}-${i}`}
-                type="button"
-                onClick={() => setLightboxIndex(i)}
-                className="relative mb-3 w-full overflow-hidden break-inside-avoid cursor-pointer group focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-inset rounded-md"
-                role="listitem"
-                aria-label={`View ${img.alt}`}
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  className="w-full h-auto object-cover transition-all duration-300 group-hover:scale-[1.02] group-hover:brightness-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  loading="lazy"
-                  placeholder={img.blurDataURL ? "blur" : undefined}
-                  blurDataURL={img.blurDataURL}
-                />
-              </button>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1" role="list">
+            {filtered.map((img, i) => {
+              const isPortrait = img.height > img.width;
+              return (
+                <button
+                  key={`${img.url}-${i}`}
+                  type="button"
+                  onClick={() => setLightboxIndex(i)}
+                  className={`relative overflow-hidden cursor-pointer group focus:outline-none focus:ring-2 focus:ring-ocean focus:ring-inset rounded-md ${
+                    isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"
+                  }`}
+                  role="listitem"
+                  aria-label={`View ${img.alt}`}
+                >
+                  <Image
+                    src={img.url}
+                    alt={img.alt}
+                    fill
+                    className="object-cover transition-all duration-300 group-hover:scale-[1.02] group-hover:brightness-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading="lazy"
+                    placeholder={img.blurDataURL ? "blur" : undefined}
+                    blurDataURL={img.blurDataURL}
+                  />
+                </button>
+              );
+            })}
           </div>
         ) : (
           <div className="py-16 text-center">
