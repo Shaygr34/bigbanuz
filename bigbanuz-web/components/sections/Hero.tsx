@@ -14,7 +14,7 @@ interface HeroProps {
 
 export default function Hero({ heroImage, heroVideo, name, subtitle }: HeroProps) {
   const imageUrl = heroImage?.asset?._ref
-    ? urlFor(heroImage).width(1920).quality(85).auto("format").url()
+    ? urlFor(heroImage).width(2560).quality(90).auto("format").url()
     : "";
 
   return (
@@ -37,6 +37,7 @@ export default function Hero({ heroImage, heroVideo, name, subtitle }: HeroProps
           alt={name}
           fill
           priority
+          quality={90}
           className="object-cover"
           sizes="100vw"
         />

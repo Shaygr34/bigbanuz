@@ -60,7 +60,7 @@ export interface FlatImage {
 function getImageUrl(image?: SanityImage, width = 1200): string {
   if (!image?.asset?._ref) return "";
   try {
-    return urlFor(image).width(width).quality(80).auto("format").url();
+    return urlFor(image).width(width).quality(85).auto("format").url();
   } catch {
     return "";
   }

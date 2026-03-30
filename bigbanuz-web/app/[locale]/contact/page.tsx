@@ -41,12 +41,9 @@ export default async function ContactPage({
       <section className="bg-sand pt-32 pb-12">
         <div className="mx-auto max-w-content px-4 text-center">
           <ScrollReveal>
-            <h1 className="font-heading text-h1 font-bold text-ink mb-3">
+            <h1 className="font-heading text-h1 font-bold text-ink mb-10">
               {t("heroTitle")}
             </h1>
-            <p className="text-body text-ink-muted mb-10">
-              {t("heroSubtitle")}
-            </p>
 
             {/* Giant WhatsApp button */}
             <a
@@ -61,9 +58,6 @@ export default async function ContactPage({
               </svg>
               {t("whatsapp")}
             </a>
-            <p className="mt-3 text-small text-ink-muted">
-              {t("whatsappDesc")}
-            </p>
           </ScrollReveal>
         </div>
       </section>

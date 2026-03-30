@@ -114,6 +114,7 @@ export default function WorkGallery({ images, tagLabels, emptyTagMessage }: Work
                     src={img.url}
                     alt={img.alt}
                     fill
+                    quality={85}
                     className="object-cover transition-all duration-300 group-hover:scale-[1.02] group-hover:brightness-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"

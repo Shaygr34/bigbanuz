@@ -83,7 +83,7 @@ export default async function HomePage({
       if (gallery.images) {
         for (const img of gallery.images) {
           const url = img.image?.asset?._ref
-            ? urlFor(img.image).width(800).quality(85).auto("format").url()
+            ? urlFor(img.image).width(1200).quality(85).auto("format").url()
             : "";
           if (url) {
             galleryEntries.push({
