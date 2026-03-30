@@ -44,7 +44,7 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "bg-deep/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.1)]"
-            : "bg-transparent"
+            : "bg-gradient-to-b from-deep/50 to-transparent"
         }`}
         role="navigation"
         aria-label={t("mainNav")}
@@ -56,7 +56,7 @@ export default function Navbar() {
               href="/"
               className="group flex items-center"
             >
-              <span className="font-heading text-[1.35rem] lg:text-[1.5rem] font-bold tracking-[-0.03em] text-white transition-colors duration-500">
+              <span className={`font-heading text-[1.35rem] lg:text-[1.5rem] font-bold tracking-[-0.03em] text-white transition-colors duration-500 ${!scrolled ? "[text-shadow:0_1px_4px_rgba(0,0,0,0.5)]" : ""}`}>
                 Amit Banuz
               </span>
             </Link>
@@ -73,7 +73,7 @@ export default function Navbar() {
                       isActive
                         ? "text-ocean"
                         : "text-white/70 hover:text-ocean-light"
-                    }`}
+                    } ${!scrolled ? "[text-shadow:0_1px_4px_rgba(0,0,0,0.5)]" : ""}`}
                   >
                     {t(link.labelKey)}
                     {/* Animated underline */}
@@ -114,7 +114,7 @@ export default function Navbar() {
                 aria-expanded={mobileOpen}
               >
                 <svg
-                  className="w-6 h-6 text-white transition-colors duration-300"
+                  className={`w-6 h-6 text-white transition-colors duration-300 ${!scrolled ? "drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
