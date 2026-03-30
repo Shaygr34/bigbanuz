@@ -13,6 +13,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "heroVideo",
+      title: "Hero Video URL",
+      type: "url",
+    }),
+    defineField({
       name: "heroHeadline",
       title: "Hero Headline",
       type: "string",
@@ -27,6 +32,7 @@ export default defineType({
     defineField({
       name: "eventsPreview",
       title: "Events Preview Card",
+      hidden: true,
       type: "object",
       fields: [
         defineField({
@@ -58,6 +64,7 @@ export default defineType({
     defineField({
       name: "surfPreview",
       title: "Surf Preview Card",
+      hidden: true,
       type: "object",
       fields: [
         defineField({
@@ -87,8 +94,33 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "miniAboutImage",
+      title: "Mini About Image",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "miniAboutText",
+      title: "Mini About Text",
+      type: "object",
+      fields: [
+        defineField({
+          name: "en",
+          title: "English",
+          type: "text",
+          rows: 3,
+        }),
+        defineField({
+          name: "he",
+          title: "Hebrew",
+          type: "text",
+          rows: 3,
+        }),
+      ],
+    }),
+    defineField({
       name: "featuredGallery",
-      title: "Featured Gallery",
+      title: "Featured Work",
       type: "array",
       of: [{ type: "reference", to: [{ type: "gallery" }] }],
     }),

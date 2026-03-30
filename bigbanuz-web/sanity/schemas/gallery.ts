@@ -28,11 +28,30 @@ export default defineType({
           { title: "Mixed", value: "mixed" },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      initialValue: "mixed",
+      hidden: true,
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: [
+          { title: "Ocean", value: "ocean" },
+          { title: "Golden Hour", value: "golden-hour" },
+          { title: "People", value: "people" },
+          { title: "Energy", value: "energy" },
+          { title: "Travel", value: "travel" },
+          { title: "Events", value: "events" },
+          { title: "Surf", value: "surf" },
+        ],
+      },
     }),
     defineField({
       name: "category",
       title: "Category",
+      hidden: true,
       type: "string",
       options: {
         list: [
