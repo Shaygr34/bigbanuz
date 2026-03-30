@@ -5,6 +5,7 @@ import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import Hero from "@/components/sections/Hero";
 import WorkGrid from "@/components/sections/WorkGrid";
 import MiniAbout from "@/components/sections/MiniAbout";
+import SocialShowcase from "@/components/sections/SocialShowcase";
 import SocialFeed from "@/components/sections/SocialFeed";
 import SimpleCTA from "@/components/sections/SimpleCTA";
 
@@ -29,6 +30,10 @@ interface HomePageData {
   heroSubline?: string;
   miniAboutImage?: SanityImage;
   miniAboutText?: string;
+  featuredPosts?: Array<{
+    url: string;
+    platform: "instagram" | "tiktok" | "youtube";
+  }>;
   featuredGallery?: Array<{
     _id: string;
     title: string;
@@ -109,6 +114,15 @@ export default async function HomePage({
     blurDataURL,
   }));
 
+  // Social posts (CMS or fallback)
+  const socialPosts = data?.featuredPosts?.length
+    ? data.featuredPosts
+    : [
+        { url: "https://www.instagram.com/p/DG5gWnKNDW0/", platform: "instagram" as const },
+        { url: "https://www.instagram.com/p/DGz3o4oN5uC/", platform: "instagram" as const },
+        { url: "https://www.instagram.com/p/DGwGkj4tRhE/", platform: "instagram" as const },
+      ];
+
   // MiniAbout image
   const miniAboutImageUrl = data?.miniAboutImage?.asset?._ref
     ? urlFor(data.miniAboutImage).width(512).quality(85).auto("format").url()
@@ -134,6 +148,10 @@ export default async function HomePage({
         moreLabel={t("miniAboutMore")}
         moreHref="/about"
         locations={aboutData?.locations}
+      />
+      <SocialShowcase
+        posts={socialPosts}
+        title={t("instagramTitle")}
       />
       <SocialFeed />
       <SimpleCTA

@@ -119,6 +119,41 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "featuredPosts",
+      title: "Featured Social Posts",
+      description: "Paste Instagram or TikTok post URLs. They will be embedded on the homepage.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "url",
+              title: "Post URL",
+              type: "url",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "platform",
+              title: "Platform",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Instagram", value: "instagram" },
+                  { title: "TikTok", value: "tiktok" },
+                  { title: "YouTube", value: "youtube" },
+                ],
+              },
+              initialValue: "instagram",
+            }),
+          ],
+          preview: {
+            select: { title: "url", subtitle: "platform" },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "featuredGallery",
       title: "Featured Work",
       type: "array",

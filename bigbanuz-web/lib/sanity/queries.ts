@@ -33,6 +33,7 @@ export const homePageQuery = groq`
     surfPreview,
     miniAboutImage,
     "miniAboutText": coalesce(miniAboutText[$locale], miniAboutText.en),
+    featuredPosts[] { url, platform },
     featuredGallery[]-> {
       _id,
       "title": coalesce(title[$locale], title),
