@@ -1,0 +1,1348 @@
+[
+  {
+    "fields": [
+      {
+        "initialValue": "Smile Amigo",
+        "name": "siteName",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "siteDescription",
+        "type": "text"
+      },
+      {
+        "description": "Optional — text logo used in V1",
+        "name": "logo",
+        "type": "image"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "instagram",
+            "type": "url",
+            "title": "Instagram URL"
+          },
+          {
+            "description": "International format, no +",
+            "name": "whatsapp",
+            "type": "string",
+            "title": "WhatsApp Phone Number"
+          },
+          {
+            "name": "email",
+            "type": "string",
+            "title": "Email Address"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "object"
+      },
+      {
+        "initialValue": "Hi Amit! I found you on your website and wanted to get in touch.",
+        "name": "ctaWhatsappMessage",
+        "type": "string",
+        "title": "Default WhatsApp CTA Message"
+      },
+      {
+        "fields": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": "Default Title"
+          },
+          {
+            "rows": 2,
+            "name": "description",
+            "type": "text",
+            "title": "Default Description"
+          },
+          {
+            "name": "ogImage",
+            "type": "image",
+            "title": "Default OG Image"
+          }
+        ],
+        "name": "seoDefaults",
+        "type": "object",
+        "title": "Default SEO"
+      },
+      {
+        "name": "analyticsId",
+        "type": "string",
+        "title": "GA4 Measurement ID"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "heroImage",
+        "type": "image"
+      },
+      {
+        "initialValue": "Amit Banuz — Surf & Event Photographer",
+        "name": "heroHeadline",
+        "type": "string"
+      },
+      {
+        "initialValue": "Capturing moments in motion — from ocean waves to unforgettable events.",
+        "name": "heroSubline",
+        "type": "string"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "name": "image",
+            "type": "image",
+            "title": "Preview Image"
+          },
+          {
+            "initialValue": "Event Photography & Magnets",
+            "name": "headline",
+            "type": "string"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "bullets",
+            "type": "array",
+            "title": "Highlight Bullets"
+          },
+          {
+            "initialValue": "Explore Events",
+            "name": "ctaText",
+            "type": "string",
+            "title": "CTA Text"
+          }
+        ],
+        "name": "eventsPreview",
+        "type": "object",
+        "title": "Events Preview Card"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "name": "image",
+            "type": "image",
+            "title": "Preview Image"
+          },
+          {
+            "initialValue": "Surf Photography",
+            "name": "headline",
+            "type": "string"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "bullets",
+            "type": "array",
+            "title": "Highlight Bullets"
+          },
+          {
+            "initialValue": "Explore Surf",
+            "name": "ctaText",
+            "type": "string",
+            "title": "CTA Text"
+          }
+        ],
+        "name": "surfPreview",
+        "type": "object",
+        "title": "Surf Preview Card"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "gallery"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to gallery"
+          }
+        ],
+        "name": "featuredGallery",
+        "type": "array"
+      },
+      {
+        "initialValue": "Ready to work together?",
+        "name": "bottomCtaText",
+        "type": "string",
+        "title": "Bottom CTA Text"
+      }
+    ],
+    "name": "pageHome",
+    "type": "document",
+    "title": "Homepage"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "English"
+          },
+          {
+            "name": "he",
+            "type": "string",
+            "title": "Hebrew"
+          }
+        ],
+        "name": "headline",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "English"
+          },
+          {
+            "name": "he",
+            "type": "string",
+            "title": "Hebrew"
+          }
+        ],
+        "name": "subline",
+        "type": "object"
+      },
+      {
+        "description": "Paragraphs separated by double newlines.",
+        "fields": [
+          {
+            "rows": 10,
+            "name": "en",
+            "type": "text",
+            "title": "English"
+          },
+          {
+            "rows": 10,
+            "name": "he",
+            "type": "text",
+            "title": "Hebrew"
+          }
+        ],
+        "name": "bio",
+        "type": "object",
+        "title": "Bio / Story"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "English"
+          },
+          {
+            "name": "he",
+            "type": "string",
+            "title": "Hebrew"
+          }
+        ],
+        "name": "approachTitle",
+        "type": "object",
+        "title": "Approach Section Title"
+      },
+      {
+        "description": "Paragraphs separated by double newlines.",
+        "fields": [
+          {
+            "rows": 6,
+            "name": "en",
+            "type": "text",
+            "title": "English"
+          },
+          {
+            "rows": 6,
+            "name": "he",
+            "type": "text",
+            "title": "Hebrew"
+          }
+        ],
+        "name": "approach",
+        "type": "object",
+        "title": "Approach Paragraphs"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "en",
+                    "type": "string",
+                    "title": "English"
+                  },
+                  {
+                    "name": "he",
+                    "type": "string",
+                    "title": "Hebrew"
+                  }
+                ],
+                "name": "description",
+                "type": "object"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Active",
+                      "value": "active"
+                    },
+                    {
+                      "title": "Coming Soon",
+                      "value": "coming-soon"
+                    }
+                  ]
+                },
+                "initialValue": "active",
+                "name": "status",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "locations",
+        "type": "array"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image"
+      }
+    ],
+    "name": "pageAbout",
+    "type": "document",
+    "title": "About Page"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Package Name"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "priceILS",
+        "type": "number",
+        "title": "Price (ILS)"
+      },
+      {
+        "description": "Formatted price, e.g., \"₪1,500\"",
+        "name": "priceDisplay",
+        "type": "string"
+      },
+      {
+        "description": "Bullet points of what's included",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "inclusions",
+        "type": "array"
+      },
+      {
+        "initialValue": false,
+        "description": "Show on homepage",
+        "name": "featured",
+        "type": "boolean"
+      },
+      {
+        "initialValue": 0,
+        "name": "sortOrder",
+        "type": "number"
+      },
+      {
+        "initialValue": "Book This Package",
+        "name": "ctaText",
+        "type": "string",
+        "title": "CTA Button Text"
+      }
+    ],
+    "name": "packages",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Events",
+              "value": "events"
+            },
+            {
+              "title": "Surf",
+              "value": "surf"
+            },
+            {
+              "title": "Mixed",
+              "value": "mixed"
+            }
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "events",
+                  "surf",
+                  "mixed"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "lane",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Action",
+              "value": "action"
+            },
+            {
+              "title": "Lifestyle",
+              "value": "lifestyle"
+            },
+            {
+              "title": "Destinations",
+              "value": "destinations"
+            },
+            {
+              "title": "Behind the Lens",
+              "value": "behind-the-lens"
+            },
+            {
+              "title": "Events",
+              "value": "events"
+            }
+          ]
+        },
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "alt",
+                "type": "string",
+                "title": "Alt Text"
+              },
+              {
+                "name": "caption",
+                "type": "string"
+              },
+              {
+                "name": "location",
+                "type": "string"
+              },
+              {
+                "initialValue": false,
+                "name": "featured",
+                "type": "boolean"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "images",
+        "type": "array"
+      },
+      {
+        "initialValue": 0,
+        "name": "sortOrder",
+        "type": "number"
+      },
+      {
+        "fields": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": "SEO Title"
+          },
+          {
+            "rows": 2,
+            "name": "description",
+            "type": "text",
+            "title": "SEO Description"
+          }
+        ],
+        "name": "seo",
+        "type": "object",
+        "title": "SEO"
+      }
+    ],
+    "name": "gallery",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "quote",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "e.g., \"Wedding Event, Tel Aviv\" or \"Surf Brand Collaboration\"",
+        "name": "context",
+        "type": "string"
+      },
+      {
+        "name": "avatar",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Link to IG post or Google review",
+        "name": "sourceLink",
+        "type": "url"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Events",
+              "value": "events"
+            },
+            {
+              "title": "Surf",
+              "value": "surf"
+            },
+            {
+              "title": "General",
+              "value": "general"
+            }
+          ]
+        },
+        "name": "lane",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean"
+      },
+      {
+        "initialValue": 0,
+        "name": "sortOrder",
+        "type": "number"
+      }
+    ],
+    "name": "testimonial",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "name": "phone",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Events Contact",
+              "value": "events-contact"
+            },
+            {
+              "title": "Surf Collaboration",
+              "value": "surf-collab"
+            },
+            {
+              "title": "General Contact",
+              "value": "general-contact"
+            }
+          ]
+        },
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "packageInterest",
+        "type": "string"
+      },
+      {
+        "name": "projectDescription",
+        "type": "text"
+      },
+      {
+        "name": "budgetRange",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "New",
+              "value": "new"
+            },
+            {
+              "title": "Contacted",
+              "value": "contacted"
+            },
+            {
+              "title": "Converted",
+              "value": "converted"
+            },
+            {
+              "title": "Archived",
+              "value": "archived"
+            }
+          ]
+        },
+        "initialValue": "new",
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "notes",
+        "type": "text",
+        "title": "Internal Notes"
+      }
+    ],
+    "name": "lead",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "dimensions",
+                "type": "string"
+              },
+              {
+                "name": "priceILS",
+                "type": "number",
+                "title": "Price (ILS)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "sizeOptions",
+        "type": "array"
+      },
+      {
+        "initialValue": "ILS",
+        "name": "currency",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "name": "available",
+        "type": "boolean"
+      },
+      {
+        "name": "fulfillmentProviderId",
+        "type": "string",
+        "title": "Fulfillment Provider ID"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "productPrint",
+    "type": "document",
+    "title": "Print Product"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Cover Image"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 200
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Brief summary shown on story cards (max 200 characters)",
+        "name": "shortDescription",
+        "type": "text"
+      },
+      {
+        "description": "Full story content with rich text formatting.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "body",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "English",
+              "value": "en"
+            },
+            {
+              "title": "Hebrew",
+              "value": "he"
+            }
+          ]
+        },
+        "initialValue": "en",
+        "description": "Content language for locale-filtered display.",
+        "name": "language",
+        "type": "string"
+      },
+      {
+        "name": "publishedAt",
+        "type": "datetime"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      }
+    ],
+    "name": "story",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Article or collaboration title",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Brand name or journalist",
+        "name": "author",
+        "type": "string",
+        "title": "Author / Brand"
+      },
+      {
+        "description": "e.g. \"Jan 2025\"",
+        "name": "date",
+        "type": "string",
+        "title": "Display Date"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Link to article or IG post",
+        "name": "url",
+        "type": "url",
+        "title": "Link"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Sanity-hosted image (preferred)",
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Fallback for external images (e.g. Shopify CDN)",
+        "name": "imageUrl",
+        "type": "url",
+        "title": "External Image URL"
+      },
+      {
+        "rows": 3,
+        "description": "Short description shown on the card",
+        "name": "excerpt",
+        "type": "text"
+      },
+      {
+        "initialValue": true,
+        "name": "featured",
+        "type": "boolean"
+      },
+      {
+        "initialValue": 0,
+        "name": "sortOrder",
+        "type": "number"
+      }
+    ],
+    "name": "feature",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Instagram",
+              "value": "instagram"
+            },
+            {
+              "title": "TikTok",
+              "value": "tiktok"
+            }
+          ]
+        },
+        "initialValue": "instagram",
+        "name": "platform",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "postUrl",
+        "type": "url",
+        "title": "Post URL"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Screenshot or saved image of the post.",
+        "name": "thumbnail",
+        "type": "image"
+      },
+      {
+        "description": "Short caption or description of the post.",
+        "name": "caption",
+        "type": "string"
+      },
+      {
+        "name": "publishedAt",
+        "type": "datetime"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean"
+      },
+      {
+        "name": "sortOrder",
+        "type": "number"
+      }
+    ],
+    "name": "socialHighlight",
+    "type": "document"
+  }
+]

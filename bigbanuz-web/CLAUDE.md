@@ -17,6 +17,9 @@ Dual-lane: Events (Israel, Hebrew-primary) + Surf (international, English-primar
 - Sanity schemas: sanity/schemas/
 - GROQ queries: lib/sanity/queries.ts
 - Server actions: lib/actions/
+- Instagram API: lib/instagram.ts (Graph API v21.0, ISR 1hr)
+- Token refresh cron: app/api/cron/refresh-instagram/route.ts
+- Cron config: vercel.json (1st/15th monthly)
 - i18n: messages/en.json, messages/he.json
 - Design tokens: app/globals.css + tailwind.config.ts
 - Docs: docs/ (v3-scope.md, decision-log.md, links-hub.md)
@@ -32,14 +35,29 @@ Dual-lane: Events (Israel, Hebrew-primary) + Surf (international, English-primar
 8. Schema deploy: `cd sanity && npx sanity@latest schema deploy`
 9. GROQ i18n pattern: `coalesce(field[$locale], field)` for flat strings, `coalesce(field[$locale], field.en)` for bilingual objects
 
+## Nav Structure
+Gallery (/) | Stories (/stories) | About (/about) | Contact (/contact)
+Driven by `NAV_LINKS` in `lib/utils/constants.ts` — single source for Navbar, MobileMenu, 404 page.
+Events (/events) and Surf (/surf) routes still exist but are not in nav.
+
 ## Schema Types (10)
 siteSettings, pageHome, pageAbout, packages, gallery, testimonial, lead, productPrint, story, feature
 
 ## V3 Status
-All milestones complete (M0–M5). See docs/v3-scope.md for details and manual steps.
+All milestones complete (M0–M5) + V3-final polish. See docs/v3-scope.md for details.
+
+### V3-Final Session (March 2026)
+- **Instagram Graph API**: SocialFeed component (self-fetching async RSC), long-lived token refresh via Vercel cron (1st/15th monthly), graceful fallback (returns null when API unavailable)
+- **socialHighlight schema removed**: Deleted schema + SocialGrid component, replaced by live Instagram feed
+- **Navbar redesign**: Premium typography (`tracking-[0.12em]`, uppercase), animated underline hover, cinematic mobile menu with staggered entrance animations
+- **Testimonials hidden**: Removed from homepage + events page rendering (schema + CMS data preserved for future use)
+- **SEO URL unification**: All fallback URLs unified to `smile-amigo.vercel.app`. `NEXT_PUBLIC_SITE_URL` is the single point of change for domain migration
+- **Dodeca footer credit**: "Built by Dodeca" link added below copyright
+- **Studio crash fix**: Stale Vercel build cache after schema deletion — resolved with `vercel --prod --force` from parent directory
 
 ## Brand
 - Display: "Smile Amigo"
-- Instagram: @bigbanuz
+- Instagram: @bigbanuz (real IG handle, intentional)
 - Email: iambigbanuz@gmail.com (temporary)
 - Logo: current Sanity asset (basic, client upgrading later)
+- Domain: `smile-amigo.vercel.app` (currently). `smile-amigo.com` pending purchase. Single env var swap when ready.

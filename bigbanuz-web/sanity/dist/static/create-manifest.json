@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "createdAt": "2026-03-09T14:54:22.815Z",
+  "workspaces": [
+    {
+      "name": "smile-amigo",
+      "title": "Smile Amigo CMS",
+      "basePath": "/studio",
+      "projectId": "6q0h6ivm",
+      "dataset": "production",
+      "icon": "<style data-styled=\"true\" data-styled-version=\"6.3.11\">.darkfu{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",\"Liberation Sans\",Helvetica,Arial,system-ui,sans-serif;font-weight:500;font-size:13px;transform:translateY(1px);}/*!sc*/\ndata-styled.g106[id=\"sc-dAlyuI\"]{content:\"darkfu,\"}/*!sc*/\n</style><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#b14802\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(24, 98%, 0%, 1)\" class=\"sc-dAlyuI darkfu\">SA</text></svg>",
+      "mediaLibrary": {
+        "enabled": false
+      },
+      "schema": "106c4a4d.create-schema.json",
+      "tools": "ea469a1f.create-tools.json"
+    }
+  ]
+}
