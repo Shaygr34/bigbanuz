@@ -3,30 +3,26 @@
 @tailwind utilities;
 
 /* ============================================================
-   LIGHT MODE (default)
+   DESIGN TOKENS
    ============================================================ */
 :root {
-  /* === FLIPPING COLORS (swapped in html.dark) === */
-  --color-black: #0A0A0A;
-  --color-white-pure: #FFFFFF;
-  --color-gray-light: #F3F4F6;
-  --color-gray-mid: #6B7280;
-  --color-accent-soft: #FEF9C3;
-  --color-accent-text: #0A0A0A;
-
-  /* === FIXED COLORS (same in both modes) === */
-  --color-charcoal: #1A1A2E;
-  --color-gray-warm: #2C2C3A;
-  --color-white: #FAFAFA;
-  --color-accent: #FACC15;
-  --color-accent-hover: #EAB308;
-  --color-ocean: #0F76B0;
-  --color-ocean-dark: #0B5782;
-  --color-overlay-dark: rgba(10, 10, 10, 0.55);
-  --color-overlay-light: rgba(10, 10, 10, 0.30);
+  /* === COLORS === */
+  --color-ocean: #0A8A8F;
+  --color-ocean-light: #0FA4A9;
+  --color-ocean-dark: #077074;
+  --color-golden: #D4943A;
+  --color-golden-light: #E0A854;
+  --color-golden-dark: #B87D2E;
+  --color-sand: #F5F0E8;
+  --color-sand-light: #FAF7F2;
+  --color-sand-dark: #E8E0D0;
+  --color-deep: #1A2E3E;
+  --color-ink: #1A1A1A;
+  --color-overlay-dark: rgba(26, 46, 62, 0.55);
+  --color-overlay-light: rgba(26, 46, 62, 0.30);
 
   /* === TYPOGRAPHY === */
-  --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-heading: var(--font-dm-sans), system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
 
   --text-hero: clamp(2.5rem, 5vw, 4.5rem);
@@ -48,10 +44,10 @@
   --space-lg: 2rem;
   --space-xl: 4rem;
   --space-2xl: 8rem;
-  --space-section: clamp(4rem, 8vw, 8rem);
+  --space-section: clamp(3rem, 6vw, 6rem);
 
   /* === LAYOUT === */
-  --max-width-content: 1200px;
+  --max-width-content: 1280px;
   --max-width-text: 680px;
   --max-width-wide: 1440px;
   --grid-gap: 1rem;
@@ -60,28 +56,11 @@
   /* === EFFECTS === */
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
-  --shadow-card: 0 1px 3px rgba(10, 10, 10, 0.08);
-  --shadow-hover: 0 4px 12px rgba(10, 10, 10, 0.15);
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-}
-
-/* ============================================================
-   DARK MODE
-   ============================================================ */
-html.dark {
-  --color-black: #FAFAFA;
-  --color-white-pure: #1A1A2E;
-  --color-gray-light: #2C2C3A;
-  --color-gray-mid: #9CA3AF;
-  --color-accent-soft: #3D3520;
-  --color-accent-text: #0A0A0A;
-  --color-ocean: #3B9FD4;
-  --color-ocean-dark: #0F76B0;
-
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 1px 3px rgba(26, 46, 62, 0.08);
+  --shadow-hover: 0 4px 12px rgba(26, 46, 62, 0.15);
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
 }
 
 /* ============================================================
@@ -95,7 +74,6 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html,
@@ -105,8 +83,8 @@ body {
 }
 
 body {
-  color: var(--color-black);
-  background: var(--color-white-pure);
+  color: var(--color-ink);
+  background: var(--color-sand);
   font-family: var(--font-body);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
@@ -129,7 +107,7 @@ img {
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--color-charcoal);
+  background: var(--color-deep);
   color: #FFFFFF;
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
@@ -139,39 +117,6 @@ img {
 
 .skip-to-content:focus {
   top: 1rem;
-}
-
-/* ============================================================
-   SHIMMER / LOADING ANIMATION
-   ============================================================ */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--color-gray-light) 25%,
-    #e5e7eb 50%,
-    var(--color-gray-light) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-html.dark .animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--color-gray-light) 25%,
-    #3D3D50 50%,
-    var(--color-gray-light) 75%
-  );
-  background-size: 200% 100%;
 }
 
 /* ============================================================
@@ -189,7 +134,25 @@ html.dark .animate-shimmer {
 }
 
 .page-transition {
-  animation: page-fade-in 0.3s ease-out;
+  animation: page-fade-in 0.4s ease-out;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-up {
+  animation: reveal-up 0.6s ease-out both;
 }
 
 /* ============================================================
@@ -207,7 +170,7 @@ html.dark .animate-shimmer {
 @keyframes menu-item {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -228,6 +191,6 @@ html.dark .animate-shimmer {
    HEBREW / RTL FONT OVERRIDE
    ============================================================ */
 html[lang="he"] {
-  --font-heading: var(--font-rubik), var(--font-space-grotesk), system-ui, sans-serif;
+  --font-heading: var(--font-heebo), var(--font-dm-sans), system-ui, sans-serif;
   --font-body: var(--font-heebo), var(--font-inter), system-ui, sans-serif;
 }
