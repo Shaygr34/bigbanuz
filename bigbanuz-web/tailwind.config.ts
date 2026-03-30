@@ -25,7 +25,10 @@ const config: Config = {
           dark: "#E8E0D0",
         },
         deep: "#1A2E3E",
-        ink: "#1A1A1A",
+        ink: {
+          DEFAULT: "#1A1A1A",
+          muted: "#5A5A5A",
+        },
         overlay: {
           dark: "rgba(26, 46, 62, 0.55)",
           light: "rgba(26, 46, 62, 0.30)",
