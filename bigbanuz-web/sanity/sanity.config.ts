@@ -1,63 +1,63 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
-import type { StructureBuilder } from "sanity/structure";
 import { schemaTypes } from "./schemas";
 
-const deskStructure = (S: StructureBuilder) =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const deskStructure = (S: any) =>
   S.list()
     .id("root")
     .title("Amit Banuz")
     .items([
-      // Singletons
       S.listItem()
         .id("siteSettings")
         .title("Site Settings")
-        .icon(() => "⚙️")
-        .child(S.document().schemaType("siteSettings").documentId("siteSettings")),
+        .child(
+          S.document()
+            .schemaType("siteSettings")
+            .documentId("GIeLRwpwGsiztVDy2VqNxj")
+        ),
       S.listItem()
         .id("homepage")
         .title("Homepage")
-        .icon(() => "🏠")
-        .child(S.document().schemaType("pageHome").documentId("pageHome")),
+        .child(
+          S.document()
+            .schemaType("pageHome")
+            .documentId("01V69ip6laclT1AsFy4mXf")
+        ),
       S.listItem()
         .id("aboutPage")
         .title("About Page")
-        .icon(() => "👤")
-        .child(S.document().schemaType("pageAbout").documentId("pageAbout")),
+        .child(
+          S.document()
+            .schemaType("pageAbout")
+            .documentId("692ee9e6-8bf7-4819-b968-a3c5c0e30547")
+        ),
       S.divider(),
-      // Content
       S.listItem()
         .id("videoReels")
         .title("Video Reels")
-        .icon(() => "🎬")
         .child(S.documentTypeList("videoReel").title("Video Reels")),
       S.listItem()
         .id("work")
         .title("Work")
-        .icon(() => "📸")
         .child(S.documentTypeList("gallery").title("Work")),
       S.listItem()
         .id("stories")
         .title("Stories")
-        .icon(() => "📖")
         .child(S.documentTypeList("story").title("Stories")),
       S.listItem()
         .id("brands")
         .title("Brands")
-        .icon(() => "🤝")
         .child(S.documentTypeList("brand").title("Brands")),
       S.divider(),
-      // Hidden from nav but accessible
       S.listItem()
         .id("leads")
         .title("Leads")
-        .icon(() => "📩")
         .child(S.documentTypeList("lead").title("Leads")),
       S.listItem()
         .id("features")
         .title("Features & Press")
-        .icon(() => "📰")
         .child(S.documentTypeList("feature").title("Features & Press")),
     ]);
 
