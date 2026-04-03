@@ -4,7 +4,7 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
 
 export default defineConfig({
-  name: "amit-banuz",
+  name: "smile-amigo",
   title: "Amit Banuz CMS",
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "6q0h6ivm",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
