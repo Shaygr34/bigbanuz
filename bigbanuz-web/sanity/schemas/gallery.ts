@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "gallery",
-  title: "Gallery",
+  title: "Work",
   type: "document",
   fields: [
     defineField({
@@ -145,8 +145,15 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "lane",
+      tags: "tags",
       media: "images.0.image",
+    },
+    prepare({ title, tags, media }) {
+      return {
+        title,
+        subtitle: tags?.length ? tags.join(", ") : "no tags",
+        media,
+      };
     },
   },
 });
