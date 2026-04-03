@@ -1,10 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { client } from "@/lib/sanity/client";
-import { homePageQuery, pageAboutQuery } from "@/lib/sanity/queries";
+import { homePageQuery, pageAboutQuery, videoReelsQuery, brandsQuery } from "@/lib/sanity/queries";
 import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import Hero from "@/components/sections/Hero";
+import VideoReelGrid from "@/components/sections/VideoReelGrid";
 import WorkGrid from "@/components/sections/WorkGrid";
 import MiniAbout from "@/components/sections/MiniAbout";
+import BrandsBar from "@/components/sections/BrandsBar";
 import SocialShowcase from "@/components/sections/SocialShowcase";
 import SocialFeed from "@/components/sections/SocialFeed";
 import SimpleCTA from "@/components/sections/SimpleCTA";
@@ -49,6 +51,21 @@ interface AboutData {
   locations?: AboutLocation[];
 }
 
+interface VideoReelData {
+  _id: string;
+  title: string;
+  videoUrl: string;
+  thumbnail: SanityImage;
+  tag?: string;
+}
+
+interface BrandData {
+  _id: string;
+  name: string;
+  logo: SanityImage;
+  url?: string;
+}
+
 export default async function HomePage({
   params,
 }: {
@@ -60,15 +77,48 @@ export default async function HomePage({
 
   let data: HomePageData | null = null;
   let aboutData: AboutData | null = null;
+  let videoReels: VideoReelData[] = [];
+  let brands: BrandData[] = [];
 
   try {
-    [data, aboutData] = await Promise.all([
+    [data, aboutData, videoReels, brands] = await Promise.all([
       client.fetch<HomePageData>(homePageQuery, { locale }, { next: { tags: ["sanity"] } }),
       client.fetch<AboutData>(pageAboutQuery, { locale }, { next: { tags: ["sanity"] } }),
+      client.fetch<VideoReelData[]>(videoReelsQuery, {}, { next: { tags: ["sanity"] } }),
+      client.fetch<BrandData[]>(brandsQuery, {}, { next: { tags: ["sanity"] } }),
     ]);
   } catch {
     // CMS not configured yet — render with fallback
   }
+
+  // Process video reels — generate thumbnail URLs + blur
+  const processedReels = await Promise.all(
+    (videoReels || []).map(async (reel) => {
+      const thumbnailUrl = reel.thumbnail?.asset?._ref
+        ? urlFor(reel.thumbnail).width(600).height(1067).quality(80).auto("format").url()
+        : "";
+      const thumbnailBlur = reel.thumbnail ? await getBlurDataURL(reel.thumbnail) : undefined;
+
+      return {
+        _id: reel._id,
+        title: reel.title,
+        videoUrl: reel.videoUrl || "",
+        thumbnailUrl,
+        thumbnailBlur,
+        tag: reel.tag,
+      };
+    })
+  );
+
+  // Process brands — generate logo URLs
+  const processedBrands = (brands || []).map((brand) => ({
+    _id: brand._id,
+    name: brand.name,
+    logoUrl: brand.logo?.asset?._ref
+      ? urlFor(brand.logo).height(80).auto("format").url()
+      : "",
+    url: brand.url,
+  }));
 
   // Flatten gallery images from featured galleries
   const galleryEntries: Array<{
@@ -123,11 +173,20 @@ export default async function HomePage({
         name={t("name")}
         subtitle={t("subtitle")}
       />
+      <VideoReelGrid
+        reels={processedReels}
+        title={t("videoTitle")}
+        subtitle={t("videoSubtitle")}
+      />
       <WorkGrid
         images={galleryImages}
         title={t("workTitle")}
         viewAllLabel={t("workViewAll")}
         viewAllHref="/work"
+      />
+      <BrandsBar
+        brands={processedBrands}
+        title={t("brandsTitle")}
       />
       <MiniAbout
         imageUrl={miniAboutImageUrl}

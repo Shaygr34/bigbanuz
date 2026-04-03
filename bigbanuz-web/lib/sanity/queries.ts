@@ -207,6 +207,35 @@ export const pageAboutQuery = groq`
   }
 `;
 
+// Video Reels — featured on homepage
+export const videoReelsQuery = groq`
+  *[_type == "videoReel" && featured == true] | order(sortOrder asc) {
+    _id,
+    title,
+    "videoUrl": video.asset->url,
+    thumbnail {
+      asset,
+      hotspot,
+      crop
+    },
+    tag
+  }
+`;
+
+// Brands
+export const brandsQuery = groq`
+  *[_type == "brand"] | order(sortOrder asc) {
+    _id,
+    name,
+    logo {
+      asset,
+      hotspot,
+      crop
+    },
+    url
+  }
+`;
+
 // Site settings SEO (consumed by layout metadata)
 export const siteSettingsSeoQuery = groq`
   *[_type == "siteSettings"][0] {
