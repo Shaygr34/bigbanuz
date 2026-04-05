@@ -19,7 +19,7 @@ Pivoted from "Smile Amigo" dual-lane portfolio → unified "Amit Banuz — צל�
 ## Key Paths
 - Pages: app/[locale]/ (5 routes: /, /work, /about, /stories, /contact)
 - Components: components/ (sections/, ui/, layout/)
-- Sanity schemas: sanity/schemas/
+- Sanity schemas: sanity/schemas/ (9 active types)
 - GROQ queries: lib/sanity/queries.ts
 - Server actions: lib/actions/
 - Instagram API: lib/instagram.ts (Graph API v21.0, ISR 1hr)
@@ -40,29 +40,54 @@ Pivoted from "Smile Amigo" dual-lane portfolio → unified "Amit Banuz — צל�
 10. No "Smile Amigo" in user-facing content — brand is "Amit Banuz"
 11. Hebrew copy: casual, young Israeli voice. No formal "אנו" or business jargon.
 12. Instagram embeds DON'T WORK (Meta login wall). Use Graph API image fetch only.
+13. **Workspace name MUST stay "smile-amigo"** — changing it breaks Studio caching. Title is "Amit Banuz CMS".
+14. **Custom desk structure breaks in production** — use schema-level title/ordering instead.
 
 ## Nav Structure
 Work (/work) | About (/about) | Stories (/stories) | Contact (/contact)
 Driven by `NAV_LINKS` in `lib/utils/constants.ts`.
 Killed routes: /events → /work?tag=events, /surf → /work?tag=ocean (301 redirects)
 
-## Schema Types (10)
-siteSettings, pageHome, pageAbout, packages (hidden), gallery, testimonial (hidden), lead, productPrint (hidden), story, feature
+## Schema Types (9 active in Studio)
+siteSettings, pageHome, pageAbout, videoReel, brand, gallery (titled "Work"), story, lead, feature
 
-## V1.4 Status (March 30, 2026)
-35 commits. Full redesign from "Smile Amigo" split-gateway to unified creator brand.
-- Syne + Secular One typography
-- Ocean/golden/sand palette, no dark mode
-- Full-viewport hero, highlights grid, mini-about, Instagram CTA, WhatsApp CTA
-- /work unified portfolio with tag filtering
-- Casual Hebrew copy throughout
-- Image quality: hero 90/2560, gallery 85/1200
+**Removed from Studio sidebar:** testimonial, packages, productPrint (schemas still in repo but not in index.ts)
+
+## Homepage Layout (V1.5)
+Hero → VideoReelGrid → WorkGrid → BrandsBar → MiniAbout → SocialShowcase → SocialFeed → SimpleCTA
+
+All content sections are "content-gated" — return null when empty. Sections only appear when CMS has data.
+
+## V1.5 Status (April 3, 2026)
+41 commits total (6 in this session). Studio overhaul + video/brands infrastructure.
+
+### What's New (V1.5)
+- Studio renamed "Amit Banuz CMS", sidebar cleaned (dead types removed)
+- Gallery renamed to "Work" in Studio, preview shows tags instead of lane
+- `videoReel` schema: file upload + thumbnail + tag + featured flag
+- `brand` schema: logo + name + URL
+- `VideoReelGrid` component: 9:16 vertical videos, autoplay on scroll via IntersectionObserver
+- `BrandsBar` component: grayscale logos with hover color reveal
+- Homepage layout updated: Hero → Reels → Work → Brands → About → Social → CTA
+- All 4 gallery collections have proper tags (surf, ocean, events, people, energy, golden-hour, travel)
+- Tag filtering on /work page now works correctly
+- GROQ queries added: videoReelsQuery, brandsQuery
+- i18n strings added: videoTitle, videoSubtitle, brandsTitle (en/he)
+
+### What's Live
+- Full-viewport hero with ocean photo + "עמית בנוז · צלם · יוצר"
+- Work highlights grid (photos from Surf Action + Events Portfolio + Surf Lifestyle)
+- MiniAbout with Hebrew bio + location pills
+- Instagram CTA section
+- WhatsApp CTA
+- /work unified portfolio with working tag filtering
+- Sanity Studio fully editable at /studio
 
 ## Blocked On
 - Instagram tokens (awaiting Amit credentials)
-- Morocco content (Amit returning March 30)
+- Morocco content (video reels, hero video, new gallery photos)
 - Photo of Amit (miniAbout + About hero)
-- Gallery content diversification (needs surf photos in highlights)
+- Brand logos (Amit needs to provide)
 
 ## Brand
 - Display: "Amit Banuz"

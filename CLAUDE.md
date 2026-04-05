@@ -47,7 +47,7 @@ app/[locale]/              → Pages (5 routes × 2 locales)
 app/[locale]/work/         → Unified portfolio with tag filtering
 app/studio/[[...index]]/   → Embedded Sanity Studio
 app/api/revalidate/        → ISR webhook endpoint
-components/sections/       → Hero, WorkGrid, MiniAbout, SocialShowcase, SimpleCTA, SocialFeed, WorkGallery
+components/sections/       → Hero, VideoReelGrid, WorkGrid, BrandsBar, MiniAbout, SocialShowcase, SimpleCTA, SocialFeed, WorkGallery
 components/ui/             → Reusable UI components (Lightbox, ScrollReveal, etc.)
 components/layout/         → Navbar, MobileMenu, Footer
 lib/sanity/client.ts       → Read + write Sanity clients
@@ -57,7 +57,7 @@ lib/instagram.ts           → Instagram Graph API v21.0 client (ISR 1hr)
 lib/actions/               → Server actions (contact leads)
 lib/utils/constants.ts     → SITE_NAME, NAV_LINKS, WHATSAPP_PHONE, INSTAGRAM_URL
 app/api/cron/refresh-instagram/ → Long-lived token refresh (1st/15th monthly)
-sanity/schemas/            → 10 schema types
+sanity/schemas/            → 9 active schema types (videoReel, brand added; testimonial, packages, productPrint removed from index)
 messages/en.json           → English i18n strings
 messages/he.json           → Hebrew i18n strings
 app/globals.css            → CSS custom properties + animations
@@ -81,22 +81,21 @@ Driven by `NAV_LINKS` in `lib/utils/constants.ts`.
 
 **Killed routes:** `/events` and `/surf` — 301 redirect to `/work?tag=events` and `/work?tag=ocean` respectively (configured in `next.config.mjs`).
 
-## Schema Types (10)
+## Schema Types (9 active in Studio)
 
-siteSettings, pageHome, pageAbout, packages (hidden), gallery, testimonial (hidden), lead, productPrint (hidden), story, feature
+siteSettings, pageHome, pageAbout, videoReel, brand, gallery (titled "Work"), story, lead, feature
 
-**Key schema additions (March 30, 2026):**
-- `pageHome.heroVideo` — URL field for optional hero video
-- `pageHome.miniAboutImage` — photo of Amit for homepage about section
-- `pageHome.miniAboutText` — bilingual short bio (en/he object)
-- `pageHome.featuredPosts` — array of social post URLs (Instagram/TikTok) for future embedding
-- `gallery.tags` — array of strings (ocean, golden-hour, people, energy, travel, events, surf)
-- `gallery.lane` — hidden (was required, now optional with initialValue "mixed")
-- `gallery.category` — hidden
+**Removed from Studio sidebar (April 2026):** testimonial, packages, productPrint — schemas in repo but removed from index.ts
 
-## Current State (V1.4 — March 30, 2026)
+**Key schemas (April 3, 2026):**
+- `videoReel` — file upload (video), thumbnail (image), tag, featured, sortOrder. Featured reels auto-show on homepage.
+- `brand` — logo (image), name, url, sortOrder. Shows in BrandsBar on homepage.
+- `gallery` — titled "Work" in Studio. Preview shows tags. Tags: ocean, golden-hour, people, energy, travel, events, surf.
+- `pageHome` — heroImage, heroVideo (URL), heroHeadline, heroSubline, miniAboutImage, miniAboutText (en/he), featuredGallery (refs), featuredPosts, bottomCtaText
 
-**35 commits shipped in this session.** Full redesign + 4 elevation passes.
+## Current State (V1.5 — April 3, 2026)
+
+**41 commits total.** V1.0–V1.4 (35 commits, March 30) + V1.5 Studio overhaul (6 commits, April 3).
 
 ### What's Live
 - Full-viewport hero with wave photo + "עמית בנוז · צלם · יוצר"
