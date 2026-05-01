@@ -26,8 +26,20 @@ export async function generateMetadata({
   };
 }
 
+interface SanityImageAsset {
+  _id?: string;
+  url?: string;
+  metadata?: {
+    dimensions?: {
+      width?: number;
+      height?: number;
+      aspectRatio?: number;
+    };
+  };
+}
+
 interface SanityImage {
-  asset?: { _ref?: string };
+  asset?: SanityImageAsset | { _ref?: string };
   hotspot?: { x: number; y: number };
   crop?: { top: number; bottom: number; left: number; right: number };
 }
@@ -44,7 +56,6 @@ interface GalleryDoc {
   _id: string;
   title: string;
   tags?: string[];
-  lane?: string;
   images?: GalleryImage[];
 }
 
@@ -58,12 +69,20 @@ export interface FlatImage {
 }
 
 function getImageUrl(image?: SanityImage, width = 1200): string {
-  if (!image?.asset?._ref) return "";
+  if (!image?.asset) return "";
   try {
     return urlFor(image).width(width).quality(85).auto("format").url();
   } catch {
     return "";
   }
+}
+
+function getImageDimensions(image?: SanityImage): { width: number; height: number } {
+  const asset = image?.asset as SanityImageAsset | undefined;
+  const w = asset?.metadata?.dimensions?.width;
+  const h = asset?.metadata?.dimensions?.height;
+  if (w && h) return { width: w, height: h };
+  return { width: 800, height: 600 }; // fallback
 }
 
 export default async function WorkPage({
@@ -87,19 +106,20 @@ export default async function WorkPage({
     // CMS not configured yet
   }
 
-  // Flatten all images from all galleries, attaching parent gallery tags + blur placeholders
+  // Flatten all images from all galleries, attaching parent gallery tags + real dimensions
   const flatImagesRaw = galleries.flatMap((gallery) =>
     (gallery.images || [])
       .map((img) => {
         const url = getImageUrl(img.image);
         if (!url) return null;
+        const dims = getImageDimensions(img.image);
         return {
           url,
           alt: img.alt || gallery.title || "Photo by Amit Banuz",
           tags: gallery.tags || [],
-          width: 800,
-          height: 600,
-          image: img.image, // keep ref for blur generation
+          width: dims.width,
+          height: dims.height,
+          image: img.image,
         };
       })
       .filter((item): item is NonNullable<typeof item> => item !== null)
@@ -109,8 +129,10 @@ export default async function WorkPage({
   const flatImages: FlatImage[] = await Promise.all(
     flatImagesRaw.map(async ({ image, ...rest }) => {
       let blurDataURL = "";
-      if (image?.asset?._ref) {
+      try {
         blurDataURL = await getBlurDataURL(image);
+      } catch {
+        // skip blur for this image
       }
       return { ...rest, blurDataURL };
     })
@@ -119,13 +141,11 @@ export default async function WorkPage({
   // Build tag labels from i18n
   const tagLabels: Record<string, string> = {
     all: t("tagAll"),
-    ocean: t("tagOcean"),
-    "golden-hour": t("tagGoldenHour"),
-    people: t("tagPeople"),
-    energy: t("tagEnergy"),
-    travel: t("tagTravel"),
     events: t("tagEvents"),
-    surf: t("tagSurf"),
+    magnets: t("tagMagnets"),
+    corporate: t("tagCorporate"),
+    private: t("tagPrivate"),
+    outdoor: t("tagOutdoor"),
   };
 
   return (

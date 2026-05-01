@@ -2,74 +2,69 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "lead",
-  title: "Lead",
+  title: "פניות",
   type: "document",
   fields: [
     defineField({
       name: "name",
-      title: "Name",
+      title: "שם",
+      description: "שם הפונה מטופס יצירת קשר.",
       type: "string",
     }),
     defineField({
       name: "email",
-      title: "Email",
+      title: "אימייל",
       type: "string",
     }),
     defineField({
       name: "phone",
-      title: "Phone",
+      title: "טלפון",
       type: "string",
     }),
     defineField({
       name: "source",
-      title: "Source",
+      title: "מקור",
+      description: "מאיפה הגיעה הפנייה.",
       type: "string",
       options: {
         list: [
-          { title: "Events Contact", value: "events-contact" },
-          { title: "Surf Collaboration", value: "surf-collab" },
-          { title: "General Contact", value: "general-contact" },
+          { title: "אירוע", value: "events-contact" },
+          { title: "מגנטים", value: "magnets" },
+          { title: "יצירת קשר כללי", value: "general-contact" },
         ],
       },
     }),
     defineField({
-      name: "packageInterest",
-      title: "Package Interest",
-      type: "string",
-    }),
-    defineField({
       name: "projectDescription",
-      title: "Project Description",
+      title: "תיאור הפרויקט",
+      description: "ההודעה שנכתבה בטופס.",
       type: "text",
     }),
     defineField({
-      name: "budgetRange",
-      title: "Budget Range",
-      type: "string",
-    }),
-    defineField({
       name: "status",
-      title: "Status",
+      title: "סטטוס",
+      description: "מצב הטיפול בפנייה.",
       type: "string",
       options: {
         list: [
-          { title: "New", value: "new" },
-          { title: "Contacted", value: "contacted" },
-          { title: "Converted", value: "converted" },
-          { title: "Archived", value: "archived" },
+          { title: "חדש", value: "new" },
+          { title: "יצרתי קשר", value: "contacted" },
+          { title: "סגור — הצלחה", value: "converted" },
+          { title: "ארכיון", value: "archived" },
         ],
       },
       initialValue: "new",
     }),
     defineField({
       name: "notes",
-      title: "Internal Notes",
+      title: "הערות פנימיות",
+      description: "הערות לשימוש פנימי בלבד.",
       type: "text",
     }),
   ],
   orderings: [
     {
-      title: "Created At",
+      title: "תאריך יצירה",
       name: "createdAt",
       by: [{ field: "_createdAt", direction: "desc" }],
     },
@@ -77,7 +72,7 @@ export default defineType({
   preview: {
     select: {
       title: "name",
-      subtitle: "source",
+      subtitle: "status",
     },
   },
 });

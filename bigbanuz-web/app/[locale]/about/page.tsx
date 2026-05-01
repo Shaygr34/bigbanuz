@@ -7,12 +7,6 @@ import { urlFor, getBlurDataURL } from "@/lib/sanity/image";
 import SimpleCTA from "@/components/sections/SimpleCTA";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
-const LOCATION_NAMES_HE: Record<string, string> = {
-  "Philippines": "פיליפינים",
-  "Sri Lanka": "סרי לנקה",
-  "Israel": "ישראל",
-  "Australia": "אוסטרליה",
-};
 
 export async function generateMetadata({
   params,
@@ -46,11 +40,6 @@ interface AboutData {
   bio?: string;
   approachTitle?: string;
   approach?: string;
-  locations?: Array<{
-    name: string;
-    description?: string;
-    status?: string;
-  }>;
   heroImage?: SanityImage;
 }
 
@@ -94,18 +83,10 @@ export default async function AboutPage({
   // CMS-first with i18n fallback
   const headline = aboutData?.headline || t("heroHeadline");
   const subline = aboutData?.subline || t("heroSubline");
-  const bio = aboutData?.bio || `${t("storyP1")} ${t("storyP2")} ${t("storyP3")}`;
+  const bio = aboutData?.bio || `${t("storyP1")}\n\n${t("storyP2")}`;
   const approachTitle = aboutData?.approachTitle || t("approachTitle");
-  const approach = aboutData?.approach || `${t("approachP1")} ${t("approachP2")}`;
+  const approach = aboutData?.approach || `${t("approachP1")}\n\n${t("approachP2")}`;
 
-  const locations = aboutData?.locations?.length
-    ? aboutData.locations
-    : [
-        { name: t("locationPhilippines") },
-        { name: t("locationSriLanka") },
-        { name: t("locationIsrael") },
-        { name: t("locationAustralia"), status: "coming-soon" },
-      ];
 
   return (
     <>
@@ -136,30 +117,6 @@ export default async function AboutPage({
         <div className="mx-auto max-w-text px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-body text-ink-muted leading-relaxed">{bio}</p>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Locations — pill style */}
-      <section className="bg-sand-dark py-section">
-        <div className="mx-auto max-w-content px-4 sm:px-6 lg:px-8 text-center">
-          <ScrollReveal>
-            <h2 className="font-heading text-h2 font-bold text-ink mb-8">
-              {t("locationsTitle")}
-            </h2>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {locations.map((loc) => (
-                <span
-                  key={loc.name}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-sand px-4 py-2 text-body text-ink-muted"
-                >
-                  {locale === "he" ? (LOCATION_NAMES_HE[loc.name] || loc.name) : loc.name}
-                  {loc.status === "coming-soon" && (
-                    <span className="text-caption text-golden">&#10022;</span>
-                  )}
-                </span>
-              ))}
-            </div>
           </ScrollReveal>
         </div>
       </section>

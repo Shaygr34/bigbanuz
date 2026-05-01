@@ -2,70 +2,43 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "gallery",
-  title: "Work",
+  title: "עבודות",
   type: "document",
   fields: [
     defineField({
       name: "title",
-      title: "Title",
+      title: "שם האוסף",
+      description: "שם פנימי לאוסף התמונות (למשל: 'חתונה כהן 2026'). מופיע ברשימה בסטודיו.",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "כתובת URL",
+      description: "נוצר אוטומטית מהשם. לא צריך לשנות.",
       type: "slug",
       options: { source: "title", maxLength: 96 },
     }),
     defineField({
-      name: "lane",
-      title: "Lane",
-      type: "string",
-      options: {
-        list: [
-          { title: "Events", value: "events" },
-          { title: "Surf", value: "surf" },
-          { title: "Mixed", value: "mixed" },
-        ],
-      },
-      initialValue: "mixed",
-      hidden: true,
-    }),
-    defineField({
       name: "tags",
-      title: "Tags",
+      title: "קטגוריות",
+      description: "בחר קטגוריות לסינון בעמוד הגלריה. ניתן לבחור יותר מאחת.",
       type: "array",
       of: [{ type: "string" }],
       options: {
         list: [
-          { title: "Ocean", value: "ocean" },
-          { title: "Golden Hour", value: "golden-hour" },
-          { title: "People", value: "people" },
-          { title: "Energy", value: "energy" },
-          { title: "Travel", value: "travel" },
-          { title: "Events", value: "events" },
-          { title: "Surf", value: "surf" },
-        ],
-      },
-    }),
-    defineField({
-      name: "category",
-      title: "Category",
-      hidden: true,
-      type: "string",
-      options: {
-        list: [
-          { title: "Action", value: "action" },
-          { title: "Lifestyle", value: "lifestyle" },
-          { title: "Destinations", value: "destinations" },
-          { title: "Behind the Lens", value: "behind-the-lens" },
-          { title: "Events", value: "events" },
+          { title: "אירועים — Events", value: "events" },
+          { title: "מגנטים — Magnets", value: "magnets" },
+          { title: "חברות — Corporate", value: "corporate" },
+          { title: "פרטי — Private", value: "private" },
+          { title: "חוץ — Outdoor", value: "outdoor" },
         ],
       },
     }),
     defineField({
       name: "images",
-      title: "Images",
+      title: "תמונות",
+      description: "הוסף תמונות לאוסף. כל תמונה צריכה טקסט חלופי (alt).",
       type: "array",
       of: [
         {
@@ -73,30 +46,34 @@ export default defineType({
           fields: [
             defineField({
               name: "image",
-              title: "Image",
+              title: "תמונה",
               type: "image",
               options: { hotspot: true },
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: "alt",
-              title: "Alt Text",
+              title: "טקסט חלופי (alt)",
+              description: "תיאור קצר של התמונה לנגישות ו-SEO.",
               type: "string",
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: "caption",
-              title: "Caption",
+              title: "כיתוב",
+              description: "טקסט שמופיע מתחת לתמונה (אופציונלי).",
               type: "string",
             }),
             defineField({
               name: "location",
-              title: "Location",
+              title: "מיקום",
+              description: "היכן צולמה התמונה (אופציונלי).",
               type: "string",
             }),
             defineField({
               name: "featured",
-              title: "Featured",
+              title: "מובחרת",
+              description: "סמן אם זו תמונה מובחרת.",
               type: "boolean",
               initialValue: false,
             }),
@@ -112,23 +89,25 @@ export default defineType({
     }),
     defineField({
       name: "sortOrder",
-      title: "Sort Order",
+      title: "סדר תצוגה",
+      description: "מספר נמוך = מוצג ראשון. השאר 0 לסדר ברירת מחדל.",
       type: "number",
       initialValue: 0,
     }),
     defineField({
       name: "seo",
       title: "SEO",
+      description: "הגדרות SEO לאוסף (אופציונלי).",
       type: "object",
       fields: [
         defineField({
           name: "title",
-          title: "SEO Title",
+          title: "כותרת SEO",
           type: "string",
         }),
         defineField({
           name: "description",
-          title: "SEO Description",
+          title: "תיאור SEO",
           type: "text",
           rows: 2,
         }),
@@ -137,7 +116,7 @@ export default defineType({
   ],
   orderings: [
     {
-      title: "Sort Order",
+      title: "סדר תצוגה",
       name: "sortOrder",
       by: [{ field: "sortOrder", direction: "asc" }],
     },
@@ -151,7 +130,7 @@ export default defineType({
     prepare({ title, tags, media }) {
       return {
         title,
-        subtitle: tags?.length ? tags.join(", ") : "no tags",
+        subtitle: tags?.length ? tags.join(", ") : "ללא קטגוריות",
         media,
       };
     },

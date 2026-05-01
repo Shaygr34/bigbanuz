@@ -2,103 +2,70 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "pageAbout",
-  title: "About Page",
+  title: "עמוד אודות",
   type: "document",
   fields: [
     defineField({
+      name: "heroImage",
+      title: "תמונת רקע",
+      description: "תמונה גדולה בראש עמוד ה'עליי'. מומלץ תמונה של עמית בעבודה.",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
       name: "headline",
-      title: "Headline",
+      title: "כותרת",
+      description: "הכותרת הראשית בעמוד האודות.",
       type: "object",
       fields: [
-        { name: "en", type: "string", title: "English" },
-        { name: "he", type: "string", title: "Hebrew" },
+        { name: "en", type: "string", title: "אנגלית" },
+        { name: "he", type: "string", title: "עברית" },
       ],
     }),
     defineField({
       name: "subline",
-      title: "Subline",
+      title: "תת-כותרת",
+      description: "מופיעה מתחת לכותרת הראשית.",
       type: "object",
       fields: [
-        { name: "en", type: "string", title: "English" },
-        { name: "he", type: "string", title: "Hebrew" },
+        { name: "en", type: "string", title: "אנגלית" },
+        { name: "he", type: "string", title: "עברית" },
       ],
     }),
     defineField({
       name: "bio",
-      title: "Bio / Story",
+      title: "אודות / ביוגרפיה",
+      description: "הטקסט הראשי בעמוד — מי את/ה, מה עושים. הפרד פסקאות עם שורה ריקה.",
       type: "object",
       fields: [
-        { name: "en", type: "text", title: "English", rows: 10 },
-        { name: "he", type: "text", title: "Hebrew", rows: 10 },
+        { name: "en", type: "text", title: "אנגלית", rows: 6 },
+        { name: "he", type: "text", title: "עברית", rows: 6 },
       ],
-      description: "Paragraphs separated by double newlines.",
     }),
     defineField({
       name: "approachTitle",
-      title: "Approach Section Title",
+      title: "כותרת 'הגישה שלי'",
+      description: "כותרת הסקציה השנייה בעמוד.",
       type: "object",
       fields: [
-        { name: "en", type: "string", title: "English" },
-        { name: "he", type: "string", title: "Hebrew" },
+        { name: "en", type: "string", title: "אנגלית" },
+        { name: "he", type: "string", title: "עברית" },
       ],
     }),
     defineField({
       name: "approach",
-      title: "Approach Paragraphs",
+      title: "טקסט 'הגישה שלי'",
+      description: "הסבר על גישת העבודה. הפרד פסקאות עם שורה ריקה.",
       type: "object",
       fields: [
-        { name: "en", type: "text", title: "English", rows: 6 },
-        { name: "he", type: "text", title: "Hebrew", rows: 6 },
+        { name: "en", type: "text", title: "אנגלית", rows: 4 },
+        { name: "he", type: "text", title: "עברית", rows: 4 },
       ],
-      description: "Paragraphs separated by double newlines.",
-    }),
-    defineField({
-      name: "locations",
-      title: "Locations",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "name", type: "string", title: "Name" }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "object",
-              fields: [
-                { name: "en", type: "string", title: "English" },
-                { name: "he", type: "string", title: "Hebrew" },
-              ],
-            }),
-            defineField({
-              name: "status",
-              title: "Status",
-              type: "string",
-              options: {
-                list: [
-                  { title: "Active", value: "active" },
-                  { title: "Coming Soon", value: "coming-soon" },
-                ],
-              },
-              initialValue: "active",
-            }),
-          ],
-          preview: {
-            select: { title: "name", subtitle: "status" },
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: "heroImage",
-      title: "Hero Image",
-      type: "image",
-      options: { hotspot: true },
     }),
   ],
   preview: {
     prepare() {
-      return { title: "About Page" };
+      return { title: "עמוד אודות" };
     },
   },
 });

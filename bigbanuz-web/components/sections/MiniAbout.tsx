@@ -1,23 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const LOCATION_NAMES_HE: Record<string, string> = {
-  "Philippines": "פיליפינים",
-  "Sri Lanka": "סרי לנקה",
-  "Israel": "ישראל",
-  "Australia": "אוסטרליה",
-};
-
 interface MiniAboutProps {
   imageUrl: string;
   text: string;
   moreLabel: string;
   moreHref: string;
-  locations?: Array<{ name: string; status?: string }>;
-  locale?: string;
 }
 
-export default function MiniAbout({ imageUrl, text, moreLabel, moreHref, locations, locale }: MiniAboutProps) {
+export default function MiniAbout({ imageUrl, text, moreLabel, moreHref }: MiniAboutProps) {
   return (
     <section className="bg-sand-dark py-section">
       <div className="mx-auto max-w-content px-4">
@@ -35,27 +26,10 @@ export default function MiniAbout({ imageUrl, text, moreLabel, moreHref, locatio
             </div>
           )}
 
-          {/* Text + locations */}
+          {/* Text */}
           <div className={`flex-1 text-center ${imageUrl ? "md:text-start" : ""}`}>
             {text && (
               <p className="text-body text-ink-muted leading-relaxed max-w-text">{text}</p>
-            )}
-
-            {/* Locations strip */}
-            {locations && locations.length > 0 && (
-              <div className={`mt-6 flex flex-wrap gap-2 justify-center ${imageUrl ? "md:justify-start" : ""}`}>
-                {locations.map((loc) => (
-                  <span
-                    key={loc.name}
-                    className="inline-flex items-center gap-1 rounded-full bg-sand px-3 py-1 text-small text-ink-muted"
-                  >
-                    {locale === "he" ? (LOCATION_NAMES_HE[loc.name] || loc.name) : loc.name}
-                    {loc.status === "coming-soon" && (
-                      <span className="text-caption text-golden">&#10022;</span>
-                    )}
-                  </span>
-                ))}
-              </div>
             )}
 
             <Link

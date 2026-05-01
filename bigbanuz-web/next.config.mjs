@@ -13,6 +13,8 @@ const nextConfig = {
     return [
       { source: '/:locale/events', destination: '/:locale/work?tag=events', permanent: true },
       { source: '/:locale/surf', destination: '/:locale/work?tag=ocean', permanent: true },
+      { source: '/:locale/stories', destination: '/:locale/', permanent: true },
+      { source: '/:locale/stories/:slug', destination: '/:locale/', permanent: true },
     ];
   },
 };
