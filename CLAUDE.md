@@ -1,15 +1,16 @@
 # Amit Banuz — CLAUDE.md
 
-> Tetra v0.2 standard. Last updated: March 30, 2026.
+> Tetra v0.2 standard. Last updated: May 2, 2026.
 
 ---
 
 ## Project
 
-**Creator-brand personal site for Amit Banuz (@bigbanuz).**
-Pivoted from "Smile Amigo" dual-lane photographer portfolio to unified personal brand.
-Brand identity: "Amit Banuz — צלם · יוצר" (Photographer · Creator).
-Site is LIVE on Vercel at `bigbanuz.vercel.app` — auto-deploy on push to `main`.
+**Events photography landing page for Amit Banuz (@bigbanuz).**
+Pivoted May 2026 from surf/creator brand → events & magnets photography, targeting Israeli event clients.
+Brand identity: "עמית בנוז — צלם אירועים" (Event Photographer).
+Site is LIVE on Vercel at `bigbanuz.vercel.app` / `amitbanuz.com` — auto-deploy on push to `main`.
+**Handoff sprint complete** — Amit manages content through Sanity Studio.
 
 ## Stack
 
@@ -43,11 +44,11 @@ Site is LIVE on Vercel at `bigbanuz.vercel.app` — auto-deploy on push to `main
 ## Key Paths
 
 ```
-app/[locale]/              → Pages (5 routes × 2 locales)
-app/[locale]/work/         → Unified portfolio with tag filtering
+app/[locale]/              → Pages (4 routes × 2 locales: /, /work, /about, /contact)
+app/[locale]/work/         → Masonry gallery with tag filtering
 app/studio/[[...index]]/   → Embedded Sanity Studio
 app/api/revalidate/        → ISR webhook endpoint
-components/sections/       → Hero, VideoReelGrid, WorkGrid, BrandsBar, MiniAbout, SocialShowcase, SimpleCTA, SocialFeed, WorkGallery
+components/sections/       → Hero, WorkGrid (masonry), WorkGallery (masonry), MiniAbout, SocialShowcase, SimpleCTA
 components/ui/             → Reusable UI components (Lightbox, ScrollReveal, etc.)
 components/layout/         → Navbar, MobileMenu, Footer
 lib/sanity/client.ts       → Read + write Sanity clients
@@ -68,60 +69,73 @@ docs/superpowers/plans/    → Implementation plan
 
 ## Brand
 
-- **Display name**: "Amit Banuz" (all user-facing)
+- **Display name**: "עמית בנוז" / "Amit Banuz"
+- **Tagline**: "צלם אירועים" / "Event Photographer"
 - **Instagram**: @bigbanuz
 - **Email**: iambigbanuz@gmail.com
-- **Domain**: Currently `bigbanuz.vercel.app`. Target: `smile-amigo.com` ($100, not purchased). Single env var swap (`NEXT_PUBLIC_SITE_URL`) when ready.
-- **No "Smile Amigo" anywhere** in user-facing content. The name may become the events sub-brand later.
+- **WhatsApp**: 972548194361
+- **Domain**: `bigbanuz.vercel.app` / `amitbanuz.com`
+- **No "Smile Amigo" anywhere** in user-facing content.
 
 ## Nav Structure
 
-Work (/work) | About (/about) | Stories (/stories) | Contact (/contact)
+Work (/work) | About (/about) | Contact (/contact)
 Driven by `NAV_LINKS` in `lib/utils/constants.ts`.
 
-**Killed routes:** `/events` and `/surf` — 301 redirect to `/work?tag=events` and `/work?tag=ocean` respectively (configured in `next.config.mjs`).
+**301 Redirects (next.config.mjs):** /events → /work?tag=events, /surf → /work?tag=ocean, /stories → /, /stories/:slug → /
 
-## Schema Types (9 active in Studio)
+## Schema Types (5 active in Studio)
 
-siteSettings, pageHome, pageAbout, videoReel, brand, gallery (titled "Work"), story, lead, feature
+הגדרות האתר (siteSettings), עמוד הבית (pageHome), עמוד אודות (pageAbout), עבודות (gallery), פניות (lead)
 
-**Removed from Studio sidebar (April 2026):** testimonial, packages, productPrint — schemas in repo but removed from index.ts
+**Removed from index.ts (files kept in repo):** videoReel, brand, feature, story, testimonial, packages, productPrint
 
-**Key schemas (April 3, 2026):**
-- `videoReel` — file upload (video), thumbnail (image), tag, featured, sortOrder. Featured reels auto-show on homepage.
-- `brand` — logo (image), name, url, sortOrder. Shows in BrandsBar on homepage.
-- `gallery` — titled "Work" in Studio. Preview shows tags. Tags: ocean, golden-hour, people, energy, travel, events, surf.
-- `pageHome` — heroImage, heroVideo (URL), heroHeadline, heroSubline, miniAboutImage, miniAboutText (en/he), featuredGallery (refs), featuredPosts, bottomCtaText
+**All schema fields have Hebrew titles + descriptions** — Reb Adam handoff standard. Each field explains WHERE on the site it appears.
 
-## Current State (V1.5 — April 3, 2026)
+**Key schemas (May 2, 2026):**
+- `gallery` — titled "עבודות" in Studio. Tags: events, magnets, corporate, private, outdoor. Masonry display.
+- `pageHome` — heroImage, heroVideo (URL), heroHeadline, heroSubline, miniAboutImage, miniAboutText (en/he), featuredGallery (refs), bottomCtaText
+- `pageAbout` — heroImage, headline (en/he), subline (en/he), bio (en/he), approachTitle (en/he), approach (en/he). No locations.
+- `lead` — name, email, phone, source (events/magnets/general), projectDescription, status, notes
+- Schema deployed to Sanity cloud — MCP can read it.
 
-**41 commits total.** V1.0–V1.4 (35 commits, March 30) + V1.5 Studio overhaul (6 commits, April 3).
+## Current State (V2.0 — May 2, 2026)
+
+**42 commits total.** V2.0: Full events photography pivot + handoff prep (May 2026).
 
 ### What's Live
-- Full-viewport hero with wave photo + "עמית בנוז · צלם · יוצר"
-- "היילייטס" photo grid (homepage featured work)
-- MiniAbout with Hebrew bio + location pills (פיליפינים, סרי לנקה, ישראל, אוסטרליה ✦)
-- Instagram "עקבו אחריי" CTA section (deep bg)
-- "בואו נדבר" WhatsApp CTA
-- `/work` unified portfolio with tag filtering (client-side, URL params)
-- `/about` "הסיפור שלי" — casual Hebrew copy
-- `/contact` WhatsApp-first, simplified form
-- `/stories` social content hub + story cards
-- Syne + Secular One typography (creative personality)
-- Ocean/golden/sand color system, no dark mode
-- Blur-up image placeholders, quality 90 hero / 85 gallery
-- 301 redirects for killed /events and /surf routes
+- Full-viewport hero with "עמית בנוז · צלם אירועים"
+- Masonry gallery preview (CSS columns, natural aspect ratios from Sanity metadata)
+- MiniAbout section (circular photo + text)
+- Instagram CTA section
+- WhatsApp CTA ("רוצים צלם לאירוע?")
+- `/work` masonry gallery with events-relevant tag filtering (events/magnets/corporate/private/outdoor) + lightbox
+- `/about` simplified: bio + approach (2 sections, no locations strip)
+- `/contact` WhatsApp-first + form
+- Sanity Studio at `/studio` — all Hebrew fields, handoff-ready
+- 301 redirects: /events, /surf, /stories, /stories/:slug
 - Bilingual EN/HE with RTL support
 
-### What's Blocked (Needs External Input)
-- **Instagram tokens** — Amit's login credentials needed to provision Graph API tokens → `SocialFeed` component lights up. Code is built: `lib/instagram.ts`, `components/sections/SocialFeed.tsx`, Vercel cron for token refresh.
-- **Morocco content** — hero video/reel, surf action photos for gallery diversification. Amit returning from Morocco March 30, has exclusive Ido Hajaj (WSL Challenger) content.
-- **Photo of Amit** — for `pageHome.miniAboutImage` and About page hero
-- **About page hero** — currently shows a woman, needs Amit-at-work photo
-- **Story body content** — old stories reference "magnet" business, needs editing in Studio
+### What Changed (V2.0)
+- All copy pivoted from surf/creator to events photography
+- Stories page removed entirely
+- VideoReelGrid, BrandsBar, SocialFeed removed from homepage
+- Gallery tags changed: ocean/golden-hour/surf → events/magnets/corporate/private/outdoor
+- Masonry layout (CSS columns) replacing uniform aspect-ratio grid
+- Schema reduced from 9 → 5 active types
+- All schema fields have Hebrew titles + descriptions
+- About page simplified: removed locations strip, reduced to 2 paragraphs
+- 825 net lines deleted
+
+### What's Blocked (Needs Amit)
+- **New hero image** — needs events photo replacing ocean
+- **Profile photo** — for miniAbout + About page hero
+- **Event photography content** — re-tag galleries with new categories, upload new work
+- **miniAboutText update** — CMS field needs events-focused Hebrew copy
+- **Instagram tokens** — Amit's login credentials for Graph API
 
 ### Instagram Embeds — DO NOT ATTEMPT
-Instagram oEmbed/iframe embeds are broken by Meta policy (login wall + API lockdown since 2024-2025). The Graph API image fetch approach (SocialFeed component) is the correct production pattern. TikTok embeds work fine via oEmbed. See memory file `smile-amigo-pivot-session.md` for full research.
+Instagram oEmbed/iframe embeds are broken by Meta policy (login wall + API lockdown since 2024-2025). The Graph API image fetch approach is the correct pattern. See memory file `smile-amigo-pivot-session.md`.
 
 ---
 
@@ -177,14 +191,14 @@ After ANY deployment, verify:
 
 | Route | EN | HE | Check |
 |-------|----|----|-------|
-| `/` | ☐ | ☐ | Hero, highlights grid, mini-about, Instagram CTA, WhatsApp CTA |
-| `/work` | ☐ | ☐ | Tag filters work, gallery loads without flickering, lightbox |
-| `/about` | ☐ | ☐ | "הסיפור שלי", bio, locations in Hebrew, CTA |
-| `/stories` | ☐ | ☐ | Instagram CTA, story cards if any |
+| `/` | ☐ | ☐ | Hero, masonry gallery, mini-about, Instagram CTA, WhatsApp CTA |
+| `/work` | ☐ | ☐ | Tag filters work (events/magnets/corporate/private/outdoor), masonry layout, lightbox |
+| `/about` | ☐ | ☐ | Bio + approach sections, CTA |
 | `/contact` | ☐ | ☐ | WhatsApp button, form, email/IG links |
-| `/studio` | ☐ | — | Structure tab loads, all schemas visible |
-| `/events` | ☐ | ☐ | Redirects to `/work?tag=events` |
-| `/surf` | ☐ | ☐ | Redirects to `/work?tag=ocean` |
+| `/studio` | ☐ | — | 5 schema types visible, all Hebrew fields |
+| `/stories` | ☐ | ☐ | 301 redirects to `/` |
+| `/events` | ☐ | ☐ | 301 redirects to `/work?tag=events` |
+| `/surf` | ☐ | ☐ | 301 redirects to `/work?tag=ocean` |
 
 ---
 
